@@ -1,0 +1,61 @@
+﻿@model ShopOnlineConnection.NhaSanXuat
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<style>
+    input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #2A9FD6;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+</style>
+<div>
+    @using (Html.BeginForm("Delete", "NhaSanXuatAdmin", FormMethod.Post, new { @style = "width: 50%; margin: auto;" }))
+    {
+
+        <label for="fname">Mã Nhà Sản Xuất</label>
+        <input type="text" id="fname" name="MaNhaSanXuat" style="background-color: #5D5E63;" required value="@Model.MaNhaSanXuat" readonly>
+
+        <label for="lname">Tên Nhà Sản Xuất</label>
+        <input type="text" id="lname" name="TenNhaSanXuat" style="background-color: #5D5E63;" required value="@Model.TenNhaSanXuat" readonly>
+
+        <label for="country">Tinh Trang</label>
+        <select id="country" style="width: 10%;background-color: #5D5E63;" name="TinhTrang">
+
+            @if (@Model.TinhTrang == "1")
+            {
+                <option value="1">Đã Khóa</option>
+            }
+            else
+            {
+                <option value="0">Chưa Khóa</option>
+            }
+        </select>
+
+        <input type="submit" value="Xac Nhan Xoa">
+    }
+</div>
+

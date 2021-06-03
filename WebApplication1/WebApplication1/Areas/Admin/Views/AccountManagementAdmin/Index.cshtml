@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ShopOnlineConnection.AspNetUser>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 60%;
+        margin: auto;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 20px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #5D5E63;
+    }
+
+    th {
+        background-color: #2A9FD6;
+        color: white;
+    }
+</style>
+
+<h2>Account Management</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>EMAIL</th>
+        <th>USER NAME</th>
+        <th>PHONE NUMBER</th>
+        <th colspan="2">
+            <a href="@Url.Action("","")">
+                <img src="~/Asset/images/AddNSX.png" />
+            </a>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Email</td>
+            <td>@item.UserName</td>
+            <td>@item.PhoneNumber</td>
+            <td>
+                <a href="#">
+                    <img src="~/Asset/images/edit.png" />
+                </a>
+            </td>
+            <td>
+                <a href="#">
+                    <img src="~/Asset/images/Delete.png" />
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+

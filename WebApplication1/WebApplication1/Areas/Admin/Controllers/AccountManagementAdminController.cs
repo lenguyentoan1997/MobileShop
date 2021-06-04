@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Controllers;
+using WebApplication1.Models;
 using WebApplication1.Models.BUS;
 
 namespace WebApplication1.Areas.Admin.Controllers
@@ -27,15 +32,15 @@ namespace WebApplication1.Areas.Admin.Controllers
         {
             return View();
         }
-
         // POST: Admin/AccountManagementAdmin/Create
         [HttpPost]
+
         public ActionResult Create(FormCollection collection)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                //waitting....
                 return RedirectToAction("Index");
             }
             catch

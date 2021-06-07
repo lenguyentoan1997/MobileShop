@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using ShopOnlineConnection;
 
 namespace WebApplication1.Models.BUS
@@ -9,10 +6,11 @@ namespace WebApplication1.Models.BUS
     //----------------Admin--------------
     public class AccountBUS
     {
-        public static IEnumerable<AspNetUser> ListAccount()
+
+        public static IEnumerable<AspNetUser> ListGuestAccount()
         {
             var db = new ShopOnlineConnectionDB();
-            return db.Query<AspNetUser>("SELECT Id,Email,PhoneNumber,UserName FROM AspNetUsers");
+            return db.Query<AspNetUser>("SELECT * FROM AspNetUsers WHERE Id NOT IN (SELECT UserId FROM AspNetUserRoles)");
 
         }
 

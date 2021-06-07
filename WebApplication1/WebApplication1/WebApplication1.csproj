@@ -174,7 +174,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AccountManagementAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GuestAccountAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoaiSanPhamAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\MainAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\NhaSanXuatAdminController.cs" />
@@ -902,8 +902,8 @@
     <Content Include="Asset\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\AccountManagementAdmin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AccountManagementAdmin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\GuestAccountAdmin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GuestAccountAdmin\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

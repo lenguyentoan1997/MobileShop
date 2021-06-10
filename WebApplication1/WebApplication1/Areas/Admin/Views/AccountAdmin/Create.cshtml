@@ -6,7 +6,7 @@
     @Scripts.Render("~/bundles/jqueryval");
 }
 
-<h2>Create A New Guest Account.</h2>
+<h2>Create A New Admin Account</h2>
 
 <style>
     .form-group {
@@ -20,9 +20,8 @@
 
 <div>
 
-    @using (Html.BeginForm("Create", "GuestAccountAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", @style = "width : 80%;" }))
+    @using (Html.BeginForm("Create", "AccountAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", @style = "width : 80%;" }))
     {
-
         //security problem Cross-Site Request Forgery (CSRF)
         @Html.AntiForgeryToken()
         <hr />
@@ -72,4 +71,3 @@
         </div>
     }
 </div>
-

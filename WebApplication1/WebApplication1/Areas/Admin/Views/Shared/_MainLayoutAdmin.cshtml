@@ -11,21 +11,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Dark Admin</title>
 
+    <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/css/local.css" />
 
+    <!-- jQuery and Modernizr-->
     <script type="text/javascript" src="~/Areas/AssetAdmin/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="~/Areas/AssetAdmin/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Areas/AssetAdmin/ckeditor/ckeditor.js"></script>
-    <!-- you need to include the shieldui css and js assets in order for the charts to work -->
-    <link rel="stylesheet" type="text/css" href="https://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
-    <link id="gridcss" rel="stylesheet" type="text/css" href="https://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
 
+    <!-- Core JavaScript Files -->
+    <script type="text/javascript" src="~/Areas/AssetAdmin/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
     <script type="text/javascript" src="https://www.prepbootstrap.com/Content/js/gridData.js"></script>
     <script src="~/Areas/AssetAdmin/js/product/previewFile.js"></script>
 
+    <!-- you need to include the shieldui css and js assets in order for the charts to work -->
+    <link rel="stylesheet" type="text/css" href="https://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
+    <link id="gridcss" rel="stylesheet" type="text/css" href="https://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
 </head>
 <body>
     <div id="wrapper">
@@ -39,20 +42,26 @@
                 </button>
                 <a class="navbar-brand" href="@Url.Action("Index","MainAdmin")">Admin Panel</a>
             </div>
+
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul id="active" class="nav navbar-nav side-nav">
                     <li class="selected"><a href="@Url.Action("Index","MainAdmin")"><i class="fa fa-bullseye"></i> Dashboard</a></li>
                     <li><a href="@Url.Action("Index","NhaSanXuatAdmin")"><i class="fa fa-tasks"></i> Quan Ly Nha San Xuat</a></li>
                     <li><a href="@Url.Action("Index","LoaiSanPhamAdmin")"><i class="fa fa-globe"></i> Quan Ly Loai San Pham</a></li>
                     <li><a href="@Url.Action("Index","SanPhamAdmin")"><i class="fa fa-list-ol"></i> San Pham</a></li>
-                    <li><a href="@Url.Action("Index","GuestAccountAdmin")"><i class="fa fa-table"></i> Account Management</a></li>
-                    @*<li><a href="register.html"><i class="fa fa-font"></i> Register</a></li>
-                        <li><a href="timeline.html"><i class="fa fa-font"></i> Timeline</a></li>
-                        <li><a href="forms.html"><i class="fa fa-list-ol"></i> Forms</a></li>
-                        <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
-                        <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
-                        <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i> Bootstrap Grid</a></li>*@
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-address-card-o" aria-hidden="true"></i> Account Management</a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-inner">
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("Index","AccountAdmin")"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Admin</a></li>
+                                    <li><a href="@Url.Action("Index","GuestAccountAdmin")"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Guest</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
+
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">2</span> <b class="caret"></b></a>
@@ -75,6 +84,7 @@
                             <li><a href="#">Go to Inbox <span class="badge">2</span></a></li>
                         </ul>
                     </li>
+
                     <li class="dropdown user-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Steve Miller<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -85,7 +95,9 @@
 
                         </ul>
                     </li>
+
                     <li class="divider-vertical"></li>
+
                     <li>
                         <form class="navbar-search">
                             <input type="text" placeholder="Search" class="form-control">
@@ -97,8 +109,8 @@
 
         @RenderBody()
     </div>
-    <!-- /#wrapper -->
 
+    <!-- /#wrapper -->
     <script type="text/javascript">
         jQuery(function ($) {
             var performance = [12, 43, 34, 22, 12, 33, 4, 17, 22, 34, 54, 67],

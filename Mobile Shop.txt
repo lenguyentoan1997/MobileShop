@@ -1,0 +1,2 @@
+This's a personal project about management a store sell mobile Phones
+and Website using ASP.Net technology

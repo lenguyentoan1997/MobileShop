@@ -17,6 +17,7 @@ namespace WebApplication1.Areas.Admin.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private AccountBUS _accountBUS = new AccountBUS();
 
         public ApplicationSignInManager SignInManager
         {
@@ -45,8 +46,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/GuestAccountAdmin
         public ActionResult Index()
         {
-            var db = AccountBUS.ListGuestAccount();
-            return View(db);
+            return View(_accountBUS.ListGuestAccount());
         }
 
         // GET: Admin/GuestAccountAdmin/Details/5
@@ -54,7 +54,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         {
             return View();
         }
-       
+
         // GET: Admin/GuestAccountAdmin/Create
         public ActionResult Create()
         {
@@ -64,11 +64,10 @@ namespace WebApplication1.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(RegisterViewModel model)
         {
-
             // TODO: Add insert logic here
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email , PhoneNumber = model.PhoneNumber };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -86,33 +85,27 @@ namespace WebApplication1.Areas.Admin.Controllers
 
             return View(model);
         }
-        //public ActionResult Create(FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
 
         // GET: Admin/GuestAccountAdmin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(String id)
         {
-            return View();
+            return View(AccountBUS.GuestAccountDetails(id));
         }
+
 
         // POST: Admin/GuestAccountAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(AspNetUser aspNetUser, String id)
         {
             try
             {
                 // TODO: Add update logic here
+                var accountDetails = AccountBUS.GuestAccountDetails(id);
+
+                aspNetUser.PasswordHash = accountDetails.PasswordHash;
+                aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
+
+                _accountBUS.UpdateGuestAccount(aspNetUser, id);
 
                 return RedirectToAction("Index");
             }
@@ -123,18 +116,19 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/GuestAccountAdmin/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(String id)
         {
-            return View();
+            return View(AccountBUS.GuestAccountDetails(id));
         }
 
         // POST: Admin/GuestAccountAdmin/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(AspNetUser aspNetUser)
         {
             try
             {
                 // TODO: Add delete logic here
+                _accountBUS.DeleteGuestAccount(aspNetUser);
 
                 return RedirectToAction("Index");
             }

@@ -36,7 +36,9 @@ namespace WebApplication1
                 user.Email = "admin@gmail.com";
 
                 string userPWD = "A@Z1112";
+
                 //ID:Gues01@gmail.com pass Toan123456@
+
                 var chkUser = UserManager.Create(user, userPWD);
 
                 //Add default User to Role Admin
@@ -45,6 +47,7 @@ namespace WebApplication1
                     var result = UserManager.AddToRole(user.Id, "Admin");
                 }
             }
+
             //// creating Creating Manager role
             //if (!roleManager.RoleExists("Manager"))
             //{

@@ -27,7 +27,7 @@
     }
 </style>
 
-<h2>Management Guest Account</h2>
+<h2>Management Admin Account</h2>
 
 <table>
     <tr>
@@ -36,9 +36,7 @@
         <th>USER NAME</th>
         <th>PHONE NUMBER</th>
         <th colspan="2">
-            <a href="@Url.Action("Create","GuestAccountAdmin")">
-                <img src="~/Asset/images/AddNSX.png" />
-            </a>
+            <a href="@Url.Action("Create","AccountAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
         </th>
     </tr>
 
@@ -50,14 +48,10 @@
             <td>@item.UserName</td>
             <td>@item.PhoneNumber</td>
             <td>
-                <a href="@Url.Action("Edit","GuestAccountAdmin",new { id = @item.Id})">
-                    <img src="~/Asset/images/edit.png" />
-                </a>
+                <a href="@Url.Action("Edit","AccountAdmin",new { id=item.Id})"><img src="~/Asset/images/edit.png" /></a>
             </td>
             <td>
-                <a href="@Url.Action("Delete","GuestAccountAdmin",new { id = @item.Id})">
-                    <img src="~/Asset/images/Delete.png" />
-                </a>
+                <a href="@Url.Action("Delete","AccountAdmin",new { id = item.Id})"><img src="~/Asset/images/Delete.png" /></a>
             </td>
         </tr>
     }

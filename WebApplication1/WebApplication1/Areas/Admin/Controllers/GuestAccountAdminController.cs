@@ -89,7 +89,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/GuestAccountAdmin/Edit/5
         public ActionResult Edit(String id)
         {
-            return View(AccountBUS.GuestAccountDetails(id));
+            return View(AccountBUS.AccountDetails(id));
         }
 
 
@@ -100,7 +100,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add update logic here
-                var accountDetails = AccountBUS.GuestAccountDetails(id);
+                var accountDetails = AccountBUS.AccountDetails(id);
 
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
@@ -118,7 +118,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/GuestAccountAdmin/Delete/5
         public ActionResult Delete(String id)
         {
-            return View(AccountBUS.GuestAccountDetails(id));
+            return View(AccountBUS.AccountDetails(id));
         }
 
         // POST: Admin/GuestAccountAdmin/Delete/5

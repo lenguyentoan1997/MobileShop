@@ -909,6 +909,8 @@
     <Content Include="Areas\Admin\Views\GuestAccountAdmin\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\AccountAdmin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AccountAdmin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AccountAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AccountAdmin\Delete.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

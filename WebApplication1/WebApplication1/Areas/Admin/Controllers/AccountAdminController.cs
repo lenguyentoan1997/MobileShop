@@ -36,7 +36,7 @@ namespace WebApplication1.Areas.Admin.Controllers
 
         // POST: Admin/AccountAdmin/Create
         [HttpPost]
-        public ActionResult Create(RegisterAdminViewModel model)
+        public ActionResult Create(RegisterViewModel model)
         {
             // TODO: Add insert logic here
             if (ModelState.IsValid)
@@ -45,11 +45,6 @@ namespace WebApplication1.Areas.Admin.Controllers
 
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
                 var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
-                //first we create name role
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = model.RoleName;
-                roleManager.Create(role);
 
                 //Here we create a Admin super user who will maintain the website
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.PhoneNumber };

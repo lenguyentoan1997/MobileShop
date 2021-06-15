@@ -4993,6 +4993,18 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
         background-color: transparent;
         color: #ffffff;
     }
+    /*CSS login-name*/
+    .navbar-inverse .navbar-nav > li .navbar-right li > a {
+        color: #BDBDBD;
+        padding-bottom: 15px;
+        line-height: 20px;
+        text-decoration: none;
+        background: transparent;
+        padding-top: 15px;
+        position: relative;
+        display: block;
+        padding: 15px 15px;
+    }
 
 @media (max-width: 767px) {
     .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
@@ -7564,5 +7576,3 @@ table.tablesorter thead {
             right: auto;
         }
 }
-
-

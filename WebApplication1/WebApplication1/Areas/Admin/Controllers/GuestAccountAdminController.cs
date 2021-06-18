@@ -67,7 +67,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             // TODO: Add insert logic here
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.PhoneNumber };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, FullName = model.FullName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -102,9 +102,10 @@ namespace WebApplication1.Areas.Admin.Controllers
                 // TODO: Add update logic here
                 var accountDetails = AccountBUS.AccountDetails(id);
 
+                aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
-
+                //Waitting..................
                 _accountBUS.UpdateGuestAccount(aspNetUser, id);
 
                 return RedirectToAction("Index");

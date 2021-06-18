@@ -11,7 +11,7 @@
 
 <style>
     input[type=text], input[type=password] {
-        width: 100%;
+        width: 90%;
         padding: 12px 20px;
         margin: 8px 0;
         display: inline-block;
@@ -35,32 +35,82 @@
             background-color: #45a049;
         }
 
-    #id, #email {
-        background-color: #5D5E63;
+    label[for=id], [for=email], [for=user-name], [for=phone] {
+        width: 100%;
     }
 
-    #user-name, #phone,#password {
+    input[type=text]:enabled {
         color: #000000;
     }
+
+    .icon-password {
+        float: left;
+        margin-right: 10px;
+        font-size: 25px;
+    }
+
+    .btn-save{
+        width: 30%;
+    }
+
+    
 </style>
 
 <div>
     @using (Html.BeginForm("Index", "ManageAccountDetailsAdmin", FormMethod.Post, new { @style = "width:50%;margin:auto;" }))
     {
         <label for="id">ID Account</label>
-        <input type="text" id="id" name="Id" value="@Model.Id" readonly>
+        <input type="text" id="id" name="Id" value="@Model.Id" disabled>
 
         <label for="email">Email</label>
-        <input type="text" id="email" name="Email" value="@Model.Email" readonly />
+        <input type="text" id="email" name="Email" value="@Model.Email"/>
 
         <label for="user-name">User Name</label>
-        <input type="text" id="user-name" name="UserName" value="@Model.UserName" required />
+        <input type="text" id="user-name" name="UserName" value="@Model.UserName" disabled />
+        <button onclick="enable_disable()" type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditName">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+        </button>
 
         <label for="phone">Phone</label>
         <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" required />
 
-        <label for="password">Password</label>
-        <a>Change Password</a>
-        
+        @*<div class="row">
+                <div class="col-md-11">
+                    <span class="icon-password"><i class="fa fa-lock" style="font-size:25px;float:left;margin-top:5px;"></i></span>
+                    <span>Change Password</span>
+                    <p>
+                        You should use a strong password that you have not used anywhere else
+                    </p>
+                </div>
+                <button type="button" class="btn btn-primary col-md-1" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+            </div>
+            <div id="demo" class="collapse">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </div>*@
+
+        <div id="save-information-account" style="text-align:center;width:90%;">
+            <hr />
+            <button type="submit" class="btn-save btn btn-primary">SAVE</button>
+        </div>
+
     }
+
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnEditName").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable";
+                $("#user-name").prop("disabled", false);
+            }
+            else {
+                this.value = "Enable";
+                $("#user-name").prop("disabled", true);
+            }
+        });
+    });
+
+</script>

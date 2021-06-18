@@ -33,7 +33,7 @@
     <tr>
         <th>ID</th>
         <th>EMAIL</th>
-        <th>USER NAME</th>
+        <th>FULL NAME</th>
         <th>PHONE NUMBER</th>
         <th colspan="2">
             <a href="@Url.Action("Create","GuestAccountAdmin")">
@@ -47,7 +47,7 @@
         <tr>
             <td>@item.Id</td>
             <td>@item.Email</td>
-            <td>@item.UserName</td>
+            <td>@item.FullName</td>
             <td>@item.PhoneNumber</td>
             <td>
                 <a href="@Url.Action("Edit","GuestAccountAdmin",new { id = @item.Id})">

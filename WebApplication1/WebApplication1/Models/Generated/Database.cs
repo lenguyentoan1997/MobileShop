@@ -173,6 +173,7 @@ namespace ShopOnlineConnection
 		[Column] public bool LockoutEnabled { get; set; }
 		[Column] public int AccessFailedCount { get; set; }
 		[Column] public string UserName { get; set; }
+		[Column] public string FullName { get; set; }
 	}
     
 	[TableName("dbo.GioHang")]

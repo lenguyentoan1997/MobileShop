@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using ShopOnlineConnection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace WebApplication1.Areas.Admin.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private AccountBUS _accountBUS = new AccountBUS();
 
         public ManageAccountDetailsAdminController()
         {
@@ -61,11 +63,49 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: /ManageAccountDetails/Index
-        public ActionResult Index(String id)
+        public ActionResult Index(AspNetUser aspNetUser,String id)
         {
 
-            return View(AccountBUS.AccountDetails(id));
+            try
+            {
+                var accountDetails = AccountBUS.AccountDetails(id);
+
+                aspNetUser.PasswordHash = accountDetails.PasswordHash;
+                aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
+
+                _accountBUS.UpdateAdminAcocunt(aspNetUser, id);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View(AccountBUS.AccountDetails(id));
+            }
         }
+
+        public ActionResult Edit(AspNetUser aspNetUser, String id)
+        {
+            try
+            {
+                var accountDetails = AccountBUS.AccountDetails(id);
+
+                aspNetUser.PasswordHash = accountDetails.PasswordHash;
+                aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
+
+                _accountBUS.UpdateAdminAcocunt(aspNetUser, id);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        //public ActionResult Index(String id)
+        //{
+
+        //    return View(AccountBUS.AccountDetails(id));
+        //}
 
         // GET: /ManageAccountDetails/ChangePassword
         public ActionResult ChangePassword()

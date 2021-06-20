@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using PetaPoco;
@@ -161,7 +162,8 @@ namespace ShopOnlineConnection
 	[ExplicitColumns]
     public partial class AspNetUser : ShopOnlineConnectionDB.Record<AspNetUser>  
     {
-		[Column] public string Id { get; set; }
+        public static IEnumerable<DataRow> Rows { get; internal set; }
+        [Column] public string Id { get; set; }
 		[Column] public string Email { get; set; }
 		[Column] public bool EmailConfirmed { get; set; }
 		[Column] public string PasswordHash { get; set; }

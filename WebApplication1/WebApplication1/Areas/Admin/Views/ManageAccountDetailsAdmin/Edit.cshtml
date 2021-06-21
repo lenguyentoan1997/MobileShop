@@ -1,10 +1,8 @@
 ﻿@model ShopOnlineConnection.AspNetUser
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
-
-
 }
 
 <h2>Account Information</h2>
@@ -49,30 +47,34 @@
         font-size: 25px;
     }
 
-    .btn-save{
+    .btn-save {
         width: 30%;
     }
 
-    
+    input:read-only {
+        background-color: rgb(118, 118, 118);
+    }
 </style>
 
 <div>
-    @using (Html.BeginForm("Index", "ManageAccountDetailsAdmin", FormMethod.Post, new { @style = "width:50%;margin:auto;" }))
+
+    @using (Html.BeginForm("Edit", "ManageAccountDetailsAdmin", FormMethod.Post, new { @style = "width:50%;margin:auto;" }))
     {
         <label for="id">ID Account</label>
-        <input type="text" id="id" name="Id" value="@Model.Id" disabled>
+        <input type="text" id="id" name="Id" value="@Model.Id" readonly />
 
         <label for="email">Email</label>
-        <input type="text" id="email" name="Email" value="@Model.Email"/>
+        <input type="text" id="email" name="Email" value="@Model.Email" readonly />
 
         <label for="user-name">User Name</label>
-        <input type="text" id="user-name" name="UserName" value="@Model.UserName" disabled />
-        <button onclick="enable_disable()" type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditName">
+        <input type="text" id="user-name" name="FullName" value="@Model.FullName" readonly />
+
+        <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditName">
             <span class="glyphicon glyphicon-edit"></span> Edit
         </button>
 
         <label for="phone">Phone</label>
-        <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" required />
+        <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" />
 
         @*<div class="row">
                 <div class="col-md-11">
@@ -104,13 +106,14 @@
         $("#btnEditName").click(function () {
             if (this.value == "Enable") {
                 this.value = "Disable";
-                $("#user-name").prop("disabled", false);
+                $("#user-name").prop("readonly", false);
             }
             else {
                 this.value = "Enable";
-                $("#user-name").prop("disabled", true);
+                $("#user-name").prop("readonly", true);
             }
         });
     });
 
 </script>
+

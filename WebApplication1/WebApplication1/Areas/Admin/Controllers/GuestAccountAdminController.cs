@@ -102,27 +102,12 @@ namespace WebApplication1.Areas.Admin.Controllers
             {
                 // TODO: Add update logic here
                 var accountDetails = AccountBUS.AccountDetails(id);
-                foreach (PropertyInfo pi in aspNetUser.GetType().GetProperties())
-                {
-                    if (pi.PropertyType == typeof(string))
-                    {
-                        string value = (string)pi.GetValue(aspNetUser);
-                        if (!string.IsNullOrEmpty(value))
-                        {
-                            aspNetUser = accountDetails;
-                        }
-                    }
-                }
+
+                aspNetUser.UserName = accountDetails.UserName;
+                aspNetUser.PasswordHash = accountDetails.PasswordHash;
+                aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
 
                 _accountBUS.UpdateGuestAccount(aspNetUser, id);
-
-                //var accountDetails = AccountBUS.AccountDetails(id);
-
-                //aspNetUser.UserName = accountDetails.UserName;
-                //aspNetUser.PasswordHash = accountDetails.PasswordHash;
-                //aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
-
-                //_accountBUS.UpdateGuestAccount(aspNetUser, id);
 
                 return RedirectToAction("Index");
             }

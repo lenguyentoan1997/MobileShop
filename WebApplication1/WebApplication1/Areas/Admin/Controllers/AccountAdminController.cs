@@ -47,7 +47,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
                 //Here we create a Admin super user who will maintain the website
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.PhoneNumber };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, FullName = model.FullName };
                 var chkUser = UserManager.Create(user, model.Password);
 
                 //Add default User to Role Admin
@@ -77,6 +77,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             {
                 var accountDetails = AccountBUS.AccountDetails(id);
 
+                aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
 

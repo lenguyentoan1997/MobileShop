@@ -9,7 +9,7 @@
             <a href="#" class="dropdown-toggle login-name" data-toggle="dropdown">@Html.Raw(User.Identity.GetUserName())</a>
             <ul class="dropdown-menu">
                 <li><a href="@Url.Action("Edit", "ManageAccountDetailsAdmin",new {id=User.Identity.GetUserId() })"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                <li><a href="@Url.Action("ChangePassword", "ManageAccountDetailsAdmin")"><i class="glyphicon glyphicon-cog"></i> Change Password</a></li>
+                <li><a href="@Url.Action("ChangePassword", "GuestAccountAdmin")"><i class="glyphicon glyphicon-cog"></i> Change Password</a></li>
                 <li class="divider"></li>
                 <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="glyphicon glyphicon-off"></i> Log off</a></li>
             </ul>

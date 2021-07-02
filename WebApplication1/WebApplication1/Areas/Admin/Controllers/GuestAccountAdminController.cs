@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using WebApplication1.Controllers;
 using WebApplication1.Models;
 using WebApplication1.Models.BUS;
+using static WebApplication1.Controllers.ManageController;
 
 namespace WebApplication1.Areas.Admin.Controllers
 {
@@ -115,6 +116,35 @@ namespace WebApplication1.Areas.Admin.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                //sucessful password change will change to MainAdmin Index
+                return RedirectToAction("Index","");
+            }
+           
+            return View(model);
         }
 
         // GET: Admin/GuestAccountAdmin/Delete/5

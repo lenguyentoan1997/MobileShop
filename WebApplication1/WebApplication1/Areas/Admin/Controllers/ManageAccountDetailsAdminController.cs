@@ -1,8 +1,5 @@
 ﻿using ShopOnlineConnection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 
@@ -11,6 +8,7 @@ namespace WebApplication1.Areas.Admin.Controllers
     public class ManageAccountDetailsAdminController : Controller
     {
         private AccountBUS _accountBUS = new AccountBUS();
+       
         // GET: Admin/ManageAccountDetailsAdmin
         public ActionResult Index()
         {
@@ -73,8 +71,9 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
+
         // GET: Admin/ManageAccountDetailsAdmin/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             return View();
         }

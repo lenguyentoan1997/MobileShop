@@ -60,6 +60,7 @@
 
     @using (Html.BeginForm("Edit", "ManageAccountDetailsAdmin", FormMethod.Post, new { @style = "width:50%;margin:auto;" }))
     {
+
         <label for="id">ID Account</label>
         <input type="text" id="id" name="Id" value="@Model.Id" readonly />
 
@@ -68,29 +69,15 @@
 
         <label for="user-name">User Name</label>
         <input type="text" id="user-name" name="FullName" value="@Model.FullName" readonly />
-
         <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditName">
             <span class="glyphicon glyphicon-edit"></span> Edit
         </button>
 
         <label for="phone">Phone</label>
-        <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" />
-
-        @*<div class="row">
-                <div class="col-md-11">
-                    <span class="icon-password"><i class="fa fa-lock" style="font-size:25px;float:left;margin-top:5px;"></i></span>
-                    <span>Change Password</span>
-                    <p>
-                        You should use a strong password that you have not used anywhere else
-                    </p>
-                </div>
-                <button type="button" class="btn btn-primary col-md-1" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-            </div>
-            <div id="demo" class="collapse">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </div>*@
+        <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
+        <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditPhone">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+        </button>
 
         <div id="save-information-account" style="text-align:center;width:90%;">
             <hr />
@@ -103,6 +90,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        //Enable input Edit Name
         $("#btnEditName").click(function () {
             if (this.value == "Enable") {
                 this.value = "Disable";
@@ -111,6 +99,16 @@
             else {
                 this.value = "Enable";
                 $("#user-name").prop("readonly", true);
+            }
+        });
+        //Enable input Edit Phone
+        $("#btnEditPhone").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable"
+                $("#phone").prop("readonly", false);
+            } else {
+                this.value = "Enable";
+                $("#phone").prop("readonly", true);
             }
         });
     });

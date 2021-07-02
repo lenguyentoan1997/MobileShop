@@ -914,6 +914,7 @@
     <Content Include="Areas\Admin\Views\Shared\_LoginPartialAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\GuestAccountAdmin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageAccountDetailsAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GuestAccountAdmin\ChangePassword.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

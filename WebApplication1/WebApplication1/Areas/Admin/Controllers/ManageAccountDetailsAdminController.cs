@@ -3,6 +3,7 @@ using System;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 
+
 namespace WebApplication1.Areas.Admin.Controllers
 {
     public class ManageAccountDetailsAdminController : Controller
@@ -70,7 +71,6 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return View();
             }
         }
-
 
         // GET: Admin/ManageAccountDetailsAdmin/Delete/5
         public ActionResult Delete(string id)

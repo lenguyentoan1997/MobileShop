@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using ShopOnlineConnection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication1.Controllers;
 using WebApplication1.Models;
 using WebApplication1.Models.BUS;
-using static WebApplication1.Controllers.ManageController;
+
 
 namespace WebApplication1.Areas.Admin.Controllers
 {
@@ -141,10 +138,28 @@ namespace WebApplication1.Areas.Admin.Controllers
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
                 //sucessful password change will change to MainAdmin Index
-                return RedirectToAction("Index","");
+                return RedirectToAction("Index", "");
             }
-           
+
             return View(model);
+        }
+
+        //
+        // POST: /Account/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index","Home", new { Area = "" });
+
+        }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
 
         // GET: Admin/GuestAccountAdmin/Delete/5

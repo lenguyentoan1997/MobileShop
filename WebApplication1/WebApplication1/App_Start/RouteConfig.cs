@@ -13,6 +13,13 @@ namespace WebApplication1
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Add Cart",
+            //    url: "them-gio-hang",
+            //    defaults: new { controller = "Cart", action = "AddItem", id = UrlParameter.Optional },
+            //    namespaces: new[] { "WebApplication1.Controllers" }
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

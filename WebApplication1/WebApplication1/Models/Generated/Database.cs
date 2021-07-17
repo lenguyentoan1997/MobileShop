@@ -12,7 +12,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using PetaPoco;
@@ -162,8 +161,7 @@ namespace ShopOnlineConnection
 	[ExplicitColumns]
     public partial class AspNetUser : ShopOnlineConnectionDB.Record<AspNetUser>  
     {
-        public static IEnumerable<DataRow> Rows { get; internal set; }
-        [Column] public string Id { get; set; }
+		[Column] public string Id { get; set; }
 		[Column] public string Email { get; set; }
 		[Column] public bool EmailConfirmed { get; set; }
 		[Column] public string PasswordHash { get; set; }
@@ -176,20 +174,6 @@ namespace ShopOnlineConnection
 		[Column] public int AccessFailedCount { get; set; }
 		[Column] public string UserName { get; set; }
 		[Column] public string FullName { get; set; }
-	}
-    
-	[TableName("dbo.GioHang")]
-	[PrimaryKey("IdGH")]
-	[ExplicitColumns]
-    public partial class GioHang : ShopOnlineConnectionDB.Record<GioHang>  
-    {
-		[Column] public int IdGH { get; set; }
-		[Column] public string MaTaiKhoan { get; set; }
-		[Column] public string MaSanPham { get; set; }
-		[Column] public string TenSanPham { get; set; }
-		[Column] public int? SoLuong { get; set; }
-		[Column] public int? Gia { get; set; }
-		[Column] public int? TongTien { get; set; }
 	}
     
 	[TableName("dbo.LoaiSanPham")]
@@ -210,6 +194,32 @@ namespace ShopOnlineConnection
 		[Column] public string MaNhaSanXuat { get; set; }
 		[Column] public string TenNhaSanXuat { get; set; }
 		[Column] public string TinhTrang { get; set; }
+	}
+    
+	[TableName("dbo.Order")]
+	[PrimaryKey("ID")]
+	[ExplicitColumns]
+    public partial class Order : ShopOnlineConnectionDB.Record<Order>  
+    {
+		[Column] public int ID { get; set; }
+		[Column] public DateTime? CreateDate { get; set; }
+		[Column] public string CustomeID { get; set; }
+		[Column] public string ShipName { get; set; }
+		[Column] public string ShipMobile { get; set; }
+		[Column] public string ShipAddress { get; set; }
+		[Column] public string ShipEmail { get; set; }
+		[Column] public bool? Status { get; set; }
+	}
+    
+	[TableName("dbo.OrderDetail")]
+	[PrimaryKey("ProductID", AutoIncrement=false)]
+	[ExplicitColumns]
+    public partial class OrderDetail : ShopOnlineConnectionDB.Record<OrderDetail>  
+    {
+		[Column] public string ProductID { get; set; }
+		[Column] public int OrderID { get; set; }
+		[Column] public int? Quantity { get; set; }
+		[Column] public decimal? Price { get; set; }
 	}
     
 	[TableName("dbo.SanPham")]

@@ -1,7 +1,9 @@
-﻿<header class="container">
+﻿@model List<WebApplication1.Models.BUS.CartItem>
+
+<header class="container">
     <div class="row">
         <div class="col-md-4">
-            <div id="logo"><img src="~/Asset/images/logo.png" /></div>
+            <div id="logo"><a href="/"><img src="~/Asset/images/logo.png" /></a></div>
         </div>
         <div class="col-md-4">
             <form class="form-search">
@@ -10,7 +12,7 @@
             </form>
         </div>
         <div class="col-md-4">
-            <div id="cart"><a class="btn btn-1" href="@Url.Action("index","GioHang")"><span class="glyphicon glyphicon-shopping-cart"></span>CART : @*@Model.Count()*@ ITEM</a></div>              
+            <div id="cart"><a class="btn btn-1" href="@Url.Action("index","Cart")"><span class="glyphicon glyphicon-shopping-cart"></span>CART : @Model.Count  ITEM</a></div>
         </div>
     </div>
 </header>

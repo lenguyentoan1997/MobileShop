@@ -1,4 +1,5 @@
 ﻿@model ShopOnlineConnection.SanPham
+
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -39,7 +40,7 @@
                                 </ul>
                             </div>
                             <div class="buttons">
-                                <a class="btn cart" href="@Url.Action("index","GioHang")">
+                                <a class="btn cart" href="@Url.Action("Index","Cart")">
                                     <span class="glyphicon glyphicon-shopping-cart"></span>
                                 </a>
                                 <a class="btn wishlist" href="#">
@@ -70,18 +71,21 @@
                                 <span class="glyphicon glyphicon-star"></span>
                                 <span class="glyphicon glyphicon-star"></span>
                             </div>
-                            @using (Html.BeginForm("Them", "GioHang", FormMethod.Post))
+                            @*@using (Html.BeginForm("AddItem", "Cart", FormMethod.Post))*@
+                            @using (Html.BeginForm(new { action = "AddItem", controller = "Cart", id = Model.MaSanPham }))
                             {
                                 <input type="hidden" name="tensanpham" value="@Model.TenSanPham" />
-                                <input type="hidden" name="masanpham" value="@Model.MaSanPham" />
-                                <input type="hidden" name="gia" value="@Model.Gia" /><label>So Luong: </label><input class="fomr-inline quantity" type="number" value="1" min="1" max="1000" name="soluong" />
+                                <input type="hidden" name="productId" value="@Model.MaSanPham" />
+                                <input type="hidden" name="gia" value="@Model.Gia" />
+                                <label>So Luong: </label>
+                                <input class="fomr-inline quantity" type="number" value="1" min="1" max="1000" name="quantity" />
                                 if (User.Identity.IsAuthenticated)
                                 {
                                     <input type="submit" class="btn btn-2" value="Them Vao Gio" />
                                 }
                                 else
                                 {
-                                    <span>Vui Long Dang Nhap De Them Vao Gio Hang</span>
+                                    <p class="alert alert-danger">Vui Long Dang Nhap De Them Vao Gio Hang</p>
                                 }
                             }
                         </div>

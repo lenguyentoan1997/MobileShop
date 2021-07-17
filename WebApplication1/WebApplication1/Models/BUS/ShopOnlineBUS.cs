@@ -17,10 +17,10 @@ namespace WebApplication1.Models.BUS
 
         }
 
-        public static SanPham ChiTiet(String a)
+        public static SanPham ChiTiet(String id)
         {
             var db = new ShopOnlineConnectionDB();
-            return db.SingleOrDefault<SanPham>("select * from SanPham where MaSanPham = @0", a);
+            return db.SingleOrDefault<SanPham>("select * from SanPham where MaSanPham = @0", id);
         }
 
         public static IEnumerable<SanPham> Top4New()

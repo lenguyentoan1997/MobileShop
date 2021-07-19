@@ -11,6 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class CartController : Controller
     {
+        private const string CartSession = "CartSession";
 
         // GET: Cart
         public ActionResult Index()
@@ -27,7 +28,7 @@ namespace WebApplication1.Controllers
         public ActionResult AddItem(String productId, int quantity)
         {
             var product = ShopOnlineBUS.ChiTiet(productId);
-            var cart = Session[CommonConstants.CartSession];
+            var cart = Session[CartSession];
             if (cart != null)
             {
                 var list = (List<CartItem>)cart;
@@ -50,7 +51,7 @@ namespace WebApplication1.Controllers
                     item.Quantity = quantity;
                     list.Add(item);
                 }
-                Session[CommonConstants.CartSession] = list;
+                Session[CartSession] = list;
             }
             else
             {
@@ -61,22 +62,15 @@ namespace WebApplication1.Controllers
                 var list = new List<CartItem>();
                 list.Add(item);
                 //assign to session
-                Session[CommonConstants.CartSession] = list;
+                Session[CartSession] = list;
             }
             return RedirectToAction("Index");
         }
-        public JsonResult DeleteAll()
-        {
-            Session[CommonConstants.CartSession] = null;
-            return Json(new
-            {
-                status = true
-            });
-        }
+
         public JsonResult Update(string cartModel)
         {
             var jsonCart = new JavaScriptSerializer().Deserialize<List<CartItem>>(cartModel);
-            var sessionCart = (List<CartItem>)Session[CommonConstants.CartSession];
+            var sessionCart = (List<CartItem>)Session[CartSession];
 
             foreach (var item in sessionCart)
             {
@@ -86,8 +80,33 @@ namespace WebApplication1.Controllers
                     item.Quantity = jsonItem.Quantity;
                 }
             }
-            Session[CommonConstants.CartSession] = sessionCart;
+
+            //jsonItem assign in sessionCart
+            Session[CartSession] = sessionCart;
+
             //return results for cartController.js
+            return Json(new
+            {
+                status = true
+            });
+        }
+
+        public JsonResult DeleteAll()
+        {
+            Session[CartSession] = null;
+
+            return Json(new
+            {
+                status = true
+            });
+        }
+
+        public JsonResult Delete(string id)
+        {
+            var sessionCart = (List<CartItem>)Session[CartSession];
+            sessionCart.RemoveAll(x => x.Product.MaSanPham == id);
+            Session[CartSession] = sessionCart;
+
             return Json(new
             {
                 status = true

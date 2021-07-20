@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WebApplication1.Common;
 using WebApplication1.Models.BUS;
 using System.Web.Script.Serialization;
+using ShopOnlineConnection;
 
 namespace WebApplication1.Controllers
 {
@@ -14,6 +15,7 @@ namespace WebApplication1.Controllers
         private const string CartSession = "CartSession";
 
         // GET: Cart
+        //ActionResult thường được sử dụng khi bạn muốn trả về 1 view hoặc file hoặc jsondata hoặc điều hướng tới 1 url khác.
         public ActionResult Index()
         {
             var cart = Session[CommonConstants.CartSession];
@@ -67,6 +69,8 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
+        //JsonResult thường được sử dụng khi bạn muốn trả về jsondata tới 1 client.
+        //JsonResult là 1 loại ActionResult trong MVC. Nó giúp gửi dữ liệu theo chuẩn format JavaScript Object Notation (JSON).
         public JsonResult Update(string cartModel)
         {
             var jsonCart = new JavaScriptSerializer().Deserialize<List<CartItem>>(cartModel);
@@ -111,6 +115,57 @@ namespace WebApplication1.Controllers
             {
                 status = true
             });
+        }
+
+        [HttpGet]
+        public ActionResult Payment()
+        {
+            var cart = Session[CartSession];
+            var list = new List<CartItem>();
+
+            if (cart != null)
+            {
+                list = (List<CartItem>)cart;
+            }
+
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult Payment(string shipName, string mobile, string address, string email)
+        {
+            var order = new Order();
+            order.CreateDate = DateTime.Now;
+            order.ShipAddress = address;
+            order.ShipMobile = mobile;
+            order.ShipName = shipName;
+            order.ShipEmail = email;
+            try
+            {
+                var id = new OrderBUS().Insert(order);
+                var cart = (List<CartItem>)Session[CartSession];
+                var orderDetailBus = new OrderDetailBUS();
+                foreach (var item in cart)
+                {
+                    var orderDetail = new OrderDetail();
+                    orderDetail.ProductID = item.Product.MaSanPham;
+                    orderDetail.OrderID = id;
+                    orderDetail.Price = item.Product.Gia;
+                    orderDetail.Quantity = item.Quantity;
+                    orderDetailBus.Insert(orderDetail);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Redirect("/Error-Payment");
+            }
+
+            return View("/Cart/Sucess");
+        }
+
+        public ActionResult Success()
+        {
+            return View();
         }
     }
 }

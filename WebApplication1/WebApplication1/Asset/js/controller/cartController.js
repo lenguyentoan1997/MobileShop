@@ -7,6 +7,10 @@
             window.location.href = "/";
         });
 
+        $('#btnPayment').off('click').on('click', function () {
+            window.location.href = "/Cart/Payment";
+        });
+
         $('#btnUpdate').off('click').on('click', function () {
             var listProduct = $('.txtQuantity');
             var cartList = [];
@@ -53,7 +57,7 @@
 
             $.ajax({
                 url: '/Cart/Delete',
-                data: { id: $(this.data('id') },              
+                data: { id: $(this).data('id') },              
                 dataType: 'json',
                 type: 'POST',
                 success: function (res) {

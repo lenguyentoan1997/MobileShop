@@ -7,6 +7,7 @@ using WebApplication1.Common;
 using WebApplication1.Models.BUS;
 using System.Web.Script.Serialization;
 using ShopOnlineConnection;
+using Microsoft.AspNet.Identity;
 
 namespace WebApplication1.Controllers
 {
@@ -136,10 +137,11 @@ namespace WebApplication1.Controllers
         {
             var order = new Order();
             order.CreateDate = DateTime.Now;
-            order.ShipAddress = address;
-            order.ShipMobile = mobile;
             order.ShipName = shipName;
+            order.ShipMobile = mobile;
+            order.ShipAddress = address;
             order.ShipEmail = email;
+
             try
             {
                 var id = new OrderBUS().Insert(order);
@@ -155,9 +157,9 @@ namespace WebApplication1.Controllers
                     orderDetailBus.Insert(orderDetail);
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return Redirect("/Error-Payment");
+                throw e;
             }
 
             return View("/Cart/Sucess");

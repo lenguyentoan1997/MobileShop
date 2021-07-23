@@ -9,16 +9,19 @@ namespace WebApplication1.Models.BUS
     public class OrderBUS
     {
         ShopOnlineConnectionDB db = null;
-        
+
         public OrderBUS()
         {
             db = new ShopOnlineConnectionDB();
         }
+
         public int Insert(Order order)
-        {
-            db.Insert(order);
+        {  
+            db.Insert("dbo.[Order]",order);
 
             return order.ID;
         }
+
+
     }
 }

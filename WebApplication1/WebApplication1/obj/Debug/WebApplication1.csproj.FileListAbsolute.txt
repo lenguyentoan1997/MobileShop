@@ -334,3 +334,5 @@ C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\obj\De
 C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete
 C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\bin\Facebook.dll
+C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\bin\Facebook.xml

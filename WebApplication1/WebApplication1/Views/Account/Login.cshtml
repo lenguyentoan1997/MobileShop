@@ -45,23 +45,23 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                                    <hr class="my-5">
                                 </div>
                             </div>
                         }
-                        <hr class="my-5">
-                        <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-                        <button class="btn btn-lg btn-facebook btn-block text-uppercase btn-facebook" type="submit"><i class="fab fa-facebook-f mr-2"></i>  @Html.ActionLink("Sign in with Facebook", "LoginFacebook")</button>
-                        @*<h5 style="text-align:center;">
-                                @Html.ActionLink("Sign Up", "Register")
-                            </h5>
-                            <br />*@
                     </section>
+                    <div class="col-md-12">
+                        <section id="socialLoginForm">
+                            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                        </section>
+                    </div>
                 </div>
             </div>
             <br />
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

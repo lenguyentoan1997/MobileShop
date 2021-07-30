@@ -187,6 +187,7 @@
     <Compile Include="Common\CommonConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ExternalLoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaiSanPhamController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

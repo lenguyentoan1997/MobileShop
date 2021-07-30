@@ -28,10 +28,10 @@ namespace WebApplication1.Models.BUS
         {
             var db = new ShopOnlineConnectionDB();
             //LingQ var user = db.Users.SingleOrDefault(x=>x.UserName == entity.UserName);
-            var user = db.SingleOrDefault<AspNetUser>("SELECT * FROM AspNetUsres WHERE UserName = @0", entity.UserName);
+            var user = db.SingleOrDefault<AspNetUser>("SELECT * FROM AspNetUsers WHERE UserName = @0", entity.UserName);
             if(user == null)
             {
-                db.Insert(entity);
+                db.Insert("dbo.AspNetUsers",entity);
                 return entity.Id;
             }
             else

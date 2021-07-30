@@ -21,18 +21,18 @@ namespace WebApplication1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private Uri _redirectUri
-        {
-            get
-            {
-                var uriBuilder = new UriBuilder(Request.Url);
-                uriBuilder.Query = null;
-                uriBuilder.Fragment = null;
-                uriBuilder.Path = Url.Action("FacebookCallback");
+        //private Uri _redirectUri
+        //{
+        //    get
+        //    {
+        //        var uriBuilder = new UriBuilder(Request.Url);
+        //        uriBuilder.Query = null;
+        //        uriBuilder.Fragment = null;
+        //        uriBuilder.Path = Url.Action("FacebookCallback");
 
-                return uriBuilder.Uri;
-            }
-        }
+        //        return uriBuilder.Uri;
+        //    }
+        //}
 
         public AccountController()
         {
@@ -67,6 +67,57 @@ namespace WebApplication1.Controllers
                 _userManager = value;
             }
         }
+
+        //login with Facebook
+        //[AllowAnonymous]
+        //public ActionResult LoginFacebook()
+        //{
+        //    var fb = new FacebookClient();
+        //    var loginUrl = fb.GetLoginUrl(new
+        //    {
+        //        client_id = ConfigurationManager.AppSettings["FbAppId"],
+        //        client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+        //        redirect_uri = _redirectUri.AbsoluteUri,
+        //        response_type = "code",
+        //        scope = "email",
+        //    });
+        //    return Redirect(loginUrl.AbsoluteUri);
+        //}
+
+        ////[HttpPost]
+        ////[AllowAnonymous]
+        ////[ValidateAntiForgeryToken]
+        //public ActionResult FacebookCallback(string code)
+        //{
+        //    var fb = new FacebookClient();
+        //    dynamic result = fb.Post("oauth/access_token", new
+        //    {
+        //        client_id = ConfigurationManager.AppSettings["FbAppId"],
+        //        client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+        //        redirect_uri = _redirectUri.AbsoluteUri,
+        //        code = code
+        //    });
+
+        //    var accessToken = result.access_token;
+        //    if (!string.IsNullOrEmpty(accessToken))
+        //    {
+        //        fb.AccessToken = accessToken;
+        //        //get the user information, like email, first name,...
+        //        dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
+        //        string email = me.email;
+        //        string userName = me.email;
+        //        string firstName = me.first_name;
+        //        string middleName = me.middle_name;
+        //        string lastName = me.last_name;
+
+        //        var user = new AspNetUser();
+        //        user.Email = email;
+        //        user.UserName = userName;
+        //        user.FullName = firstName + " " + middleName + " " + lastName;
+        //        var resultInsert = new AccountBUS().InsertForFacebook(user);
+        //    }
+        //    return Redirect("/");
+        //}
 
         //
         // GET: /Account/Login
@@ -106,53 +157,6 @@ namespace WebApplication1.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
-        }
-
-        //login with Facebook
-        public ActionResult LoginFacebook()
-        {
-            var fb = new FacebookClient();
-            var loginUrl = fb.GetLoginUrl(new
-            {
-                client_id = ConfigurationManager.AppSettings["FbAppId"],
-                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
-                redirect_uri = _redirectUri.AbsoluteUri,
-                response_type = "code",
-                scope = "email",
-            });
-            return Redirect(loginUrl.AbsoluteUri);
-        }
-
-        public ActionResult FacebookCallback(string code)
-        {
-            var fb = new FacebookClient();
-            dynamic result = fb.Post("oauth/access_token", new
-            {
-                client_id = ConfigurationManager.AppSettings["FbAppId"],
-                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
-                redirect_uri = _redirectUri.AbsoluteUri,
-                code = code
-            }) ;
-
-            var accessToken = result.access_token;
-            if (!string.IsNullOrEmpty(accessToken))
-            {
-                fb.AccessToken = accessToken;
-                //get the user information, like email, first name,...
-                dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
-                string email = me.email;
-                string userName = me.email;
-                string firstName = me.first_name;
-                string middleName = me.middle_name;
-                string lastName = me.last_name;
-
-                var user = new AspNetUser();
-                user.Email = email;
-                user.UserName = userName;
-                user.FullName = firstName + " " + middleName + " " + lastName;
-                var resultInsert = new AccountBUS().InsertForFacebook(user);
-            }
-            return Redirect("/");
         }
 
         //
@@ -491,7 +495,7 @@ namespace WebApplication1.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
+        internal IAuthenticationManager AuthenticationManager
         {
             get
             {

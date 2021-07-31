@@ -187,7 +187,6 @@
     <Compile Include="Common\CommonConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
-    <Compile Include="Controllers\ExternalLoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaiSanPhamController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -724,7 +723,7 @@
     <Content Include="Areas\AssetAdmin\js\jquery-1.10.2.min.js" />
     <Content Include="Areas\AssetAdmin\js\product\previewFile.js" />
     <Content Include="Asset\css\bootstrap.min.css" />
-    <Content Include="Asset\css\stylesheet.css" />
+    <Content Include="Asset\css\stylesheet1.css" />
     <Content Include="Asset\font-awesome\css\font-awesome.css" />
     <Content Include="Asset\font-awesome\css\font-awesome.min.css" />
     <Content Include="Asset\font-awesome\fonts\fontawesome-webfont.svg" />

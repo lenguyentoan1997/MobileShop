@@ -68,7 +68,19 @@ namespace WebApplication1.Controllers
             }
         }
 
-        //login with Facebook
+        ////code để hiểu rõ về nguyên lý hoạt động ExternalLogin
+        //private Uri _redirectUri
+        //{
+        //    get
+        //    {
+        //        var uriBuilder = new UriBuilder(Request.Url);
+        //        uriBuilder.Query = null;
+        //        uriBuilder.Fragment = null;
+        //        uriBuilder.Path = Url.Action("FacebookCallback");
+
+        //        return uriBuilder.Uri;
+        //    }
+        //}
         //[AllowAnonymous]
         //public ActionResult LoginFacebook()
         //{
@@ -83,14 +95,13 @@ namespace WebApplication1.Controllers
         //    });
         //    return Redirect(loginUrl.AbsoluteUri);
         //}
-
         ////[HttpPost]
         ////[AllowAnonymous]
         ////[ValidateAntiForgeryToken]
         //public ActionResult FacebookCallback(string code)
         //{
-        //    var fb = new FacebookClient();
-        //    dynamic result = fb.Post("oauth/access_token", new
+        //    var facebookClient = new FacebookClient();
+        //    dynamic result = facebookClient.Post("oauth/access_token", new
         //    {
         //        client_id = ConfigurationManager.AppSettings["FbAppId"],
         //        client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
@@ -101,20 +112,20 @@ namespace WebApplication1.Controllers
         //    var accessToken = result.access_token;
         //    if (!string.IsNullOrEmpty(accessToken))
         //    {
-        //        fb.AccessToken = accessToken;
+        //        facebookClient.AccessToken = accessToken;
         //        //get the user information, like email, first name,...
-        //        dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
-        //        string email = me.email;
-        //        string userName = me.email;
-        //        string firstName = me.first_name;
-        //        string middleName = me.middle_name;
-        //        string lastName = me.last_name;
-
+        //        dynamic facebookAccountInfor = facebookClient.Get("me?fields=first_name,middle_name,last_name,id,email");
         //        var user = new AspNetUser();
-        //        user.Email = email;
-        //        user.UserName = userName;
-        //        user.FullName = firstName + " " + middleName + " " + lastName;
+        //        user.Email = facebookAccountInfor.email;
+        //        user.UserName = facebookAccountInfor.email;
+        //        user.FullName = facebookAccountInfor.first_name + " " + facebookAccountInfor.middle_name + " " + facebookAccountInfor.last_name;
+        //        user.Id = facebookAccountInfor.id;
         //        var resultInsert = new AccountBUS().InsertForFacebook(user);
+        //        if (resultInsert != null)
+        //        {
+
+        //        }
+
         //    }
         //    return Redirect("/");
         //}
@@ -411,7 +422,7 @@ namespace WebApplication1.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email , FullName = loginInfo.DefaultUserName });
             }
         }
 
@@ -435,7 +446,7 @@ namespace WebApplication1.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

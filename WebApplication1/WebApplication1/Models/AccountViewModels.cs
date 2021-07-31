@@ -5,9 +5,15 @@ namespace WebApplication1.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please do not leave it blank")]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
+
+        [Required (ErrorMessage = "Please do not leave it blank")]
+        [Display(Name = "Full Name")]
+        //[RegularExpression("(^[a-zA-Z]+( )+[a-zA-Z]{3,30}", ErrorMessage = "Enter only letters, do not enter numbers and max length 30")]
+        public string FullName { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -85,7 +91,7 @@ namespace WebApplication1.Models
         public string ConfirmPassword { get; set; }
     }
 
- 
+
     public class ResetPasswordViewModel
     {
         [Required]

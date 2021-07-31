@@ -45,16 +45,14 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-                                    <hr class="my-5">
                                 </div>
                             </div>
+                            <hr class="my-5" />
                         }
-                    </section>
-                    <div class="col-md-12">
                         <section id="socialLoginForm">
                             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
                         </section>
-                    </div>
+                    </section>
                 </div>
             </div>
             <br />

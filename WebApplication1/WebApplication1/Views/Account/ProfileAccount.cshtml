@@ -1,0 +1,116 @@
+﻿@model ShopOnlineConnection.AspNetUser
+
+@{
+    ViewBag.Title = "ProfileAccount";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Profile Account</h2>
+
+<style>
+    input[type=text], input[type=password] {
+        width: 90%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #2A9FD6;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+    label[for=id], [for=email], [for=user-name], [for=phone] {
+        width: 100%;
+    }
+
+    input[type=text]:enabled {
+        color: #000000;
+    }
+
+    .icon-password {
+        float: left;
+        margin-right: 10px;
+        font-size: 25px;
+    }
+
+    .btn-save {
+        width: 30%;
+    }
+
+    input:read-only {
+        background-color: rgb(118, 118, 118);
+    }
+</style>
+
+<div>
+
+    @using (Html.BeginForm("ProfileAccount", "Account", FormMethod.Post, new { @style = "width:50%;margin:auto;" }))
+    {
+
+        <label for="id">ID Account</label>
+        <input type="text" id="id" name="Id" value="@Model.Id" readonly />
+
+        <label for="email">Email</label>
+        <input type="text" id="email" name="Email" value="@Model.Email" readonly />
+
+        <label for="user-name">User Name</label>
+        <input type="text" id="user-name" name="FullName" value="@Model.FullName" readonly />
+        <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditName">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+        </button>
+
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
+        <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditPhone">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+        </button>
+
+        <div id="save-information-account" style="text-align:center;width:90%;">
+            <hr />
+            <button type="submit" class="btn-save btn btn-primary">SAVE</button>
+        </div>
+
+    }
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Enable input Edit Name
+        $("#btnEditName").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable";
+                $("#user-name").prop("readonly", false);
+            }
+            else {
+                this.value = "Enable";
+                $("#user-name").prop("readonly", true);
+            }
+        });
+        //Enable input Edit Phone
+        $("#btnEditPhone").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable"
+                $("#phone").prop("readonly", false);
+            } else {
+                this.value = "Enable";
+                $("#phone").prop("readonly", true);
+            }
+        });
+    });
+
+</script>

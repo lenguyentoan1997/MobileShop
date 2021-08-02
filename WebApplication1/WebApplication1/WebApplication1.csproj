@@ -185,6 +185,7 @@
     <Compile Include="Areas\Admin\Controllers\NhaSanXuatAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanPhamAdminController.cs" />
     <Compile Include="Common\CommonConstants.cs" />
+    <Compile Include="Common\Helper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -982,6 +983,7 @@
     <Content Include="Views\Shared\_LapTop.cshtml" />
     <Content Include="Views\Cart\Payment.cshtml" />
     <Content Include="Views\Cart\Success.cshtml" />
+    <Content Include="Views\Account\ProfileAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

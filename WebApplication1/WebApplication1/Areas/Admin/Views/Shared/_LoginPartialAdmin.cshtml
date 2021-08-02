@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using WebApplication1.Common
 
 @if (Request.IsAuthenticated)
 {
@@ -6,7 +7,7 @@
     {
         @Html.AntiForgeryToken()
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle login-name" data-toggle="dropdown">@Html.Raw(User.Identity.GetUserName())</a>
+            <a href="#" class="dropdown-toggle login-name" data-toggle="dropdown">@Html.Raw("Hello " + User.GetFullName())</a>
             <ul class="dropdown-menu">
                 <li><a href="@Url.Action("Edit", "ManageAccountDetailsAdmin",new {id=User.Identity.GetUserId() })"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                 <li><a href="@Url.Action("ChangePassword", "GuestAccountAdmin")"><i class="glyphicon glyphicon-cog"></i> Change Password</a></li>

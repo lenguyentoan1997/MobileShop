@@ -12,7 +12,7 @@ namespace WebApplication1.Models
 
         [Required (ErrorMessage = "Please do not leave it blank")]
         [Display(Name = "Full Name")]
-        //[RegularExpression("(^[a-zA-Z]+( )+[a-zA-Z]{3,30}", ErrorMessage = "Enter only letters, do not enter numbers and max length 30")]
+        [RegularExpression("^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$", ErrorMessage = "Enter only letters, do not enter numbers and max length 30")]
         public string FullName { get; set; }
     }
 

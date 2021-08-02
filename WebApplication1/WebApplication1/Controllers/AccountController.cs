@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ShopOnlineConnection;
+using WebApplication1.Areas.Admin.Controllers;
+using WebApplication1.Common;
 using WebApplication1.Models;
 using WebApplication1.Models.BUS;
 
@@ -21,6 +23,7 @@ namespace WebApplication1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
         //private Uri _redirectUri
         //{
         //    get
@@ -241,7 +244,6 @@ namespace WebApplication1.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -422,10 +424,11 @@ namespace WebApplication1.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email , FullName = loginInfo.DefaultUserName });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-
+       
+        
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
@@ -433,20 +436,43 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
+            
             if (User.Identity.IsAuthenticated)
             {
+    
                 return RedirectToAction("Index", "Manage");
             }
 
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
+            //if (ModelState.IsValid)
+            //{
+            //    // Get the information about the user from the external login provider
+            //    var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+            //    if (info == null)
+            //    {
+            //        return View("ExternalLoginFailure");
+            //    }
+            //    var user = new ApplicationUser { UserName = info.Email, Email = info.Email, FullName = model.FullName };
+            //    var result = await UserManager.CreateAsync(user);
+            //    if (result.Succeeded)
+            //    {
+            //        result = await UserManager.AddLoginAsync(user.Id, info.Login);
+            //        if (result.Succeeded)
+            //        {
+            //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            //            return RedirectToLocal(returnUrl);
+            //        }
+            //    }
+            //    AddErrors(result);
+            //}
+
+            else
+            {   // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName };
+                var user = new ApplicationUser { UserName = info.Email, Email = info.Email, FullName = model.FullName };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -454,6 +480,7 @@ namespace WebApplication1.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+   
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -462,7 +489,17 @@ namespace WebApplication1.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
+
         }
+        //public bool IsLoginWithFacebook()
+        //{
+        //    if ()
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
 
         //
         // POST: /Account/LogOff
@@ -560,5 +597,29 @@ namespace WebApplication1.Controllers
             }
         }
         #endregion
+        //Profile Account
+        // GET: Admin/ManageAccountDetailsAdmin/Edit/5
+        public ActionResult ProfileAccount(String id)
+        {
+            return View(AccountBUS.AccountDetails(id));
+        }
+
+        // POST: Admin/ManageAccountDetailsAdmin/Edit/5
+        [HttpPost]
+        public ActionResult ProfileAccount(AspNetUser aspNetUser, String id)
+        {
+            try
+            {
+                ManageAccountDetailsAdminController mn = new ManageAccountDetailsAdminController();
+                mn.Edit(aspNetUser, id);
+                return RedirectToAction("ProfileAccount");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
     }
 }

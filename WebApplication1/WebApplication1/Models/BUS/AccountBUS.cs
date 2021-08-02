@@ -70,5 +70,6 @@ namespace WebApplication1.Models.BUS
         {
             Database().Delete(aspNetUser);
         }
+
     }
 }

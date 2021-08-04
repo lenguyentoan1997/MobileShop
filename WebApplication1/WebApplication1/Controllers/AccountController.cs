@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
@@ -154,7 +155,7 @@ namespace WebApplication1.Controllers
             {
                 return View(model);
             }
-
+            IsExternalLogin("Login");
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -360,7 +361,24 @@ namespace WebApplication1.Controllers
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
+            IsExternalLogin(provider);
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public bool IsExternalLogin(string provider)
+        {
+
+            if (provider == "Facebook")
+            {
+                return Helper.IsFacebook = true;
+            }
+            else
+            {
+                return Helper.IsFacebook = false;
+            }
         }
 
         //
@@ -427,8 +445,8 @@ namespace WebApplication1.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-       
-        
+
+
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
@@ -436,10 +454,10 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
-            
+
             if (User.Identity.IsAuthenticated)
             {
-    
+
                 return RedirectToAction("Index", "Manage");
             }
 
@@ -480,7 +498,6 @@ namespace WebApplication1.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-   
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -489,16 +506,7 @@ namespace WebApplication1.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
-
         }
-        //public bool IsLoginWithFacebook()
-        //{
-        //    if ()
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
 
 
         //
@@ -596,6 +604,7 @@ namespace WebApplication1.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
         #endregion
         //Profile Account
         // GET: Admin/ManageAccountDetailsAdmin/Edit/5

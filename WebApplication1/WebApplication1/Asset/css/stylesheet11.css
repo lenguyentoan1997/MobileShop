@@ -838,8 +838,7 @@ footer {
         display: block;
         width: 100%;
         margin-bottom: 0;
-         Override default `<label>` margin 
-        line-height: 1.5;
+        Override default `<label>` margin line-height: 1.5;
         color: #495057;
         border: 1px solid transparent;
         border-radius: .25rem;
@@ -887,3 +886,48 @@ footer {
     color: white;
     background-color: #3b5998;
 }
+
+/* ---------------------------------------------------------------------------- */
+/* ----------------------------Form Profile Account-----------------------------*/
+/* ---------------------------------------------------------------------------- */
+#profile_account {
+    width: 70%;
+    margin: auto;
+}
+
+    #profile_account label {
+        width: 100%;
+    }
+
+    #profile_account .btn-save {
+        width: 25%;
+        font-size: 20px;
+    }
+
+    #profile_account .btn-save, button[id = btnEditName], [id = btnEditPhone] {
+        background-color: black;
+        color: white;
+    }
+
+        #profile_account button[id = btnEditName]:hover, [id = btnEditPhone]:hover, [id = btnEditName]:focus, [id = btnEditPhone]:focus {
+            background-color: rgb(118, 118, 118);
+            color: white;
+        }
+
+    #profile_account input {
+        width: 90%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+        #profile_account input:read-only {
+            background-color: rgb(118, 118, 118);
+        }
+
+        #profile_account input[type=text]:enabled {
+            color: #000000;
+        }

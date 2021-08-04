@@ -10,7 +10,6 @@ namespace WebApplication1.Models
     public class ApplicationUser : IdentityUser
     {
         public string FullName { get; set; }
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

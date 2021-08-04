@@ -8,13 +8,14 @@ using WebApplication1.Models.BUS;
 using System.Web.Script.Serialization;
 using ShopOnlineConnection;
 using Microsoft.AspNet.Identity;
+using System.Collections;
 
 namespace WebApplication1.Controllers
 {
     public class CartController : Controller
     {
         private const string CartSession = "CartSession";
-
+       
         // GET: Cart
         //ActionResult thường được sử dụng khi bạn muốn trả về 1 view hoặc file hoặc jsondata hoặc điều hướng tới 1 url khác.
         public ActionResult Index()

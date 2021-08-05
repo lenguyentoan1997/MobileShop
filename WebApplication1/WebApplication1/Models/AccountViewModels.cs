@@ -10,7 +10,7 @@ namespace WebApplication1.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required (ErrorMessage = "Please do not leave it blank")]
+        [Required(ErrorMessage = "Please do not leave it blank")]
         [Display(Name = "Full Name")]
         [RegularExpression("^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$", ErrorMessage = "Enter only letters, do not enter numbers and max length 30")]
         public string FullName { get; set; }
@@ -70,9 +70,11 @@ namespace WebApplication1.Models
 
     public class RegisterViewModel
     {
-        public string PhoneNumber { get; set; }
-        public string UserName { get; set; }
+        [Required]
+        [Display(Name = "Full Name")]
+        [RegularExpression("^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$", ErrorMessage = "Enter only letters, do not enter numbers and max length 30")]
         public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         [EmailAddress]

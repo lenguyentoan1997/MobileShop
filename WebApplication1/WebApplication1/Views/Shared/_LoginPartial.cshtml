@@ -8,12 +8,11 @@
         @Html.AntiForgeryToken()
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.Raw("Hello " + User.GetFullName()) </a>
-            @if(User.IsLoginWithFaceBook() == true)
+            @if (User.IsloginLocal() == true)
             {
                 <ul class="dropdown-menu">
                     <li><a href="@Url.Action("ProfileAccount", "Account",new {id=User.Identity.GetUserId() })"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                    @*<li><a href="#"><i class="glyphicon glyphicon-user"></i> Profile</a></li>*@
-                    @*<li><a href="@Url.Action("ChangePassword", "Manage")"><i class="glyphicon glyphicon-cog"></i> Change Password</a></li>*@
+                    <li><a href="@Url.Action("ChangePassword", "Manage")"><i class="glyphicon glyphicon-cog"></i> Change Password</a></li>
                     <li class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="glyphicon glyphicon-off"></i> Log off</a></li>
                 </ul>
@@ -22,13 +21,10 @@
             {
                 <ul class="dropdown-menu">
                     <li><a href="@Url.Action("ProfileAccount", "Account",new {id=User.Identity.GetUserId() })"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                    @*<li><a href="#"><i class="glyphicon glyphicon-user"></i> Profile</a></li>*@
-                    <li><a href="@Url.Action("ChangePassword", "Manage")"><i class="glyphicon glyphicon-cog"></i> Change Password</a></li>
                     <li class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="glyphicon glyphicon-off"></i> Log off</a></li>
                 </ul>
             }
-
         </li>
     }
 }

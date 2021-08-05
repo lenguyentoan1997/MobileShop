@@ -234,7 +234,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,FullName = model.FullName};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -247,7 +247,9 @@ namespace WebApplication1.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+
+                //AddErrors(result);
+                ModelState.AddModelError("", String.Format("This Email: {0} already exists.", model.Email));
             }
 
             // If we got this far, something failed, redisplay form
@@ -373,11 +375,11 @@ namespace WebApplication1.Controllers
 
             if (provider == "Facebook")
             {
-                return Helper.IsFacebook = true;
+                return Helper.IsSocialMediaLogin = true;
             }
             else
             {
-                return Helper.IsFacebook = false;
+                return Helper.IsSocialMediaLogin = false;
             }
         }
 

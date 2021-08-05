@@ -14,7 +14,7 @@ namespace WebApplication1.Common
 {
     public static class Helper
     {
-        public static bool IsFacebook { get; set; }
+        public static bool IsSocialMediaLogin { get; set; }
         public static string GetFullName(this System.Security.Principal.IPrincipal usr)
         {
             var fullNameClaim = ((ClaimsIdentity)usr.Identity).FindFirst("FullName");
@@ -26,14 +26,14 @@ namespace WebApplication1.Common
             return "";
         }
 
-        public static bool IsLoginWithFaceBook(this System.Security.Principal.IPrincipal usr)
+        public static bool IsloginLocal(this System.Security.Principal.IPrincipal usr)
         {
 
-            if (IsFacebook == true)
+            if (IsSocialMediaLogin == true)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
     }

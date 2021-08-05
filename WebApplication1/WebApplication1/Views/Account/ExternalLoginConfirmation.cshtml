@@ -14,19 +14,6 @@
                         @Html.AntiForgeryToken()
                         <h4 class="text-center" style="color:#3b5998">Information Account</h4>
                         <hr />
-                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <p class="text-info">
-                                You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
-                                Please enter a user name for this site below and click the Register button to finish
-                                logging in.
-                            </p>*@
-                        @*<div class="form-group">
-                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label", @style = "color:#3b5998" })
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
                         <div class="form-group">
                             @Html.LabelFor(m => m.FullName, new { @class = "col-md-3 control-label", @style = "color:#3b5998" })
                             <div class="col-md-9">

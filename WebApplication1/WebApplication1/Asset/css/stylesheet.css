@@ -904,12 +904,15 @@ footer {
         font-size: 20px;
     }
 
-    #profile_account .btn-save, button[id = btnEditName], [id = btnEditPhone] {
+    #profile_account .btn-save, button[id = btnEditName], [id = btnEditPhone], [id = btnEditAddress], [id = btnEditDOB] {
         background-color: black;
         color: white;
     }
 
-        #profile_account button[id = btnEditName]:hover, [id = btnEditPhone]:hover, [id = btnEditName]:focus, [id = btnEditPhone]:focus {
+        #profile_account button[id = btnEditName]:hover, [id = btnEditName]:focus,
+        [id = btnEditPhone]:hover, [id = btnEditPhone]:focus,
+        [id = btnEditAddress]:hover, [id = btnEditAddress]:focus,
+        [id = btnEditDOB]:hover, [id = btnEditDOB]:focus {
             background-color: rgb(118, 118, 118);
             color: white;
         }
@@ -928,6 +931,6 @@ footer {
             background-color: rgb(118, 118, 118);
         }
 
-        #profile_account input[type=text]:enabled {
+        #profile_account input[type = text]:enabled, input[type = date]:enabled {
             color: #000000;
         }

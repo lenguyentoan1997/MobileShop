@@ -621,8 +621,9 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                ManageAccountDetailsAdminController mn = new ManageAccountDetailsAdminController();
-                mn.Edit(aspNetUser, id);
+                ManageAccountDetailsAdminController manageAccountDetailsAdmin = new ManageAccountDetailsAdminController();
+                manageAccountDetailsAdmin.Edit(aspNetUser, id);
+
                 return RedirectToAction("ProfileAccount");
             }
             catch

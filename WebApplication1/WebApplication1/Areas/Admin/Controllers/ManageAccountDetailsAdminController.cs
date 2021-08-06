@@ -62,7 +62,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
-
+             
                 _accountBUS.UpdateGuestAccount(aspNetUser, id);
                 return RedirectToAction("Edit");
             }

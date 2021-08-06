@@ -175,8 +175,9 @@ namespace ShopOnlineConnection
 		[Column] public string UserName { get; set; }
 		[Column] public string FullName { get; set; }
 		[Column] public string UserAddress { get; set; }
-		[Column] public DateTime? DOB { get; set; }
-	}
+        [Column] public DateTime? DOB { get; set; }
+
+    }
     
 	[TableName("dbo.LoaiSanPham")]
 	[PrimaryKey("MaLoaiSanPham", AutoIncrement=false)]

@@ -17,8 +17,6 @@
                     <div>
                         @using (Html.BeginForm("ProfileAccount", "Account", FormMethod.Post, new { @id = "profile_account" }))
                         {
-                            <label for="id">ID Account</label>
-                            <input type="text" id="id" name="Id" value="@Model.Id" readonly />
                             <label for="email">Email</label>
                             <input type="text" id="email" name="Email" value="@Model.Email" readonly />
                             <label for="user-name">User Name</label>
@@ -29,6 +27,14 @@
                             <label for="phone">Phone</label>
                             <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
                             <button type="button" class="slide-toggle btn" value="Enable" id="btnEditPhone">
+                                <span class="glyphicon glyphicon-edit"></span> Edit
+                            </button>
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="UserAddress" value="@Model.UserAddress" readonly /><button type="button" class="slide-toggle btn" value="Enable" id="btnEditAddress">
+                                <span class="glyphicon glyphicon-edit"></span> Edit
+                            </button><label for="dob">Date Of Birthday</label>
+                            <input type="date" id="dob" name="DOB" value="@Model.DOB.Value.ToString("yyyy-MM-dd")" readonly />
+                            <button type="button" class="slide-toggle btn" value="Enable" id="btnEditDOB">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
                             </button>
                             <div class="text-center">
@@ -61,6 +67,7 @@
                 $("#user-name").prop("readonly", true);
             }
         });
+
         //Enable input Edit Phone
         $("#btnEditPhone").click(function () {
             if (this.value == "Enable") {
@@ -69,6 +76,28 @@
             } else {
                 this.value = "Enable";
                 $("#phone").prop("readonly", true);
+            }
+        });
+
+        //Enable input Edit Address
+        $("#btnEditAddress").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable"
+                $("#address").prop("readonly", false);
+            } else {
+                this.value = "Enable";
+                $("#address").prop("readonly", true);
+            }
+        });
+
+        //Enable input Edit Date Of Birthday
+        $("#btnEditDOB").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable"
+                $("#dob").prop("readonly", false);
+            } else {
+                this.value = "Enable";
+                $("#dob").prop("readonly", true);
             }
         });
     });

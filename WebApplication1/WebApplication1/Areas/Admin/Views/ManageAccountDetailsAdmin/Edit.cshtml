@@ -5,88 +5,95 @@
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
 }
 
-<h2>Account Information</h2>
-
 <style>
-    input[type=text], input[type=password] {
-        width: 90%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+        /*    input[type=text], input[type=password] {
+            width: 90%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }*/
 
-    input[type=submit] {
-        width: 100%;
-        background-color: #2A9FD6;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+        /*    input[type=submit] {
+            width: 100%;
+            background-color: #2A9FD6;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }*/
 
-        input[type=submit]:hover {
-            background-color: #45a049;
+        /*        input[type=submit]:hover {
+                background-color: #45a049;
+            }
+    */
+        /*    label[for=id], [for=email], [for=user-name], [for=phone] {
+            width: 100%;
+        }*/
+
+        /*   input[type=text]:enabled {
+            color: #000000;
         }
 
-    label[for=id], [for=email], [for=user-name], [for=phone] {
-        width: 100%;
-    }
+        .icon-password {
+            float: left;
+            margin-right: 10px;
+            font-size: 25px;
+        }
 
-    input[type=text]:enabled {
-        color: #000000;
-    }
+        .btn-save {
+            width: 30%;
+        }
 
-    .icon-password {
-        float: left;
-        margin-right: 10px;
-        font-size: 25px;
-    }
-
-    .btn-save {
-        width: 30%;
-    }
-
-    input:read-only {
-        background-color: rgb(118, 118, 118);
-    }
+        input:read-only {
+            background-color: rgb(118, 118, 118);
+        }*/
 </style>
 
-<div>
-
-    @using (Html.BeginForm("Edit", "ManageAccountDetailsAdmin", FormMethod.Post, new { @style = "width:50%;margin:auto;" }))
-    {
-
-        <label for="id">ID Account</label>
-        <input type="text" id="id" name="Id" value="@Model.Id" readonly />
-
-        <label for="email">Email</label>
-        <input type="text" id="email" name="Email" value="@Model.Email" readonly />
-
-        <label for="user-name">User Name</label>
-        <input type="text" id="user-name" name="FullName" value="@Model.FullName" readonly />
-        <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditName">
-            <span class="glyphicon glyphicon-edit"></span> Edit
-        </button>
-
-        <label for="phone">Phone</label>
-        <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
-        <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditPhone">
-            <span class="glyphicon glyphicon-edit"></span> Edit
-        </button>
-
-        <div id="save-information-account" style="text-align:center;width:90%;">
-            <hr />
-            <button type="submit" class="btn-save btn btn-primary">SAVE</button>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="profile-account-admin">
+                <h2 class="text-center">Account Information</h2>
+                @using (Html.BeginForm("Edit", "ManageAccountDetailsAdmin", FormMethod.Post, new { @class = "form-profile-account-admin" }))
+                {
+                    <label for="id">ID Account</label>
+                    <input type="text" id="id" name="Id" value="@Model.Id" readonly />
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="Email" value="@Model.Email" readonly />
+                    <label for="user-name">User Name</label>
+                    <input type="text" id="user-name" name="FullName" value="@Model.FullName" readonly />
+                    <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditName">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button>
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
+                    <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditPhone">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button>
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="UserAddress" value="@Model.UserAddress" readonly />
+                    <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditAddress">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button><label for="dob">Date Of Birthday</label>
+                    <input type="date" id="dob" name="DOB" value="@Model.DOB.Value.ToString("yyyy-MM-dd")" readonly />
+                    <button type="button" class="slide-toggle btn btn-primary" value="Enable" id="btnEditDOB">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button>
+                    <div id="save-information-account" style="text-align:center;width:90%;">
+                        <hr />
+                        <button type="submit" class="btn-save btn btn-primary">SAVE</button>
+                    </div>
+                }
+            </div>
         </div>
-
-    }
-
+    </div>
 </div>
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -101,6 +108,7 @@
                 $("#user-name").prop("readonly", true);
             }
         });
+
         //Enable input Edit Phone
         $("#btnEditPhone").click(function () {
             if (this.value == "Enable") {
@@ -109,6 +117,28 @@
             } else {
                 this.value = "Enable";
                 $("#phone").prop("readonly", true);
+            }
+        });
+
+        //Enable input Edit Address
+        $("#btnEditAddress").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable"
+                $("#address").prop("readonly", false);
+            } else {
+                this.value = "Enable";
+                $("#address").prop("readonly", true);
+            }
+        });
+
+        //Enable input Edit Date Of Birthday
+        $("#btnEditDOB").click(function () {
+            if (this.value == "Enable") {
+                this.value = "Disable"
+                $("#dob").prop("readonly", false);
+            } else {
+                this.value = "Enable";
+                $("#dob").prop("readonly", true);
             }
         });
     });

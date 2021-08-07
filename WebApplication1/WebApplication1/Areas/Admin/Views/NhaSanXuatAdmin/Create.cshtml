@@ -4,51 +4,29 @@
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
 }
 
-<style>
-    input[type=text] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="text-center">Create Producer</h2>
+            @using (Html.BeginForm("Create", "NhaSanXuatAdmin", FormMethod.Post, new { @class = "create-admin" }))
+            {
+                <label for="fname">Producer Code</label>
+                <input type="text" id="fname" name="MaNhaSanXuat" placeholder="Enter The Producer Code" required>
 
-    input[type=submit] {
-        width: 100%;
-        background-color: #2A9FD6;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+                <label for="lname">Producer Name</label>
+                <input type="text" id="lname" name="TenNhaSanXuat" placeholder="Enter The Producer Code" required>
 
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
-</style>
+                <label for="status">Status</label>
+                <select id="status" name="TinhTrang" required>
+                    <option value="0">Not Locked</option>
+                    <option value="1">Locked</option>
+                </select>
 
-<div>
-    @using (Html.BeginForm("Create", "NhaSanXuatAdmin", FormMethod.Post, new { @style = "width : 50%;margin:auto;" }))
-    {
-        <label for="fname">Mã Nhà Sản Xuất</label>
-        <input type="text" id="fname" name="MaNhaSanXuat" style="background-color: #5D5E63;" placeholder="Nhập Mã Nhà Sản Xuất.." required>
-
-        <label for="lname">Tên Nhà Sản Xuất</label>
-        <input type="text" id="lname" name="TenNhaSanXuat" style="background-color: #5D5E63;" placeholder="Tên Nhà Sản Xuất.." required>
-
-        <label for="country">Tinh Trang</label>
-        <select id="country" style="width: 10%;background-color: #5D5E63;" name="TinhTrang" required>
-            <option value="0">Chưa Khóa</option>
-            <option value="1">Đã Khóa</option>
-        </select>
-
-        <input type="submit" value="Them Nha San Xuat">
-    }
-
+                <input type="submit" value="CREATE">
+            }
+        </div>
+    </div>
 </div>
+
 
 

@@ -4,61 +4,46 @@
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
 }
 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="text-center">Products Management</h2>
+            <br />
+            <table class="table-admin-panel">
+                <tr>
+                    <th>Mã Sản Phẩm</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Hình Ảnh</th>
+                    <th>Tình Trạng</th>
+                    <th colspan="2">
+                        <a href="@Url.Action("Create","SanPhamAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
+                    </th>
+                </tr>
 
-<style>
-    table {
-        border-collapse: collapse;
-        width: 50%;
-        margin: auto;
-    }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaSanPham</td>
+                        <td>@item.TenSanPham</td>
+                        <td><img src="~/Asset/images/@item.HinhChinh" style="width:50px;height:70px;" /></td>
+                        <td>@item.TinhTrang</td>
+                        <td>
+                            <a href="@Url.Action("Edit","SanPhamAdmin",new { id = @item.MaSanPham})">
+                                <img src="~/Asset/images/edit.png" />
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete","SanPhamAdmin",new { id = @item.MaSanPham})">
+                                <img src="~/Asset/images/Delete.png" />
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <br />
+        </div>
+    </div>
+</div>
 
-    th, td {
-        text-align: center;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #5D5E63;
-    }
-
-    th {
-        background-color: #2A9FD6;
-        color: white;
-    }
-</style>
-
-<h2>Products Management</h2>
-
-<table style="margin-bottom:15px;">
-    <tr>
-        <th>Mã Sản Phẩm</th>
-        <th>Tên Sản Phẩm</th>
-        <th>Hình Ảnh</th>
-        <th>Tình Trạng</th>
-        <th colspan="2">
-            <a href="@Url.Action("Create","SanPhamAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.MaSanPham</td>
-            <td>@item.TenSanPham</td>
-            <td><img src="~/Asset/images/@item.HinhChinh" style="width:50px;height:70px;" /></td>
-            <td>@item.TinhTrang</td>
-            <td>
-                <a href="@Url.Action("Edit","SanPhamAdmin",new { id = @item.MaSanPham})">
-                    <img src="~/Asset/images/edit.png" />
-                </a>
-            </td>
-            <td>
-                <a href="@Url.Action("Delete","SanPhamAdmin",new { id = @item.MaSanPham})">
-                    <img src="~/Asset/images/Delete.png" />
-                </a>
-            </td>
-        </tr>
-    }
-</table>
 
 

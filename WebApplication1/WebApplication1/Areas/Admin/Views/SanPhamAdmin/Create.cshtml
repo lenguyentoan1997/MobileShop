@@ -5,67 +5,15 @@
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
 }
 
-<h2>Create Product</h2>
-<style>
-    input[type=text] {
-        width: 100%;
-        background-color: black;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ff0000;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    input[type=number] {
-        width: 100%;
-        background-color: black;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ff0000;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    input[type=submit] {
-        width: 100%;
-        background-color: #2A9FD6;
-        color: black;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
-
-    .img-responsive {
-        border-radius: 3px;
-        border: 5px solid #ff0000;
-        max-height: 85px;
-        margin-bottom: 10px;
-    }
-
-    ul li {
-        list-style: none;
-    }
-
-    .img {
-        max-height: 300px;
-    }
-</style>
+<br />
+<h2 class="title-product-admin">Create Product</h2>
 @using (Html.BeginForm("Create", "SanPhamAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <table style="width:70%;margin:auto; background-color:black;">
+    <table class="product-admin">
         <tr>
-            <td>Mã San Pham</td>
+            <td>Product Code</td>
             @*name input like name DB*@
-            <td><input style="width:300px;float:left;height:35px" maxlength="11" type="text" name="MaSanPham" /></td>
+            <td><input class="input-product-style" maxlength="11" type="text" name="MaSanPham" /></td>
             <td rowspan="8">
                 <div class="image">
                     <img class="img" id="imgAvatar" src="~/Asset/images/defaultPhone.jpg" />
@@ -73,19 +21,19 @@
                         <ul class="row" style="margin-top:50px;">
                             <li class="col-lg-3 col-sm-3 col-xs-4">
                                 <img class="img1 img-responsive" id="imgThumbnail1" src="~/Asset/images/defaultPhone.jpg">
-                                <span>Hinh 1</span>
+                                <span>Image 1</span>
                             </li>
                             <li class="col-lg-3 col-sm-3 col-xs-4">
                                 <img class="img2 img-responsive" id="imgThumbnail2" src="~/Asset/images/defaultPhone.jpg">
-                                <span>Hinh 2</span>
+                                <span>Image 2</span>
                             </li>
                             <li class="col-lg-3 col-sm-3 col-xs-4">
                                 <img class="img3 img-responsive" id="imgThumbnail3" src="~/Asset/images/defaultPhone.jpg">
-                                <span>Hinh 3</span>
+                                <span>Image 3</span>
                             </li>
                             <li class="col-lg-3 col-sm-3 col-xs-4">
                                 <img class="img4 img-responsive" id="imgThumbnail4" src="~/Asset/images/defaultPhone.jpg">
-                                <span>Hinh 4</span>
+                                <span>Image 4</span>
                             </li>
                         </ul>
                     </div>
@@ -93,58 +41,58 @@
             </td>
         </tr>
         <tr>
-            <td>Mã Loại San Pham</td>
+            <td>Product Type Code</td>
             <td>
-                @Html.DropDownList("MaLoaiSanPham", null, new { @style = "float:left;width:300px;background:black;height:30px;" })
+                @Html.DropDownList("MaLoaiSanPham", null, new { @class = "product-type-list" })
             </td>
         </tr>
         <tr>
-            <td>Tên San Pham</td>
-            <td><input style="width:300px;float:left;height:35px" type="text" name="TenSanPham" maxlength="11" /></td>
+            <td>Product Name</td>
+            <td><input class="input-product-style" type="text" name="TenSanPham" maxlength="11" /></td>
         </tr>
         <tr>
-            <td>Hinh Chính</td>
-            <td><input type="File" class="img" id="file_Hinh" name="HinhChinh" onchange="loadImgAvatar(this)" style="float:left" /></td>
+            <td>Image Avatar</td>
+            <td><input type="File" class="img" id="file_Hinh" name="HinhChinh" onchange="loadImgAvatar(this)" /></td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 1</td>
-            <td><input type="File" class="img1" id="file_Hinh" name="Hinh1" onchange="loadImgThumbnail1(this)" style="float:left" /></td>
+            <td>Image 1</td>
+            <td><input type="File" class="img1" id="file_Hinh" name="Hinh1" onchange="loadImgThumbnail1(this)" /></td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 2</td>
-            <td><input type="File" class="img2" id="file_Hinh" name="Hinh2" onchange="loadImgThumbnail2(this)" style="float:left" /></td>
+            <td>Image 2</td>
+            <td><input type="File" class="img2" id="file_Hinh" name="Hinh2" onchange="loadImgThumbnail2(this)" /></td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 3</td>
-            <td><input type="File" class="img3" id="file_Hinh" name="Hinh3" onchange="loadImgThumbnail3(this)" style="float:left" /></td>
+            <td>Image 3</td>
+            <td><input type="File" class="img3" id="file_Hinh" name="Hinh3" onchange="loadImgThumbnail3(this)" /></td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 4</td>
-            <td><input type="File" class="img4" id="file_Hinh" name="Hinh4" onchange="loadImgThumbnail4(this)" style="float:left" /></td>
+            <td>Image 4</td>
+            <td><input type="File" class="img4" id="file_Hinh" name="Hinh4" onchange="loadImgThumbnail4(this)" /></td>
         </tr>
         <tr>
-            <td>Giá</td>
-            <td><input style="width:300px;float:left;height:35px" type="number" name="Gia" /></td>
+            <td>Price</td>
+            <td><input class="input-product-style" type="number" name="Gia" /></td>
         </tr>
         <tr>
-            <td>Nha San Xuat</td>
+            <td>Producer</td>
             <td>
-                @Html.DropDownList("MaNhaSanXuat", null, new { @style = "float:left;width:300px;background:black;height:30px;" })
+                @Html.DropDownList("MaNhaSanXuat", null, new { @class = "producer-code-list" })
             </td>
         </tr>
         <tr>
-            <td>Ghi Chu</td>
-            <td><input style="width:300px;float:left;height:35px" type="text" name="GhiChu" /></td>
+            <td>Note</td>
+            <td><input class="input-product-style" type="text" name="GhiChu" /></td>
         </tr>
         <tr>
-            <td style="width:300px;">Cấu Hình</td>
+            <td class="td-config-product">Configuration</td>
             <td colspan="2">
-                <textarea class="ckeditor" name="CauHinh" style="width:300px;height150px;max-width:100px;max-height:600px;" rows="4" cols="30"></textarea>
+                <textarea class="ckeditor" name="CauHinh" rows="4" cols="30"></textarea>
             </td>
         </tr>
         <tr>
             <td colspan="3">
-                <input style="height:40px; width:300px;margin-left:32%;background:#016ABC;color:#fff;border:1px solid #eee;border-radius:20px;box-shadow:5px 5px 5px #eee;" type="submit" name="btn_ThemDienThoai" value="Thêm Điện Thoại" />
+                <input class="input-add-product" type="submit" name="btn_ThemDienThoai" value="Create Product" />
             </td>
         </tr>
     </table>

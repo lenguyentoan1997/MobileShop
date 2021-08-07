@@ -4,57 +4,42 @@
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
 }
 
-<style>
-    table {
-        border-collapse: collapse;
-        width: 50%;
-        margin: auto;
-    }
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="text-center">Producer Management</h2>
+            <br />
+            <table class="table-admin-panel">
+                <tr>
+                    <th>Producer Code</th>
+                    <th>Producer Name</th>
+                    <th>Status</th>
+                    <th colspan="2">
+                        <a href="@Url.Action("Create","NhaSanXuatAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
+                    </th>
+                </tr>
 
-    th, td {
-        text-align: center;
-        padding: 8px;
-    }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaNhaSanXuat</td>
+                        <td>@item.TenNhaSanXuat</td>
+                        <td>@item.TinhTrang</td>
+                        <td>
+                            <a href="@Url.Action("Edit","NhaSanXuatAdmin",new { id = @item.MaNhaSanXuat})">
+                                <img src="~/Asset/images/edit.png" />
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete","NhaSanXuatAdmin",new { id = item.MaNhaSanXuat})">
+                                <img src="~/Asset/images/Delete.png" />
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
 
-    tr:nth-child(even) {
-        background-color: #5D5E63;
-    }
-
-    th {
-        background-color: #2A9FD6;
-        color: white;
-    }
-</style>
-
-<h2>Quan Ly Nha San Xuat</h2>
-
-<table>
-    <tr>
-        <th>Mã Nhà Sản Xuất</th>
-        <th>Tên Nhà Sản Xuất</th>
-        <th>Tình Trạng</th>
-        <th colspan="2">
-            <a href="@Url.Action("Create","NhaSanXuatAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.MaNhaSanXuat</td>
-            <td>@item.TenNhaSanXuat</td>
-            <td>@item.TinhTrang</td>
-            <td>
-                <a href="@Url.Action("Edit","NhaSanXuatAdmin",new { id = @item.MaNhaSanXuat})">
-                    <img src="~/Asset/images/edit.png" />
-                </a>
-            </td>
-            <td>
-                <a href="@Url.Action("Delete","NhaSanXuatAdmin",new { id = item.MaNhaSanXuat})">
-                    <img src="~/Asset/images/Delete.png" />
-                </a>
-            </td>
-        </tr>
-    }
-</table>
 

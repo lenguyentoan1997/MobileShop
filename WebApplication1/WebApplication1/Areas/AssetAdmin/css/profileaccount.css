@@ -1,0 +1,39 @@
+﻿/* ---------------------------------------------------------------------------- */
+/* --------------------------Profile Account------------------------------------*/
+/* ---------------------------------------------------------------------------- */
+.profile-account-admin .form-profile-account-admin {
+    width: 100%;
+    margin: auto;
+}
+
+    .form-profile-account-admin input[type=text], input[type=password],
+    input[type=date] {
+        width: 90%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .form-profile-account-admin input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    .form-profile-account-admin input[type=text]:enabled, input[type=date] {
+        color: #000000;
+    }
+
+    .form-profile-account-admin input:read-only {
+        background-color: rgb(118, 118, 118);
+    }
+
+    .form-profile-account-admin .btn-save {
+        width: 30%;
+    }
+
+    .form-profile-account-admin label[for=id],
+    [for=email], [for=user-name], [for=phone], [for=address], [for=dob] {
+        width: 100%;
+    }

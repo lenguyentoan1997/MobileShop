@@ -1,0 +1,43 @@
+﻿/*Common Management Account*/
+.container-account-managenment {
+    width: 97%;
+}
+
+/*Edit*/
+.account-management-admin {
+    width: 50%;
+    margin: auto;
+}
+
+    .account-management-admin input[type=text], input[type=date] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .account-management-admin input[type=submit] {
+        width: 100%;
+        background-color: #2A9FD6;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .account-management-admin input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+    .account-management-admin #id, #email {
+        background-color: #5D5E63;
+    }
+
+    .account-management-admin #full-name, #phone, #address {
+        color: #000000;
+    }

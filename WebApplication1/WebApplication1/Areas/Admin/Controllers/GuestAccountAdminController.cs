@@ -45,6 +45,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/GuestAccountAdmin
         public ActionResult Index()
         {
+            
             return View(_accountBUS.ListGuestAccount());
         }
 

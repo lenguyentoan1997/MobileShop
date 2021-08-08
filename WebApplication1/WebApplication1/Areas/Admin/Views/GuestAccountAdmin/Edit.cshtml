@@ -5,45 +5,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
 }
 
-<h2>Edit</h2>
-
-<style>
-    input[type=text] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    input[type=submit] {
-        width: 100%;
-        background-color: #2A9FD6;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
-
-    #id, #email {
-        background-color: #5D5E63;
-    }
-
-    #full-name, #phone {
-        color: #000000;
-    }
-</style>
-
+<br />
+<h2 class="title-product-admin">Edit</h2>
 <div>
-    @using (Html.BeginForm("Edit", "GuestAccountAdmin", FormMethod.Post, new { @style = "width: 50%; margin: auto;" }))
+    @using (Html.BeginForm("Edit", "GuestAccountAdmin", FormMethod.Post, new { @class = "account-management-admin" }))
     {
 
         <label for="id">ID Account</label>
@@ -53,11 +18,24 @@
         <input type="text" id="email" name="Email" value="@Model.Email" readonly />
 
         <label for="full-name">User Name</label>
-        <input type="text" id="full-name" name="FullName" value="@Model.FullName"/>
+        <input type="text" id="full-name" name="FullName" value="@Model.FullName" />
 
         <label for="phone">Phone</label>
         <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" required />
 
-        <input type="submit" value="Xac Nhan" />
+        <label for="address">Address</label>
+        <input type="text" id="address" name="UserAddress" value="@Model.UserAddress" required />
+
+        <label for="dob">Date Of Birthday</label>
+        if (Model.DOB == null)
+        {
+            <input type="date" id="dob" name="DOB" value="" required />
+        }
+        else
+        {
+            <input type="date" id="dob" name="DOB" value="@Model.DOB.Value.ToString("yyyy-MM-dd")" required />
+        }
+
+        <input type="submit" value="Edit" />
     }
 </div>

@@ -7,41 +7,9 @@
 
 }
 
-<h2>Delete</h2>
-
-<style>
-    input[type=text] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    input[type=submit] {
-        width: 100%;
-        background-color: #2A9FD6;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
-
-    #id, #email, #user-name, #phone {
-        background-color: #5D5E63;
-    }
-</style>
-
+<h2 class="title-product-admin">Delete</h2>
 <div>
-    @using (Html.BeginForm("Delete", "GuestAccountAdmin", FormMethod.Post, new { @style = "width:50%;margin:auto;" }))
+    @using (Html.BeginForm("Delete", "GuestAccountAdmin", FormMethod.Post, new { @class = "account-management-admin" }))
     {
         <label for="id">ID Account</label>
         <input type="text" id="id" name="Id" value="@Model.Id" readonly />
@@ -49,12 +17,24 @@
         <label for="email">Email</label>
         <input type="text" id="email" name="Email" value="@Model.Email" readonly />
 
-        <label for="user-name">User Name</label>
-        <input type="text" id="user-name" name="UserName" value="@Model.UserName" readonly />
+        <label for="full-name">Full Name</label>
+        <input class="bg-color-delete" type="text" name="FullName" value="@Model.FullName" readonly />
 
         <label for="phone">Phone</label>
-        <input type="text" id="phone" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
+        <input class="bg-color-delete" type="text" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
 
-        <input type="submit" value="Xac Nhan" />
+        <label for="address">Address</label>
+        <input class="bg-color-delete" type="text" name="UserAddress" value="@Model.UserAddress" readonly />
+        <label for="dob">Date Of Birthday</label>
+        if (Model.DOB == null)
+        {
+            <input class="bg-color-delete" type="text" name="DOB" value="@Model.DOB" readonly />
+        }
+        else
+        {
+            <input class="bg-color-delete" type="text" name="DOB" value="@Model.DOB.Value.ToString("yyyy-MM-dd")" readonly />
+        }
+
+        <input type="submit" value="Delete" />
     }
 </div>

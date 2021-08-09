@@ -3,7 +3,7 @@
     width: 97%;
 }
 
-/*Edit*/
+/*Edit account guest and employee*/
 .account-management-admin {
     width: 50%;
     margin: auto;
@@ -41,3 +41,14 @@
     .account-management-admin #full-name, #phone, #address {
         color: #000000;
     }
+
+    /*create account guest and employee*/
+    .account-management-admin .create-passsword {
+        width: 100%;
+    }
+
+    /*Delete Account Guest And Employee*/
+    .account-management-admin .bg-color-delete {
+        background-color: #5D5E63;
+    }
+/*Account Admin*/

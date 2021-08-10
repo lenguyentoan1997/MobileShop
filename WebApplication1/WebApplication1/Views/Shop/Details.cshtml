@@ -47,7 +47,7 @@
                                     <span class="glyphicon glyphicon-heart"></span>
                                 </a>
                                 <a class="btn compare" href="#">
-                                    <span class="glyphicon glyphicon-transfer"></span>
+                                    <span class="glyphicon glyphicon-eye-open"> @Model.LuotView</span>
                                 </a>
                             </div>
                             <div class="image-more">
@@ -60,16 +60,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="caption">
-                            <div class="name"><h3>@Model.TenSanPham</h3></div>
-                            <div><h5>Luot View: @Model.LuotView</h5></div>
-                            <div class="price">@String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", Model.Gia)</div>
+                            <div class="name-phone"><h3>@Model.TenSanPham</h3></div>
+                            @*<div><h5>Luot View: @Model.LuotView</h5></div>*@
+                            <div class="price-phone">
+                                <h5>
+                                    @String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:#,#₫}", Model.Gia)
+                                </h5>
+                            </div>
                             @Html.Raw(HttpUtility.HtmlDecode(Model.CauHinh))
                             <div class="rating">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
                             </div>
                             @*@using (Html.BeginForm("AddItem", "Cart", FormMethod.Post))*@
                             @using (Html.BeginForm(new { action = "AddItem", controller = "Cart", id = Model.MaSanPham }))

@@ -1,4 +1,4 @@
-﻿/*Edit Profile Account*/
+﻿/*Button Edit Profile Account Admin And Client*/
 $(document).ready(function () {
     //Enable input Edit Name
     $("#btnEditName").click(function () {

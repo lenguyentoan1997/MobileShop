@@ -6,6 +6,8 @@ Free Bootstrap Themes : http://www.365bootstrap.com
 /* ==== Google font ==== */
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700,900);
 @import url('http://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700');
+/*Products Client*/
+@import url(product.css);
 
 /* ---------------------------------------------------------------------------- */
 /* ------------------------------------Html-Body------------------------------- */
@@ -934,3 +936,5 @@ footer {
         #profile_account input[type = text]:enabled, input[type = date]:enabled {
             color: #000000;
         }
+
+

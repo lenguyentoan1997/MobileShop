@@ -12,7 +12,7 @@
 {
     <table class="product-admin">
         <tr>
-            <td>Mã San Pham</td>
+            <td>Product Code</td>
             @*name input like name DB*@
             <td><input class="input-product-style" maxlength="11" type="text" name="MaSanPham" value="@Model.MaSanPham" readonly /></td>
             <td rowspan="8" class="td-avatar-product">
@@ -31,24 +31,24 @@
                                 @if (Model.Hinh1 == null)
                                 {
                                     <img class="img1 img-responsive" id="imgThumbnail1" src="~/Asset/images/defaultPhone.jpg">
-                                    <span>Hinh 1</span>
+                                    <span>Image 1</span>
                                 }
                                 else
                                 {
                                     <img class="img1 img-responsive" id="imgThumbnail1" src="~/Asset/images/@Model.Hinh1">
-                                    <span>Hinh 1</span>
+                                    <span>Image 1</span>
                                 }
                             </li>
                             <li class="col-lg-3 col-sm-3 col-xs-4">
                                 @if (Model.Hinh2 == null)
                                 {
                                     <img class="img2 img-responsive" id="imgThumbnail2" src="~/Asset/images/defaultPhone.jpg">
-                                    <span>Hinh 2</span>
+                                    <span>Image 2</span>
                                 }
                                 else
                                 {
                                     <img class="img2 img-responsive" id="imgThumbnail2" src="~/Asset/images/@Model.Hinh2">
-                                    <span>Hinh 2</span>
+                                    <span>Image 2</span>
                                 }
 
                             </li>
@@ -56,24 +56,24 @@
                                 @if (Model.Hinh3 == null)
                                 {
                                     <img class="img3 img-responsive" id="imgThumbnail3" src="~/Asset/images/defaultPhone.jpg">
-                                    <span>Hinh 3</span>
+                                    <span>Image 3</span>
                                 }
                                 else
                                 {
                                     <img class="img3 img-responsive" id="imgThumbnail3" src="~/Asset/images/@Model.Hinh3">
-                                    <span>Hinh 3</span>
+                                    <span>Image 3</span>
                                 }
                             </li>
                             <li class="col-lg-3 col-sm-3 col-xs-4">
                                 @if (Model.Hinh4 == null)
                                 {
                                     <img class="img4 img-responsive" id="imgThumbnail4" src="~/Asset/images/defaultPhone.jpg">
-                                    <span>Hinh 4</span>
+                                    <span>Image 4</span>
                                 }
                                 else
                                 {
                                     <img class="img4 img-responsive" id="imgThumbnail4" src="~/Asset/images/@Model.Hinh4">
-                                    <span>Hinh 4</span>
+                                    <span>Image 4</span>
                                 }
                             </li>
                         </ul>
@@ -82,51 +82,52 @@
             </td>
         </tr>
         <tr>
-            <td>Mã Loại San Pham</td>
+            <td>Product Type</td>
             <td>
                 @Html.DropDownList("MaLoaiSanPham", null, new { @class = "product-type-list" })
             </td>
         </tr>
         <tr>
-            <td>Tên San Pham</td>
-            <td><input class="input-product-style" type="text" name="TenSanPham" maxlength="11" value="@Model.TenSanPham" /></td>
+            <td>Product Name</td>
+            <td><input class="input-product-style" type="text" name="TenSanPham" value="@Model.TenSanPham" /></td>
         </tr>
         <tr>
-            <td>Hinh Chính</td>
-            <td><input type="File" class="img" id="file_Hinh" name="HinhChinh" onchange="loadImgAvatar(this)" value="@Model.HinhChinh" /></td>
+            <td>Image Avatar</td>
+            <td><input type="File" class="img" id="file_Hinh" name="HinhChinh" onchange="loadImgAvatar(this)" value="@Model.HinhChinh" />
+            </td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 1</td>
+            <td>Image 1</td>
             <td><input type="File" class="img1" id="file_Hinh" name="Hinh1" onchange="loadImgThumbnail1(this)" value="@Model.Hinh1" /></td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 2</td>
+            <td>Image 2</td>
             <td><input type="File" class="img2" id="file_Hinh" name="Hinh2" onchange="loadImgThumbnail2(this)" value="@Model.Hinh2" /></td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 3</td>
+            <td>Image 3</td>
             <td><input type="File" class="img3" id="file_Hinh" name="Hinh3" onchange="loadImgThumbnail3(this)" value="@Model.Hinh3" /></td>
         </tr>
         <tr>
-            <td>Hinh Nhỏ 4</td>
+            <td>Image 4</td>
             <td><input type="File" class="img4" id="file_Hinh" name="Hinh4" onchange="loadImgThumbnail4(this)" value="@Model.Hinh4" /></td>
         </tr>
         <tr>
-            <td>Giá</td>
+            <td>Price</td>
             <td><input class="input-product-style" type="number" name="Gia" value="@Model.Gia" /></td>
         </tr>
         <tr>
-            <td>Ghi Chu</td>
+            <td>Note</td>
             <td><input class="input-product-style" type="text" name="GhiChu" value="@Model.GhiChu" /></td>
         </tr>
         <tr>
-            <td>Nha San Xuat</td>
+            <td>Producer</td>
             <td>
                 @Html.DropDownList("MaNhaSanXuat", null, new { @class = "producer-code-list" })
             </td>
         </tr>
         <tr>
-            <td>Tình Trạng</td>
+            <td>Status</td>
             <td>
                 <select id="conditionProduct" name="TinhTrang">
                     @if (Model.TinhTrang == "1")
@@ -143,7 +144,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width:300px;">Cấu Hình</td>
+            <td style="width:300px;">Configuration</td>
             <td colspan="2">
                 <textarea class="ckeditor" name="CauHinh" rows="4" cols="30">@Model.CauHinh</textarea>
             </td>

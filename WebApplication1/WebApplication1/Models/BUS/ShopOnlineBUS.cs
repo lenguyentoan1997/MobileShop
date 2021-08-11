@@ -17,6 +17,17 @@ namespace WebApplication1.Models.BUS
 
         }
 
+        public static IEnumerable<SanPham> AllPhone()
+        {
+            var db = new ShopOnlineConnectionDB();
+            return db.Query<SanPham>("SELECT * FROM SanPham WHERE TinhTrang = 0 AND MaLoaiSanPham ='LSP01'");
+
+        }
+        public static IEnumerable<SanPham> AllLaptop()
+        {
+            var db = new ShopOnlineConnectionDB();
+            return db.Query<SanPham>("SELECT * FROM SanPham WHERE TinhTrang = 0 AND MaLoaiSanPham ='LSP02'");
+        }
         public static SanPham ChiTiet(String id)
         {
             var db = new ShopOnlineConnectionDB();
@@ -63,23 +74,5 @@ namespace WebApplication1.Models.BUS
             sp.HinhChinh = images;
             db.Update(sp, id);
         }
-        //------Loai anh dai dien cho hinh anh------------
-        //public static string LoadAvartaImg(string id)
-        //{
-        //    var sp = ChiTiet(id);
-        //    var product = ShopOnlineBUS.ChiTiet(id);
-        //    var images = product.HinhChinh;
-        //    XElement xImages = XElement.Parse(images);
-        //    List<string> listImageReturn = new List<string>();
-        //    foreach(XElement element in xImages.Elements())
-        //    {
-        //        listImageReturn.Add(element.Value);
-        //    }
-        //    if (listImageReturn.Count() == 0)
-        //    {
-        //        return "~/Asset/images/default.png";
-        //    }
-        //    return listImageReturn.ElementAt(0).ToString();
-        //}
     }
 }

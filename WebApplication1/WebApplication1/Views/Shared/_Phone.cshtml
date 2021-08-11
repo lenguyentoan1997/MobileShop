@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ShopOnlineConnection.NhaSanXuat>
+
+<li class="dropdown">
+    @Html.ActionLink("Phone", "AllPhone", "Shop")
+    <div class="dropdown-menu">
+        <div class="dropdown-inner">
+            <ul class="list-unstyled">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="@Url.Action("Index","NhaSanXuat",new { id = @item.MaNhaSanXuat})">@item.TenNhaSanXuat</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</li>

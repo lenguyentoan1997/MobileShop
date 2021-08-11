@@ -12,7 +12,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using PetaPoco;
@@ -177,8 +176,7 @@ namespace ShopOnlineConnection
 		[Column] public string FullName { get; set; }
 		[Column] public string UserAddress { get; set; }
 		[Column] public DateTime? DOB { get; set; }
-
-    }
+	}
     
 	[TableName("dbo.LoaiSanPham")]
 	[PrimaryKey("MaLoaiSanPham", AutoIncrement=false)]
@@ -198,6 +196,7 @@ namespace ShopOnlineConnection
 		[Column] public string MaNhaSanXuat { get; set; }
 		[Column] public string TenNhaSanXuat { get; set; }
 		[Column] public string TinhTrang { get; set; }
+		[Column] public string LoaiSanXuat { get; set; }
 	}
     
 	[TableName("dbo.Order")]

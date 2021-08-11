@@ -11,9 +11,9 @@ namespace WebApplication1.Controllers
     public class ShopController : Controller
     {
         // GET: Shop
-        public ActionResult Index(int page = 1, int pagesize = 4)
+        public ActionResult Index(int page = 1, int pageSize = 4)
         {
-            var db = ShopOnlineBUS.DanhSach().ToPagedList(page,pagesize);
+            var db = ShopOnlineBUS.DanhSach().ToPagedList(page, pageSize);
             return View(db);
         }
 
@@ -21,6 +21,18 @@ namespace WebApplication1.Controllers
         public ActionResult Details(String id)
         {
             var db = ShopOnlineBUS.ChiTiet(id);
+            return View(db);
+        }
+
+        public ActionResult AllPhone(int page = 1, int pageSize = 4)
+        {
+            var db = ShopOnlineBUS.AllPhone().ToPagedList(page,pageSize);
+            return View(db);
+        }
+
+        public ActionResult AllLaptop(int page = 1 , int pageSize=4)
+        {
+            var db = ShopOnlineBUS.AllLaptop().ToPagedList(page, pageSize);
             return View(db);
         }
 

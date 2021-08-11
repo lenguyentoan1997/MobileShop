@@ -6,11 +6,24 @@ namespace WebApplication1.Models.BUS
 {
     public class NhaSanXuatBUS
     {
+
         //------------Guest---------------------------
         public static IEnumerable<NhaSanXuat> DanhSach()
         {
             var db = new ShopOnlineConnectionDB();
-            return db.Query<NhaSanXuat>("select * from NhaSanXuat where TinhTrang = 0");
+            return db.Query<NhaSanXuat>("SELECT * FROM NhaSanXuat WHERE TinhTrang = 0");
+
+        }
+        public static IEnumerable<NhaSanXuat> ListPhone()
+        {
+            var db = new ShopOnlineConnectionDB();
+            return db.Query<NhaSanXuat>("SELECT * FROM NhaSanXuat WHERE TinhTrang = 0 AND LoaiSanXuat ='Phone'");
+
+        }
+        public static IEnumerable<NhaSanXuat> ListLapTop()
+        {
+            var db = new ShopOnlineConnectionDB();
+            return db.Query<NhaSanXuat>("SELECT * FROM NhaSanXuat WHERE TinhTrang = 0 AND LoaiSanXuat ='LapTop'");
 
         }
         public static IEnumerable<NhaSanXuat> DanhSachAdmin()

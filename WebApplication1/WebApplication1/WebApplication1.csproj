@@ -981,15 +981,18 @@
     <Content Include="Views\Shop\Index.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Views\Shared\_LoaiSanPham.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
-    <Content Include="Views\Shared\_NhaSanXuat.cshtml" />
+    <Content Include="Views\Shared\_Phone.cshtml" />
     <Content Include="Views\Shared\_Top4New.cshtml" />
     <Content Include="Views\Shared\_TopHot.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\Payment.cshtml" />
     <Content Include="Views\Cart\Success.cshtml" />
     <Content Include="Views\Account\ProfileAccount.cshtml" />
+    <Content Include="Views\Shared\_LapTop.cshtml" />
+    <Content Include="Views\Shared\_Accessories.cshtml" />
+    <Content Include="Views\Shop\AllPhone.cshtml" />
+    <Content Include="Views\Shop\AllLaptop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

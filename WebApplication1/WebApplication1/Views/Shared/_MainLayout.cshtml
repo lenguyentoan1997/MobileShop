@@ -92,10 +92,10 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Products", "Index", "Shop")</li>
-                    @Html.Partial("_NhaSanXuat", WebApplication1.Models.BUS.NhaSanXuatBUS.DanhSach())
-                    @Html.Partial("_LoaiSanPham", WebApplication1.Models.BUS.LoaiSanPhamBUS.DanhSach())
-                    <li><a href="category.html">Software</a></li>
+                    @Html.Partial("_Phone", WebApplication1.Models.BUS.NhaSanXuatBUS.ListPhone())
+                    @Html.Partial("_LapTop", WebApplication1.Models.BUS.NhaSanXuatBUS.ListLapTop())
+                    @Html.Partial("_Accessories", WebApplication1.Models.BUS.NhaSanXuatBUS.DanhSach())
+                    <li><a href="category.html">Contact</a></li>
                 </ul>
             </div>
         </div>

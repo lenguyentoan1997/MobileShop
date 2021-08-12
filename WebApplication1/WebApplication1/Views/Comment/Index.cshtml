@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ShopOnlineConnection.Comment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+    //Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Comment</h2>
+@using (Html.BeginForm("Create", "Comment", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("productId", (string)ViewBag.productId)
+    @Html.TextArea("commentContent")
+    <input type="submit" value="Enter" />
+}
+<div id="comments">
+    @foreach (var item in Model)
+    {
+        <div class="comment">
+            <div class="comment-name">@item.UserEmail</div>
+            <div class="comment-content">@item.CommentContent</div>
+        </div>
+    }
+</div>
+
+

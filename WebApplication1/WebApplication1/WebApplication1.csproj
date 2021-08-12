@@ -188,6 +188,7 @@
     <Compile Include="Common\Helper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaiSanPhamController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BUS\AccountBUS.cs" />
     <Compile Include="Models\BUS\CartItem.cs" />
+    <Compile Include="Models\BUS\CommentBUS.cs" />
     <Compile Include="Models\BUS\LoaiSanPhamBUS.cs" />
     <Compile Include="Models\BUS\NhaSanXuatBUS.cs" />
     <Compile Include="Models\BUS\OrderBUS.cs" />
@@ -993,6 +995,7 @@
     <Content Include="Views\Shared\_Accessories.cshtml" />
     <Content Include="Views\Shop\AllPhone.cshtml" />
     <Content Include="Views\Shop\AllLaptop.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

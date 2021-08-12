@@ -132,7 +132,11 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.Action("Index", "Comment", new { productId = Model.MaSanPham })
+                    </div>
+                </div>
             </div>
             <div id="sidebar" class="col-md-4">
                 <div class="widget wid-categories">

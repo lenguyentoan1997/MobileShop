@@ -178,6 +178,19 @@ namespace ShopOnlineConnection
 		[Column] public DateTime? DOB { get; set; }
 	}
     
+	[TableName("dbo.Comment")]
+	[PrimaryKey("Id")]
+	[ExplicitColumns]
+    public partial class Comment : ShopOnlineConnectionDB.Record<Comment>  
+    {
+		[Column] public int Id { get; set; }
+		[Column] public string ProductId { get; set; }
+		[Column] public string UserEmail { get; set; }
+		[Column] public string CommentContent { get; set; }
+		[Column] public int Status { get; set; }
+		[Column] public DateTime Date { get; set; }
+	}
+    
 	[TableName("dbo.LoaiSanPham")]
 	[PrimaryKey("MaLoaiSanPham", AutoIncrement=false)]
 	[ExplicitColumns]
@@ -245,5 +258,17 @@ namespace ShopOnlineConnection
 		[Column] public int? LuotView { get; set; }
 		[Column] public string TinhTrang { get; set; }
 		[Column] public string GhiChu { get; set; }
+	}
+    
+	[TableName("dbo.sysdiagrams")]
+	[PrimaryKey("diagram_id")]
+	[ExplicitColumns]
+    public partial class sysdiagram : ShopOnlineConnectionDB.Record<sysdiagram>  
+    {
+		[Column] public string name { get; set; }
+		[Column] public int principal_id { get; set; }
+		[Column] public int diagram_id { get; set; }
+		[Column] public int? version { get; set; }
+		[Column] public byte[] definition { get; set; }
 	}
 }

@@ -14,11 +14,23 @@ namespace WebApplication1.Models.BUS
             db.Insert(comment);
         }
 
-        public static IEnumerable<Comment> CommentList(string productId)
+        public IEnumerable<Comment> GetCommentList(string productId)
         {
             var db = new ShopOnlineConnectionDB();
 
-            return db.Query<Comment>("SELECT * FROM Comment WHERE ProductId = @0", productId);
+            //Create Store Procedures
+            //CREATE PROCEDURE usp_GetGuestCommentInfor @ProductId nvarchar(10)
+            //AS
+            //SELECT Comment.Id,Comment.UserEmail,Comment.CommentContent,Comment.[Date],AspNetUsers.FullName
+            //FROM Comment Right JOIN AspNetUsers  ON Comment.UserEmail = AspNetUsers.Email
+            //Where ProductId = @ProductId ORDER BY[Date] DESC
+            //GO
+
+            //EXEC usp_GetGuestCommentInfor @ProductId = 'SP01'
+
+            return db.Query<Comment>(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId);
         }
     }
 }
+
+

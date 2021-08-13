@@ -12,9 +12,9 @@ namespace WebApplication1.Controllers
     {
         public ActionResult Index(string productId)
         {
-            ViewBag.productId = productId;
+            CommentBUS commentBUS = new CommentBUS();
 
-            return View(CommentBUS.CommentList(productId));
+            return View(commentBUS.GetCommentList(productId));
         }
 
         //[Authorize(Roles = "Admin")]
@@ -27,6 +27,7 @@ namespace WebApplication1.Controllers
             {
                 return Redirect("/");
             }
+
             comment.Date = DateTime.Now;
             comment.UserEmail = User.Identity.Name;
             CommentBUS.Create(comment);

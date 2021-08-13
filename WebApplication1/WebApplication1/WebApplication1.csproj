@@ -732,8 +732,8 @@
     <Content Include="Areas\AssetAdmin\js\product\previewFile.js" />
     <Content Include="Areas\AssetAdmin\js\profile-account\profileAccount.js" />
     <Content Include="Asset\css\bootstrap.min.css" />
-    <Content Include="Asset\css\product.css" />
-    <Content Include="Asset\css\stylesheet011.css" />
+    <Content Include="Asset\css\product01.css" />
+    <Content Include="Asset\css\stylesheet013.css" />
     <Content Include="Asset\font-awesome\css\font-awesome.css" />
     <Content Include="Asset\font-awesome\css\font-awesome.min.css" />
     <Content Include="Asset\font-awesome\fonts\fontawesome-webfont.svg" />

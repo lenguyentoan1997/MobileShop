@@ -7,19 +7,25 @@
 }
 
 <h2>Comment</h2>
-@using (Html.BeginForm("Create", "Comment", FormMethod.Post))
+@using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { @class = "comment-product" }))
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("productId", (string)ViewBag.productId)
-    @Html.TextArea("commentContent")
-    <input type="submit" value="Enter" />
+    @Html.TextArea("commentContent", new { @placeholder = "Writing" })
+    <input type="submit" value="Enter" class="btn-comment btn btn-2" />
 }
+
 <div id="comments">
+    <br />
     @foreach (var item in Model)
     {
         <div class="comment">
-            <div class="comment-name">@item.UserEmail</div>
-            <div class="comment-content">@item.CommentContent</div>
+            <div class="comment-name">
+                <p><strong>@item.UserEmail</strong> @item.Date</p>
+            </div>
+            <div class="comment-content">
+                <p>@item.CommentContent</p>
+            </div>
         </div>
     }
 </div>

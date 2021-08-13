@@ -1,0 +1,45 @@
+﻿.single-page .container-fluid {
+    background-color: white;
+}
+
+.body-shadow {
+    background-color: #fff;
+    background-clip: border-box;
+    -webkit-box-shadow: 0 0 3px 0 #dee2e6;
+    box-shadow: 0 0 3px 0 #dee2e6;
+    border-radius: 6px;
+}
+
+.rating .checked {
+    color: red;
+}
+
+.products .height-products {
+    height: 537px;
+}
+
+.products .product .caption .name {
+    margin-top: 30px;
+}
+
+.products .product .buttons {
+    margin-top: 20px;
+}
+
+.btn-comment {
+    position: absolute;
+    right: 50px;
+    top: 113px;
+}
+/*details product*/
+.product .image .buttons .btn_images {
+    margin-left: 5px;
+    background-color: #ffffff;
+}
+
+/*comment details product*/
+.comment-product #commentContent {
+    width: 100%;
+    resize: none;
+    padding: 8px;
+}

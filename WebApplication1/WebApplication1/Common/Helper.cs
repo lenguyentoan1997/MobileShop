@@ -36,5 +36,37 @@ namespace WebApplication1.Common
             return true;
         }
 
+        public static string FormatTime(DateTime commentDate)
+        {
+            var seconds = Math.Floor((DateTime.Now - commentDate).TotalSeconds);
+ 
+            var interval = Math.Floor(seconds / 31536000);
+
+            if (interval >= 1)
+            {
+                return interval + " years";
+            }
+            interval = Math.Floor(seconds / 2592000);
+            if (interval >= 1)
+            {
+                return interval + " months";
+            }
+            interval = Math.Floor(seconds / 86400);
+            if (interval >= 1)
+            {
+                return interval + " days";
+            }
+            interval = Math.Floor(seconds / 3600);
+            if (interval >= 1)
+            {
+                return interval + " hours";
+            }
+            interval = Math.Floor(seconds / 60);
+            if (interval >= 1)
+            {
+                return interval + " minutes";
+            }
+            return Math.Floor(seconds) + " seconds";
+        }
     }
 }

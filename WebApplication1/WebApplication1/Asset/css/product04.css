@@ -43,3 +43,8 @@
     resize: none;
     padding: 8px;
 }
+
+#comments .comment .comment-name strong {
+    font-size: 25px;
+    color: black;
+}

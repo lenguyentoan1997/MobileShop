@@ -1,19 +1,29 @@
 ﻿@model IEnumerable<ShopOnlineConnection.Comment>
+@using WebApplication1.Common
 
 @{
     ViewBag.Title = "Index";
     Layout = null;
-    //Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
+<script src="~/Asset/js/productDetails.js"></script>
+
 <h2>Comment</h2>
-@using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { @class = "comment-product" }))
+@if (User.Identity.IsAuthenticated)
 {
-    @Html.AntiForgeryToken()
-    @Html.Hidden("productId", (string)ViewBag.productId)
-    @Html.TextArea("commentContent", new { @placeholder = "Writing" })
-    <input type="submit" value="Enter" class="btn-comment btn btn-2" />
+    using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { @class = "comment-product" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("productId", (string)ViewBag.productId)
+        @Html.TextArea("commentContent", new { @placeholder = "Writing" })
+        <input type="submit" value="Enter" class="btn-comment btn btn-2" />
+    }
 }
+else
+{
+    <p class="alert alert-danger">Please login to comment</p>
+}
+
 
 <div id="comments">
     <br />
@@ -21,7 +31,11 @@
     {
         <div class="comment">
             <div class="comment-name">
-                <p><strong>@item.UserEmail</strong> @item.Date</p>
+                <strong data-toggle="tooltip" data-placement="bottom" title="@item.Date.ToString("dd-MM-yyyy")">
+                    @item.UserEmail
+                </strong>
+                @Helper.FormatTime(item.Date)
+
             </div>
             <div class="comment-content">
                 <p>@item.CommentContent</p>
@@ -29,5 +43,6 @@
         </div>
     }
 </div>
+
 
 

@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace WebApplication1.Models.BUS
 {
-    public class ShopOnlineBUS
+    public class ProductBUS
     {
         //------------------Guest--------------------
         public static IEnumerable<SanPham> DanhSach()
@@ -51,15 +51,32 @@ namespace WebApplication1.Models.BUS
             var db = new ShopOnlineConnectionDB();
             return db.Query<SanPham>("SELECT * FROM SanPham");
         }
+
+        public static IEnumerable<SanPham> SimilarProducts(string producer)
+        {
+            //create function udf_SimilarProducts(@producer_code nvarchar(10), @price int)
+            //returns table
+            //as
+            //return (
+            //select top 5 * from SanPham where MaNhaSanXuat = @producer_code and gia <= (@price + 2000000)
+            //)
+            //GO
+
+            //select* from udf_SimilarProducts('NSX01', 30000000)
+
+            var db = new ShopOnlineConnectionDB();
+            return db.Query<SanPham>("SELECT * FROM SanPham");
+        }
+
         public static void InsertSp(SanPham sp)
         {
             var db = new ShopOnlineConnectionDB();
             db.Insert(sp);
         }
-        public static void UpdateSp(String id,SanPham sp)
+        public static void UpdateSp(String id, SanPham sp)
         {
             var db = new ShopOnlineConnectionDB();
-            db.Update(sp,id);
+            db.Update(sp, id);
         }
         public static SanPham DeleteSp(String id)
         {
@@ -67,10 +84,10 @@ namespace WebApplication1.Models.BUS
             return db.Single<SanPham>("DELETE FROM SanPham WHERE MaSanPham = '" + id + "'");
         }
         //----------------update images
-        public static void UpdateImages(string id,string images)
+        public static void UpdateImages(string id, string images)
         {
             var db = new ShopOnlineConnectionDB();
-            var sp = ShopOnlineBUS.ChiTiet(id);
+            var sp = ProductBUS.ChiTiet(id);
             sp.HinhChinh = images;
             db.Update(sp, id);
         }

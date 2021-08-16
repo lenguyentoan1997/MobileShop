@@ -1,12 +1,11 @@
-﻿@model IEnumerable<ShopOnlineConnection.Comment>
+﻿@model PagedList.IPagedList<ShopOnlineConnection.CommentInformation>
 @using WebApplication1.Common
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
-    Layout = null;
+    Layout = "";
 }
-
-<script src="~/Asset/js/productDetails.js"></script>
 
 <h2>Comment</h2>
 @if (User.Identity.IsAuthenticated)
@@ -23,8 +22,6 @@ else
 {
     <p class="alert alert-danger">Please login to comment</p>
 }
-
-
 <div id="comments">
     <br />
     @foreach (var item in Model)
@@ -32,17 +29,21 @@ else
         <div class="comment">
             <div class="comment-name">
                 <strong data-toggle="tooltip" data-placement="bottom" title="@item.Date.ToString("dd-MM-yyyy")">
-                    @item.UserEmail
+                    @item.FullName
                 </strong>
                 @Helper.FormatTime(item.Date)
-
-            </div>
-            <div class="comment-content">
-                <p>@item.CommentContent</p>
             </div>
         </div>
+        <div class="comment-content">
+            <p>@item.CommentContent</p>
+        </div>
     }
+
+    <div class="text-center">
+        <ul class="pagination">
+            @Html.PagedListPager(Model, page => Url.Action("Details", "Product", new { page, id = ViewBag.ProductId }))
+        </ul>
+    </div>
 </div>
 
-
-
+<script src="~/Asset/js/productDetails1.js"></script>

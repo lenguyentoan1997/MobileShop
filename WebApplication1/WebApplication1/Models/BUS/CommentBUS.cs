@@ -14,7 +14,7 @@ namespace WebApplication1.Models.BUS
             db.Insert(comment);
         }
 
-        public IEnumerable<Comment> GetCommentList(string productId)
+        public IEnumerable<CommentInformation> AllComments(string productId)
         {
             var db = new ShopOnlineConnectionDB();
 
@@ -28,7 +28,7 @@ namespace WebApplication1.Models.BUS
 
             //EXEC usp_GetGuestCommentInfor @ProductId = 'SP01'
 
-            return db.Query<Comment>(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId);
+            return db.Fetch<CommentInformation>(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId);
         }
     }
 }

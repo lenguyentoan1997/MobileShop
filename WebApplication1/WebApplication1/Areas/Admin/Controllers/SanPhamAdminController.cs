@@ -15,7 +15,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/SanPhamAdmin
         public ActionResult Index()
         {
-            return View(ShopOnlineBUS.DanhSachSP());
+            return View(ProductBUS.DanhSachSP());
         }
 
         // GET: Admin/SanPhamAdmin/Details/5
@@ -83,7 +83,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 sp.SoLuongDaBan = 0;
                 sp.LuotView = 0;
                 // TODO: Add insert logic here
-                ShopOnlineBUS.InsertSp(sp);
+                ProductBUS.InsertSp(sp);
                 return RedirectToAction("Index");
             }
             catch
@@ -95,16 +95,16 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/SanPhamAdmin/Edit/5
         public ActionResult Edit(String id)
         {
-            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatBUS.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat", ShopOnlineBUS.ChiTiet(id).MaNhaSanXuat);
-            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamBUS.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham", ShopOnlineBUS.ChiTiet(id).MaLoaiSanPham);
-            return View(ShopOnlineBUS.ChiTiet(id));
+            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatBUS.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat", ProductBUS.ChiTiet(id).MaNhaSanXuat);
+            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamBUS.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham", ProductBUS.ChiTiet(id).MaLoaiSanPham);
+            return View(ProductBUS.ChiTiet(id));
         }
 
         // POST: Admin/SanPhamAdmin/Edit/5
         [HttpPost, ValidateInput(false)]
         public ActionResult Edit(String id, SanPham sp)
         {
-            var temp = ShopOnlineBUS.ChiTiet(id);
+            var temp = ProductBUS.ChiTiet(id);
             try
             {
                 var hpf = HttpContext.Request.Files[0];
@@ -168,7 +168,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 {
                     sp.Hinh4 = temp.Hinh4;
                 }
-                ShopOnlineBUS.UpdateSp(id, sp);
+                ProductBUS.UpdateSp(id, sp);
                 // TODO: Add update logic here
                 return RedirectToAction("Index");
             }
@@ -181,7 +181,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/SanPhamAdmin/Delete/5
         public ActionResult Delete(String id)
         {
-            return View(ShopOnlineBUS.ChiTiet(id));
+            return View(ProductBUS.ChiTiet(id));
         }
 
         // POST: Admin/SanPhamAdmin/Delete/5
@@ -191,7 +191,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         {
             try
             {
-                ShopOnlineBUS.DeleteSp(id);
+                ProductBUS.DeleteSp(id);
                 // TODO: Add delete logic here
                 return RedirectToAction("Index");
             }

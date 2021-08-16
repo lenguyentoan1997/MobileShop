@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult AddItem(String productId, int quantity)
         {
-            var product = ShopOnlineBUS.ChiTiet(productId);
+            var product = ProductBUS.ChiTiet(productId);
             var cart = Session[CartSession];
             if (cart != null)
             {

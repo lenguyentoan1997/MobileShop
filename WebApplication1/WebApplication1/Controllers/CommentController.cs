@@ -5,16 +5,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
     public class CommentController : Controller
     {
-        public ActionResult Index(string productId)
+        public ActionResult Index(string productId, int page = 1, int pageSize = 5)
         {
+            ViewBag.ProductId = productId;
             CommentBUS commentBUS = new CommentBUS();
+            var allComments = commentBUS.AllComments(productId).ToPagedList(page, pageSize);
 
-            return View(commentBUS.GetCommentList(productId));
+            return View(allComments);
         }
 
         //[Authorize(Roles = "Admin")]

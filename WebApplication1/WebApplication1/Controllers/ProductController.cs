@@ -8,31 +8,36 @@ using WebApplication1.Models.BUS;
 
 namespace WebApplication1.Controllers
 {
-    public class ShopController : Controller
+    public class ProductController : Controller
     {
         // GET: Shop
-        public ActionResult Index(int page = 1, int pageSize = 4)
+        public ActionResult Index()
         {
-            var db = ShopOnlineBUS.DanhSach().ToPagedList(page, pageSize);
-            return View(db);
+            return View();
         }
 
         // GET: Shop/Details/5
         public ActionResult Details(String id)
         {
-            var db = ShopOnlineBUS.ChiTiet(id);
+            var db = ProductBUS.ChiTiet(id);
             return View(db);
         }
 
         public ActionResult AllPhone(int page = 1, int pageSize = 4)
         {
-            var db = ShopOnlineBUS.AllPhone().ToPagedList(page,pageSize);
+            var db = ProductBUS.AllPhone().ToPagedList(page, pageSize);
             return View(db);
         }
 
-        public ActionResult AllLaptop(int page = 1 , int pageSize=4)
+        public ActionResult AllLaptop(int page = 1, int pageSize = 4)
         {
-            var db = ShopOnlineBUS.AllLaptop().ToPagedList(page, pageSize);
+            var db = ProductBUS.AllLaptop().ToPagedList(page, pageSize);
+            return View(db);
+        }
+
+        public ActionResult SimilarProducts(string producer)
+        {
+            var db = ProductBUS.SimilarProducts(producer);
             return View(db);
         }
 

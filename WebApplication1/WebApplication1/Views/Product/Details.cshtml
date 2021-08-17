@@ -138,7 +138,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="tab-content body-shadow">
@@ -147,34 +146,13 @@
                     </div>
                 </div>
             </div>
-            <div id="sidebar" class="col-md-4">
+            <div id="similarProducts" class="col-md-12">
                 <div class="widget wid-product">
-                    <div class="heading"><h4>Similar Products</h4></div>
+                    <div class="heading">
+                        <h4>Similar Products</h4>
+                    </div>
                     <div class="content">
-                        <div class="product">
-                            <a href="#"><img src="~/Asset/images/galaxy-note.jpg"></a>
-                            <div class="wrapper">
-                                <h5><a href="#">Samsung Galaxy Tab</a></h5>
-                                <div class="price">$122</div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                        <div class="product">
-                            <a href="#"><img src="~/Asset/images/galaxy-s4.jpg"></a>
-                            <div class="wrapper">
-                                <h5><a href="#">Samsung Galaxy Tab</a></h5>
-                                <div class="price">$122</div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                        <div class="product">
-                            <a href="#"><img src="~/Asset/images/Z1.png"></a>
-                            <div class="wrapper">
-                                <h5><a href="#">Samsung Galaxy Tab</a></h5>
-                                <div class="price">$122</div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
+                        @Html.Action("SimilarProducts", "Product", new { producerCode = Model.MaNhaSanXuat, price = Model.Gia })
                     </div>
                 </div>
             </div>

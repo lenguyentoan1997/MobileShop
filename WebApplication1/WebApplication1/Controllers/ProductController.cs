@@ -35,9 +35,9 @@ namespace WebApplication1.Controllers
             return View(db);
         }
 
-        public ActionResult SimilarProducts(string producer)
+        public ActionResult SimilarProducts(string producerCode, int price)
         {
-            var db = ProductBUS.SimilarProducts(producer);
+            var db = ProductBUS.SimilarProducts(producerCode, price);
             return View(db);
         }
 

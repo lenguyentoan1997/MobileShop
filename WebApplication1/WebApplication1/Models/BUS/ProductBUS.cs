@@ -52,7 +52,7 @@ namespace WebApplication1.Models.BUS
             return db.Query<SanPham>("SELECT * FROM SanPham");
         }
 
-        public static IEnumerable<SanPham> SimilarProducts(string producer)
+        public static IEnumerable<SanPham> SimilarProducts(string producerCode, int price)
         {
             //create function udf_SimilarProducts(@producer_code nvarchar(10), @price int)
             //returns table
@@ -65,7 +65,7 @@ namespace WebApplication1.Models.BUS
             //select* from udf_SimilarProducts('NSX01', 30000000)
 
             var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("SELECT * FROM SanPham");
+            return db.Query<SanPham>("SELECT * FROM udf_SimilarProducts(@0,@1)", producerCode, price);
         }
 
         public static void InsertSp(SanPham sp)

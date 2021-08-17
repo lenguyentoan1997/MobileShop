@@ -555,7 +555,6 @@ header {
 .widget {
     margin-bottom: 30px;
     border: 1px solid #aaa;
-    padding-bottom: 20px;
 }
 
     .widget .heading {
@@ -571,7 +570,7 @@ header {
         }
 
     .widget .content {
-        padding: 15px 20px;
+        padding: 15px 20px 0px 20px;
     }
 
     .widget.wid-categories {
@@ -594,7 +593,6 @@ header {
     }
 
     .widget.wid-product img {
-        float: left;
         margin: 10px;
         max-height: 110px;
     }

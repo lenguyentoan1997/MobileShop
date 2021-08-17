@@ -733,7 +733,7 @@
     <Content Include="Areas\AssetAdmin\js\profile-account\profileAccount.js" />
     <Content Include="Asset\css\bootstrap.min.css" />
     <Content Include="Asset\css\product05.css" />
-    <Content Include="Asset\css\stylesheet05.css" />
+    <Content Include="Asset\css\stylesheet06.css" />
     <Content Include="Asset\font-awesome\css\font-awesome.css" />
     <Content Include="Asset\font-awesome\css\font-awesome.min.css" />
     <Content Include="Asset\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -996,6 +996,7 @@
     <Content Include="Views\Product\AllPhone.cshtml" />
     <Content Include="Views\Product\AllLaptop.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Product\SimilarProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

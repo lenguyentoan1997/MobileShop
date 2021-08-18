@@ -5,16 +5,20 @@
     Layout = null;
 }
 
-
-
-@*<div class="row" id="itemslider1">
+<div class="row">
+    <section class="center slider">
         @foreach (var item in Model)
         {
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 similar-details-products">
                 <div class="card card-signin my-5 height-products">
-                    <div class="card-body carousel-showmanymoveone1">
-                        <div class="product text-center item1">
-                            <div class="image col-lg-12"><a href="@Url.Action("Details","Product",new { id=item.MaSanPham})"><img src="~/Asset/images/@item.HinhChinh" /></a></div>
+                    <div class="card-body">
+                        <div class="product text-center">
+                            <div class="image col-lg-12">
+                                <a href="@Url.Action("Details","Product",new { id=item.MaSanPham})"
+                                   target="_blank">
+                                    <img src="~/Asset/images/@item.HinhChinh" style="display:initial;" />
+                                </a>
+                            </div>
                             <div class="name">
                                 <h3><a href="@Url.Action("Details",new { id=item.MaSanPham})">@item.TenSanPham</a></h3>
                             </div>
@@ -26,73 +30,14 @@
                 </div>
             </div>
         }
-    </div>*@
+    </section>
+</div>
+<div class="paginator-center text-color text-center">
+    <ul>
+        <li class="prev"><i class="fas fa-arrow-alt-circle-left"></i></li>
+        <li class="next"><i class="fas fa-arrow-alt-circle-right"></i></li>
+    </ul>
+</div>
 
-@*<div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="carousel carousel-showmanymoveone slide" id="itemslider">
-                    <div class="carousel-inner">
-                        @foreach (var obj in Model.Select((value, index) => new { value, index }))
-                        {
-                            <div class='@(obj.index==0?"item active":"item")'>
-                                <div class="col-xs-12 col-sm-6 col-md-2">
-                                    <div class="image col-lg-12"><a href="@Url.Action("Details","Product",new { id=obj.value.MaSanPham})"><img src="~/Asset/images/@obj.value.HinhChinh" /></a></div>
-                                    <div class="name">
-                                        <h3><a href="@Url.Action("Details",new { id=obj.value.MaSanPham})">@obj.value.TenSanPham</a></h3>
-                                    </div>
-                                    <div class="price">
-                                        <strong>@String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:#,#₫}", obj.value.Gia)</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        <div id="slider-control">
-                            <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_402-512.png" alt="Left" class="img-responsive"></a>
-                            <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="http://pixsector.com/cache/81183b13/avcc910c4ee5888b858fe.png" alt="Right" class="img-responsive"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
-
-
-
-
-
-
-<!-- Item slider-->
-<!--<div class="container-fluid">
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="carousel carousel-showmanymoveone slide" id="itemslider">
-                <div class="carousel-inner">
-                    @foreach (var obj in Model.Select((value, index) => new { value, index }))
-                    {
-                        <div class='@(obj.index==0?"item active":"item")'>
-                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                <div class="image col-lg-12"><a href="@Url.Action("Details","Product",new { id=obj.value.MaSanPham})"><img src="~/Asset/images/@obj.value.HinhChinh" /></a></div>
-                                <div class="name">
-                                    <h3><a href="@Url.Action("Details",new { id=obj.value.MaSanPham})">@obj.value.TenSanPham</a></h3>
-                                </div>
-                                <div class="price">
-                                    <strong>@String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:#,#₫}", obj.value.Gia)</strong>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-                <div id="slider-control">
-                    <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_402-512.png" alt="Left" class="img-responsive"></a>
-                    <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="http://pixsector.com/cache/81183b13/avcc910c4ee5888b858fe.png" alt="Right" class="img-responsive"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-@*slick slider*@
-
+<script src="~/Asset/js/productDetails01.js"></script>
 

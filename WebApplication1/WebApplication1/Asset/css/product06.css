@@ -48,3 +48,30 @@
     font-size: 25px;
     color: black;
 }
+
+/*similar products*/
+.slider .similar-details-products {
+    padding: 30px;
+}
+
+.wid-product .content .paginator-center .prev, .next {
+    position: absolute;
+    height: 20px;
+    width: 30px;
+    line-height: 0px;
+    cursor: pointer;
+    top: 50%;
+    margin-top: -10px;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-size: 40px;
+}
+
+.wid-product .content .paginator-center .prev {
+    left: -30px;
+}
+
+.wid-product .content .paginator-center .next {
+    right: -30px;
+}

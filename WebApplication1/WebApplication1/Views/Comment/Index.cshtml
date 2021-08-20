@@ -7,6 +7,19 @@
     Layout = "";
 }
 
+<style>
+    .span-comment-content {
+        outline: none;
+    }
+
+    #btnCancelComment {
+        background-color: black;
+        color: white;
+        font-size: 10px;
+        border-radius: 10%;
+    }
+</style>
+
 <h2>Comment</h2>
 @if (User.Identity.IsAuthenticated)
 {
@@ -22,28 +35,147 @@ else
 {
     <p class="alert alert-danger">Please login to comment</p>
 }
-<div id="comments">
+<div id="comments" class="row">
     <br />
     @foreach (var item in Model)
     {
-        <div class="comment">
+        <div class="comment col-lg-10">
             <div class="comment-name">
                 <strong data-toggle="tooltip" data-placement="bottom" title="@item.Date.ToString("dd-MM-yyyy")">
                     @item.FullName
                 </strong>
                 @Helper.FormatTime(item.Date)
             </div>
+            <div class="comment-content">
+                <p>
+                    <span class="input span-comment-content" id="spanCommentContent_@item.Id">
+                        @item.CommentContent
+                        <br />
+                    </span>
+                    <span>
+                        <input type="button" value="Cancel" id="btnCancelComment_@item.Id" hidden />
+                    </span>
+                </p>
+            </div>
         </div>
-        <div class="comment-content">
-            <p>@item.CommentContent</p>
-        </div>
+        if (item.UserEmail == User.Identity.Name)
+        {
+            <div class="details-comment col-lg-2">
+                @*@using (Html.BeginForm("Edit", "Comment", FormMethod.Post, new { @class = "edit-comment" }))
+                    {
+                        <input type="submit" value="Edit" class="btn btn-2" />
+                    }*@
+                <input type="button" value="Edit" class="btn btn-2" id="btnEditComment_@item.Id" onclick="getBtnId(@item.Id)" />
+                <input type="submit" value="Delete" class="btn btn-2" />
+            </div>
+        }
     }
 
-    <div class="text-center">
+    <div class="text-center col-lg-12">
         <ul class="pagination">
             @Html.PagedListPager(Model, page => Url.Action("Details", "Product", new { page, id = ViewBag.ProductId }))
         </ul>
     </div>
 </div>
 
-@*<script src="~/Asset/js/productDetails01.js"></script>*@
+<script>
+    
+    function getBtnId(id) {      
+        $("#btnEditComment_" + id).click(function () {
+            if (this.value == "Save") {
+                this.value = "Edit";
+                $("#spanCommentContent_" + id).prop("contenteditable", false);
+                $("#btnCancelComment_" + id).prop("hidden", true);
+            }
+            else {
+                this.value = "Save";
+                $("#spanCommentContent_" + id).prop("contenteditable", true);
+                $("#btnCancelComment_" + id).prop("hidden", false);
+            }
+        });
+
+        $("#btnCancelComment_" + id).click(function () {
+            $("#spanCommentContent_" + id).prop("contenteditable", false);
+
+            $("#btnCancelComment_" + id).prop("hidden", true);
+
+            $("#btnEditComment_" + id).val("Edit");
+        });
+    }
+    
+
+    //$(document).ready(function () {
+    //    function getBtnId(id) {
+    //        return id;
+    //    }
+    //    var stringId = getBtnId(id);
+
+    //    $("#btnEditComment_" + id).click(function () {
+    //        if (this.value == "Save") {
+    //            this.value = "Edit";
+    //            $("#spanCommentContent_" + id).prop("contenteditable", false);
+    //            $("#btnCancelComment_" + id).prop("hidden", true);
+    //        }
+    //        else {
+    //            this.value = "Save";
+    //            $("#spanCommentContent_" + id).prop("contenteditable", true);
+    //            $("#btnCancelComment_" + id).prop("hidden", false);
+    //        }
+    //    });
+
+    //    $("#btnCancelComment_" + id).click(function () {
+    //        $("#spanCommentContent_" + id).prop("contenteditable", false);
+
+    //        $("#btnCancelComment_" + id).prop("hidden", true);
+
+    //        $("#btnEditComment_" + id).val("Edit");
+    //    });
+    //});
+
+    //$(document).ready(function () {
+    //    //Enable input Edit Name
+    //    $("#btnEditComment").click(function () {
+    //        if (this.value == "Save") {
+    //            this.value = "Edit";
+    //            $("#spanCommentContent").prop("contenteditable", false);
+    //            $("#btnCancelComment").prop("hidden", true);
+    //        }
+    //        else {
+    //            this.value = "Save";
+    //            $("#spanCommentContent").prop("contenteditable", true);
+    //            $("#btnCancelComment").prop("hidden", false);
+    //        }
+    //    });
+
+    //    $("#btnCancelComment").click(function () {
+    //        $("#spanCommentContent").prop("contenteditable", false);
+
+    //        $("#btnCancelComment").prop("hidden", true);
+
+    //        $("#btnEditComment").val("Edit");
+    //    });
+    //});
+    //$(document).ready(function getBtnId(id) {
+    //    $("#btnEditComment_" + id).click(function () {
+    //        if (this.value == "Save") {
+    //            this.value = "Edit";
+    //            $("#spanCommentContent_" + id).prop("contenteditable", false);
+    //            $("#btnCancelComment_" + id).prop("hidden", true);
+    //        }
+    //        else {
+    //            this.value = "Save";
+    //            $("#spanCommentContent_" + id).prop("contenteditable", true);
+    //            $("#btnCancelComment_" + id).prop("hidden", false);
+    //        }
+    //    });
+
+    //    $("#btnCancelComment_" + id).click(function () {
+    //        $("#spanCommentContent_" + id).prop("contenteditable", false);
+
+    //        $("#btnCancelComment_" + id).prop("hidden", true);
+
+    //        $("#btnEditComment_" + id).val("Edit");
+    //    });
+    //});
+
+</script>

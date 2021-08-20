@@ -51,12 +51,12 @@ namespace WebApplication1.Areas.Admin.Controllers
 
         // POST: Admin/LoaiSanPhamAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(String maLoaiSanPham, String tenLoaiSanPham, String tinhTrang)
+        public ActionResult Edit(LoaiSanPham loaiSanPham, string maLoaiSanPham)
         {
             try
             {
                 // TODO: Add update logic here
-                LoaiSanPhamBUS.UpdateLSP(maLoaiSanPham, tenLoaiSanPham, tinhTrang);
+                LoaiSanPhamBUS.UpdateLSP(loaiSanPham, maLoaiSanPham);
                 return RedirectToAction("Index");
             }
             catch
@@ -73,12 +73,13 @@ namespace WebApplication1.Areas.Admin.Controllers
 
         // POST: Admin/LoaiSanPhamAdmin/Delete/5
         [HttpPost]
-        public ActionResult Delete(String maLoaiSanPham, String id)
+        public ActionResult Delete(LoaiSanPham loaiSanPham)
         {
             try
             {
                 // TODO: Add delete logic here
-                LoaiSanPhamBUS.DeleteLSP(maLoaiSanPham);
+                LoaiSanPhamBUS.DeleteLSP(loaiSanPham);
+
                 return RedirectToAction("Index");
             }
             catch

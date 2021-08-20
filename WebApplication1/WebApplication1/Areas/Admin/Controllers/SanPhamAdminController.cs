@@ -187,11 +187,11 @@ namespace WebApplication1.Areas.Admin.Controllers
         // POST: Admin/SanPhamAdmin/Delete/5
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Delete(String id, SanPham sp)
+        public ActionResult Delete(SanPham sp)
         {
             try
             {
-                ProductBUS.DeleteSp(id);
+                ProductBUS.DeleteSp(sp);
                 // TODO: Add delete logic here
                 return RedirectToAction("Index");
             }

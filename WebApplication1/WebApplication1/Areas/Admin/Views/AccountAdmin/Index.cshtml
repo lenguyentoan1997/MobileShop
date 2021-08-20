@@ -15,8 +15,10 @@
                 <tr>
                     <th>ID</th>
                     <th>EMAIL</th>
-                    <th>USER NAME</th>
+                    <th>Full NAME</th>
                     <th>PHONE NUMBER</th>
+                    <th>Address</th>
+                    <th>Date Of Birth</th>
                     <th colspan="2">
                         <a href="@Url.Action("Create","AccountAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
                     </th>
@@ -26,8 +28,17 @@
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.Email</td>
-                        <td>@item.UserName</td>
+                        <td>@item.FullName</td>
                         <td>@item.PhoneNumber</td>
+                        <td>@item.UserAddress</td>
+                        @if (item.DOB == null)
+                        {
+                            <td>Null</td>
+                        }
+                        else
+                        {
+                            <td>@item.DOB.Value.ToString("dd-MM-yyyy")</td>
+                        }
                         <td>
                             <a href="@Url.Action("Edit","AccountAdmin",new { id=item.Id})"><img src="~/Asset/images/edit.png" /></a>
                         </td>

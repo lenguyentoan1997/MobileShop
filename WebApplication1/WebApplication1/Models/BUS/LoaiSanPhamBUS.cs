@@ -12,43 +12,50 @@ namespace WebApplication1.Models.BUS
         public static IEnumerable<LoaiSanPham> DanhSach()
         {
             var db = new ShopOnlineConnectionDB();
-            return db.Query<LoaiSanPham>("select * from LoaiSanPham where TinhTrang = 0");
+            string status = "0";
+
+            return db.Query<LoaiSanPham>("SELECT * FROM udf_GetLoaiSanPhamByStatus(@0)", status);
 
         }
 
-        public static IEnumerable<SanPham> ChiTiet(String id)
+        public static IEnumerable<SanPham> ChiTiet(string id)
         {
             var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("select * from SanPham where MaLoaiSanPham = '" + id + "'");
+            return db.Query<SanPham>("SELECT * FROM udf_GetSanPhamByMaLoaiSanPham(@0)", id);
 
         }
         //--------------Admin---------------
         public static IEnumerable<LoaiSanPham> DanhSachAdmin()
         {
             var db = new ShopOnlineConnectionDB();
-            return db.Query<LoaiSanPham>("select * from LoaiSanPham");
+            return db.Query<LoaiSanPham>("SELECT * FROM vw_LoaiSanPham");
 
         }
+
         public static void AddLoaiSanPham(LoaiSanPham lsp)
         {
             var db = new ShopOnlineConnectionDB();
             db.Insert(lsp);
         }
+
         public static LoaiSanPham ChiTietLSP(String id)
         {
             var db = new ShopOnlineConnectionDB();
-            return db.SingleOrDefault<LoaiSanPham>("SELECT * FROM LoaiSanPham WHERE MaLoaiSanPham = '" + id + "'");
-        }
-        public static LoaiSanPham UpdateLSP(String maLoaiSanPham, String tenLoaiSanPham, String tinhTrang)
-        {
-            var db = new ShopOnlineConnectionDB();
-            return db.Single<LoaiSanPham>("UPDATE LoaiSanPham SET TenLoaiSanPham = '" + tenLoaiSanPham + "',TinhTrang = '" + tinhTrang + "' WHERE MaLoaiSanPham = '" + maLoaiSanPham + "'");
 
+            return db.SingleOrDefault<LoaiSanPham>("SELECT * FROM udf_GetLoaiSanPhamByMaLoaiSanPham(@0)", id);
         }
-        public static LoaiSanPham DeleteLSP(String maLoaiSanPham)
+
+        public static void UpdateLSP(LoaiSanPham loaiSanPham, string maLoaiSanPham)
         {
             var db = new ShopOnlineConnectionDB();
-            return db.Single<LoaiSanPham>("DELETE FROM LoaiSanPham WHERE MaLoaiSanPham = '" + maLoaiSanPham + "'");
+
+            db.Update(loaiSanPham, maLoaiSanPham);
+        }
+        public static void DeleteLSP(LoaiSanPham loaiSanPham)
+        {
+            var db = new ShopOnlineConnectionDB();
+
+            db.Delete(loaiSanPham);
         }
     }
 }

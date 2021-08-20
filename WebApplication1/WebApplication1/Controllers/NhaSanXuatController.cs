@@ -34,8 +34,8 @@ namespace WebApplication1.Controllers
                     GetProducer = "Acer"; break;
                 case "NSX08":
                     GetProducer = "Macbook"; break;
-
             }
+
             return View(db);
         }
     }

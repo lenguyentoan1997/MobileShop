@@ -37,5 +37,21 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("Details", "Shop", new { Id = productId });
         }
+
+        public ActionResult Edit(Comment comment, string productId)
+        {
+            int commentId = comment.Id;
+            CommentBUS.Edit(comment, commentId);
+
+            return RedirectToAction("Details", "Shop", new { Id = productId });
+        }
+
+        [Authorize]
+        public ActionResult Delete(Comment comment, string productId)
+        {
+            CommentBUS.Delete(comment);
+
+            return RedirectToAction("Details", "Shop", new { Id = productId });
+        }
     }
 }

@@ -9,47 +9,49 @@ namespace WebApplication1.Models.BUS
 {
     public class ProductBUS
     {
+        private static ShopOnlineConnectionDB DatabaseConnection()
+        {
+            var database = new ShopOnlineConnectionDB();
+
+            return database;
+        }
+
         //------------------Guest--------------------
         public static IEnumerable<SanPham> DanhSach()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("select * from SanPham where TinhTrang = 0");
-
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetSanPhamByStatus");
         }
 
         public static IEnumerable<SanPham> AllPhone()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("SELECT * FROM SanPham WHERE TinhTrang = 0 AND MaLoaiSanPham ='LSP01'");
-
+            string phone = "LSP01";
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM udf_GetSanPhamByMaLoaiSanPham(@0)", phone);
         }
         public static IEnumerable<SanPham> AllLaptop()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("SELECT * FROM SanPham WHERE TinhTrang = 0 AND MaLoaiSanPham ='LSP02'");
+            string laptop = "LSP02";
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM udf_GetSanPhamByMaLoaiSanPham(@0)", laptop);
         }
-        public static SanPham ChiTiet(String id)
+
+        public static SanPham ChiTiet(string id)
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.SingleOrDefault<SanPham>("select * from SanPham where MaSanPham = @0", id);
+            return DatabaseConnection().SingleOrDefault<SanPham>("SELECT * FROM udf_GetSanPhamByMaSanPham(@0)", id);
         }
 
         public static IEnumerable<SanPham> Top4New()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("select Top 4 * from SanPham Where GhiChu = N'New'");
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetTop4ProductByNew");
         }
 
         public static IEnumerable<SanPham> TopHot()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("select Top 4 * from SanPham Where LuotView >0");
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetTop4ProductByLuotView");
         }
         //---------------Admin----------------------
         public static IEnumerable<SanPham> DanhSachSP()
         {
             var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("SELECT * FROM SanPham");
+            return db.Query<SanPham>("SELECT * FROM vw_GetProduct");
         }
 
         public static IEnumerable<SanPham> SimilarProducts(string producerCode, int price)
@@ -78,10 +80,9 @@ namespace WebApplication1.Models.BUS
             var db = new ShopOnlineConnectionDB();
             db.Update(sp, id);
         }
-        public static SanPham DeleteSp(String id)
+        public static void DeleteSp(SanPham sanPham)
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Single<SanPham>("DELETE FROM SanPham WHERE MaSanPham = '" + id + "'");
+            DatabaseConnection().Delete(sanPham);
         }
         //----------------update images
         public static void UpdateImages(string id, string images)

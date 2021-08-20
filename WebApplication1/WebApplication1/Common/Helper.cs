@@ -26,15 +26,14 @@ namespace WebApplication1.Common
             return "";
         }
 
-        public static bool IsloginLocal(this System.Security.Principal.IPrincipal usr)
-        {
-
-            if (IsSocialMediaLogin == true)
-            {
-                return false;
-            }
-            return true;
-        }
+        //public static bool IsloginLocal(this System.Security.Principal.IPrincipal usr)
+        //{
+        //    if (IsSocialMediaLogin == true)
+        //    {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public static string FormatTime(DateTime commentDate)
         {

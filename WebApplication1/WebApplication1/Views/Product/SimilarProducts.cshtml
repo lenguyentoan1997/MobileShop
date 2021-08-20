@@ -14,9 +14,8 @@
                     <div class="card-body">
                         <div class="product text-center">
                             <div class="image col-lg-12">
-                                <a href="@Url.Action("Details","Product",new { id=item.MaSanPham})"
-                                   target="_blank">
-                                    <img src="~/Asset/images/@item.HinhChinh" style="display:initial;" />
+                                <a href="@Url.Action("Details","Product",new { id=item.MaSanPham})" target="_blank">
+                                    <img src="~/Asset/images/@item.HinhChinh" />
                                 </a>
                             </div>
                             <div class="name">
@@ -40,4 +39,3 @@
 </div>
 
 <script src="~/Asset/js/productDetails01.js"></script>
-

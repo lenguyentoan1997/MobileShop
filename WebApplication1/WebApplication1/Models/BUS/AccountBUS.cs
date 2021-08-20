@@ -10,16 +10,16 @@ namespace WebApplication1.Models.BUS
     {
 
         //-------------- Share account for guest and admin-----------
-        public static ShopOnlineConnectionDB Database()
+        private static ShopOnlineConnectionDB Database()
         {
             var database = new ShopOnlineConnectionDB();
             return database;
         }
 
         //display details of account
-        public static AspNetUser AccountDetails(String id)
+        public static AspNetUser AccountDetails(string id)
         {
-            return Database().SingleOrDefault<AspNetUser>("SELECT * FROM AspNetUsers WHERE Id = @0", id);
+            return Database().SingleOrDefault<AspNetUser>("SELECT * FROM udf_GetAccountById(@0)", id);
         }
 
         //----------------Guest Account Managed By Admin--------------
@@ -38,11 +38,11 @@ namespace WebApplication1.Models.BUS
         //    {
         //        return entity.Id;
         //    }
-            
+
         //}
         public IEnumerable<AspNetUser> ListGuestAccount()
         {
-            return Database().Query<AspNetUser>("SELECT * FROM AspNetUsers WHERE Id NOT IN (SELECT UserId FROM AspNetUserRoles)");
+            return Database().Query<AspNetUser>(" SELECT * FROM vw_GuestAccount");
         }
 
         public void UpdateGuestAccount(AspNetUser aspNetUser, String id)
@@ -58,10 +58,10 @@ namespace WebApplication1.Models.BUS
         //----------------Admin Account Managed By Admin--------------
         public IEnumerable<AspNetUser> ListAdminAccocunt()
         {
-            return Database().Query<AspNetUser>("SELECT * FROM AspNetUsers WHERE Id IN (SELECT UserId FROM AspNetUserRoles)");
+            return Database().Query<AspNetUser>("SELECT * FROM vw_AdminAccount");
         }
 
-        public void UpdateAdminAcocunt(AspNetUser aspNetUser, String id)
+        public void UpdateAdminAcocunt(AspNetUser aspNetUser, string id)
         {
             Database().Update(aspNetUser, id);
         }

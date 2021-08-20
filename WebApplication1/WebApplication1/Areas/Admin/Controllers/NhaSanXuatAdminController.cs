@@ -10,7 +10,7 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class NhaSanXuatAdminController : Controller
     {
-       //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         // GET: Admin/NhaSanXuatAdmin
         public ActionResult Index()
         {
@@ -54,12 +54,13 @@ namespace WebApplication1.Areas.Admin.Controllers
 
         // POST: Admin/NhaSanXuatAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(String maNhaSanXuat, String tenNhaSanXuat, String tinhTrang)
+        public ActionResult Edit(NhaSanXuat nhaSanXuat, string maNhaSanXuat)
         {
             try
             {
                 // TODO: Add update logic here
-                NhaSanXuatBUS.UpdateNSX(maNhaSanXuat, tenNhaSanXuat, tinhTrang);
+                NhaSanXuatBUS.UpdateNSX(nhaSanXuat, maNhaSanXuat);
+
                 return RedirectToAction("Index");
             }
             catch
@@ -76,12 +77,12 @@ namespace WebApplication1.Areas.Admin.Controllers
 
         // POST: Admin/NhaSanXuatAdmin/Delete/5
         [HttpPost]
-        public ActionResult Delete(String maNhaSanXuat, String id)
+        public ActionResult Delete(NhaSanXuat nhaSanXuat)
         {
             try
             {
                 // TODO: Add delete logic here
-                NhaSanXuatBUS.DeleteNSX(maNhaSanXuat);
+                NhaSanXuatBUS.DeleteNSX(nhaSanXuat);
                 return RedirectToAction("Index");
             }
             catch

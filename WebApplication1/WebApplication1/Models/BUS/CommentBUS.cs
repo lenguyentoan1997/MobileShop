@@ -8,16 +8,14 @@ namespace WebApplication1.Models.BUS
 {
     public class CommentBUS
     {
-        public static void Create(Comment comment)
+        private static ShopOnlineConnectionDB DatabaseConnection()
         {
-            var db = new ShopOnlineConnectionDB();
-            db.Insert(comment);
+            var datase = new ShopOnlineConnectionDB();
+            return datase;
         }
-
         public IEnumerable<CommentInformation> AllComments(string productId)
         {
-            var db = new ShopOnlineConnectionDB();
-
+            
             //Create Store Procedures
             //CREATE PROCEDURE usp_GetGuestCommentInfor @ProductId nvarchar(10)
             //AS
@@ -28,7 +26,22 @@ namespace WebApplication1.Models.BUS
 
             //EXEC usp_GetGuestCommentInfor @ProductId = 'SP01'
 
-            return db.Fetch<CommentInformation>(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId);
+            return DatabaseConnection().Fetch<CommentInformation>(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId);
+        }
+
+        public static void Create(Comment comment)
+        {            
+            DatabaseConnection().Insert(comment);
+        }
+
+        public static void Delete(Comment comment)
+        {
+            DatabaseConnection().Delete(comment);
+        }
+
+        public static void Edit(Comment comment ,int commentId)
+        {
+            DatabaseConnection().Update(comment,commentId);
         }
     }
 }

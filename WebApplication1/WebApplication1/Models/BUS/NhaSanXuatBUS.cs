@@ -6,62 +6,58 @@ namespace WebApplication1.Models.BUS
 {
     public class NhaSanXuatBUS
     {
+        private static ShopOnlineConnectionDB DatabaseConnection()
+        {
+            var database = new ShopOnlineConnectionDB();
+
+            return database;
+        }
 
         //------------Guest---------------------------
         public static IEnumerable<NhaSanXuat> DanhSach()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<NhaSanXuat>("SELECT * FROM NhaSanXuat WHERE TinhTrang = 0");
-
+            return DatabaseConnection().Query<NhaSanXuat>("SELECT * FROM vw_GetNhaSanXuatByStatus");
         }
         public static IEnumerable<NhaSanXuat> ListPhone()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<NhaSanXuat>("SELECT * FROM NhaSanXuat WHERE TinhTrang = 0 AND LoaiSanXuat ='Phone'");
+            string typeProduct = "phone";
 
+            return DatabaseConnection().Query<NhaSanXuat>("SELECT * FROM udf_GetNhaSanXuatByTenLoaiSanPham(@0)", typeProduct);
         }
         public static IEnumerable<NhaSanXuat> ListLapTop()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<NhaSanXuat>("SELECT * FROM NhaSanXuat WHERE TinhTrang = 0 AND LoaiSanXuat ='LapTop'");
+            string typeProduct = "LapTop";
 
+            return DatabaseConnection().Query<NhaSanXuat>("SELECT * FROM udf_GetNhaSanXuatByTenLoaiSanPham(@0)", typeProduct);
         }
         public static IEnumerable<NhaSanXuat> DanhSachAdmin()
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<NhaSanXuat>("select * from NhaSanXuat");
-
+            return DatabaseConnection().Query<NhaSanXuat>("SELECT * FROM vw_NhaSanXuat");
         }
-        public static IEnumerable<SanPham> ChiTiet(String id)
+        public static IEnumerable<SanPham> ChiTiet(string id)
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Query<SanPham>("select * from SanPham where MaNhaSanXuat = '" + id + "'");
-
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM udf_GetSanPhamByMaNhaSanXuat(@0)", id);
         }
         //-------------Admin--------------------
         public static void ThemNSX(NhaSanXuat nsx)
         {
-            var db = new ShopOnlineConnectionDB();
-            db.Insert(nsx);
+            DatabaseConnection().Insert(nsx);
         }
 
-        public static NhaSanXuat ChiTietAdmin(String id)
+        public static NhaSanXuat ChiTietAdmin(string id)
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.SingleOrDefault<NhaSanXuat>("select * from NhaSanXuat where MaNhaSanXuat = '" + id + "'");
+            return DatabaseConnection().SingleOrDefault<NhaSanXuat>("SELECT * FROM udf_GetNhaSanXuatByMaNhaSanXuat(@0)", id);
 
         }
 
-        public static NhaSanXuat UpdateNSX(String maNhaSanXuat, String tenNhaSanXuat, String tinhTrang)
+        public static void UpdateNSX(NhaSanXuat nhaSanXuat, string maNhaSanXuat)
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Single<NhaSanXuat>("UPDATE NhaSanXuat set TenNhaSanXuat = '" + tenNhaSanXuat + "',TinhTrang = '" + tinhTrang + "' WHERE MaNhaSanXuat ='" + maNhaSanXuat + "'");
+            DatabaseConnection().Update(nhaSanXuat, maNhaSanXuat);
         }
 
-        public static NhaSanXuat DeleteNSX(String maNhaSanXuat)
+        public static void DeleteNSX(NhaSanXuat nhaSanXuat)
         {
-            var db = new ShopOnlineConnectionDB();
-            return db.Single<NhaSanXuat>("DELETE FROM NhaSanXuat WHERE MaNhaSanXuat = '" + maNhaSanXuat + "'");
+            DatabaseConnection().Delete(nhaSanXuat);
         }
 
     }

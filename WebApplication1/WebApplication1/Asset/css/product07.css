@@ -75,3 +75,12 @@
 .wid-product .content .paginator-center .next {
     right: -30px;
 }
+
+.similar-details-products .card .card-body .product .image a {
+    outline: none;
+    outline: 0;
+}
+
+    .similar-details-products .card .card-body .product .image a img {
+        display: initial;
+    }

@@ -12,63 +12,156 @@
         outline: none;
     }
 
-    #btnCancelComment {
+    .btn-cancel-comment {
         background-color: black;
         color: white;
         font-size: 10px;
         border-radius: 10%;
     }
+
+    .txtarea-comment-content {
+        background-color: #f8f9fa;
+        border: none;
+        outline: none;
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        color: black;
+        padding: 8px;
+        resize: none;
+        border-radius: 10px;
+    }
+
+    .c-progress-list .c-progress-item label {
+        float: left;
+    }
+
+    .c-progress-list .c-progress-item .progress {
+        width: 80%;
+        float: left;
+    }
+
+    .rate-list .rating {
+        margin-top: 5px;
+    }
+
+        .rate-list .rating .star {
+            font-size: 35px;
+        }
+
+    .rate-list .total .totalResult {
+        font-size: 20px;
+        font-weight: 800;
+        color:black;
+    }
+    .rate-list .total{
+        margin-top:10px;
+    }
+
 </style>
 
 <h2>Comment</h2>
-@if (User.Identity.IsAuthenticated)
-{
-    using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { @class = "comment-product" }))
+<div class="comment-rate-start">
+    <div class="row">
+        <div class="col-lg-5">
+            <br />
+            <div class="c-rate-start-left text-center">
+                <p>Average Rating</p>
+                <div class="point">
+                    <h2 style="color: #D9534F;">4/5</h2>
+                </div>
+                <div class="rating list-start">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+                <span>60 Comment</span>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="c-rate-start-right">
+                <div class="c-progress-list">
+                    @for (int i = 5; i >= 1; i--)
+                    {
+                        <div class="rating c-progress-item col-lg-12 ">
+                            <label>@i <i class="fa fa-star checked"></i></label>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span>10</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<h4>Submit a Review</h4>
+<div class="row create-comment">
+    @if (User.Identity.IsAuthenticated)
     {
-        @Html.AntiForgeryToken()
-        @Html.Hidden("productId", (string)ViewBag.productId)
-        @Html.TextArea("commentContent", new { @placeholder = "Writing" })
-        <input type="submit" value="Enter" class="btn-comment btn btn-2" />
+        using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { @class = "comment-product" }))
+        {
+            <div class="col-lg-3">
+                <div class="rate-list text-center">
+                    <div class="rating">
+                        <span class="star-1 star"><i class="fa fa-star"></i></span>
+                        <span class="star-2 star"><i class="fa fa-star"></i></span>
+                        <span class="star-3 star"><i class="fa fa-star"></i></span>
+                        <span class="star-4 star"><i class="fa fa-star"></i></span>
+                        <span class="star-5 star"><i class="fa fa-star"></i></span>
+                    </div>
+                    <div class="total" name="qualityEvalution"><span class="totalResult"></span></div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                @Html.AntiForgeryToken()
+                @Html.Hidden("productId", (string)ViewBag.productId)
+                @Html.TextArea("commentContent", new { @placeholder = "Writing" })
+            </div>
+            <input type="submit" value="Enter" class="btn-comment btn btn-2" />
+        }
     }
-}
-else
-{
-    <p class="alert alert-danger">Please login to comment</p>
-}
+    else
+    {
+        <p class="alert alert-danger">Please login to comment</p>
+    }
+</div>
+
+
+
+
 <div id="comments" class="row">
     <br />
     @foreach (var item in Model)
     {
-        <div class="comment col-lg-10">
-            <div class="comment-name">
+        <div class="comment col-lg-12">
+            <div class="comment-name col-lg-12">
                 <strong data-toggle="tooltip" data-placement="bottom" title="@item.Date.ToString("dd-MM-yyyy")">
                     @item.FullName
                 </strong>
                 @Helper.FormatTime(item.Date)
             </div>
-            <div class="comment-content">
+            <div class="comment-content col-lg-10">
                 <p>
-                    <span class="input span-comment-content" id="spanCommentContent_@item.Id">
-                        @item.CommentContent
-                        <br />
-                    </span>
+                    <textarea class="input txtarea-comment-content" id="txtareaCommentContent_@item.Id" data-id="@item.Id">@item.CommentContent</textarea>
                     <span>
-                        <input type="button" value="Cancel" id="btnCancelComment_@item.Id" hidden />
+                        <input class="btn-cancel-comment" type="button" value="Cancel" id="btnCancelComment_@item.Id" hidden />
                     </span>
                 </p>
             </div>
+            @if (item.UserEmail == User.Identity.Name)
+            {
+                <div class="details-comment col-lg-2">
+                    <input type="submit" value="Edit" class="btn btn-2" id="btnEditComment_@item.Id" onClick="btnEditComment_(@item.Id)" />
+                    <input type="submit" value="Delete" class="btn btn-2" />
+                </div>
+            }
         </div>
-        if (item.UserEmail == User.Identity.Name)
-        {
-            <div class="details-comment col-lg-2">
-                @*@using (Html.BeginForm("Edit", "Comment", FormMethod.Post, new { @class = "edit-comment" }))
-                    {
-                        <input type="submit" value="Edit" class="btn btn-2" />
-                    }*@
-                <input type="button" value="Edit" class="btn btn-2" id="btnEditComment_@item.Id" onclick="getBtnId(@item.Id)" />
-                <input type="submit" value="Delete" class="btn btn-2" />
-            </div>
-        }
+
     }
 
     <div class="text-center col-lg-12">
@@ -79,103 +172,88 @@ else
 </div>
 
 <script>
-    
-    function getBtnId(id) {      
-        $("#btnEditComment_" + id).click(function () {
-            if (this.value == "Save") {
-                this.value = "Edit";
-                $("#spanCommentContent_" + id).prop("contenteditable", false);
-                $("#btnCancelComment_" + id).prop("hidden", true);
-            }
-            else {
-                this.value = "Save";
-                $("#spanCommentContent_" + id).prop("contenteditable", true);
-                $("#btnCancelComment_" + id).prop("hidden", false);
-            }
-        });
+    $(document).ready(function () {
+        var resultDisplay = $('.totalResult');
+        //Select single star
+        var star1 = $('.star-1').attr('data-star', 'Bad');
+        var star2 = $('.star-2').attr('data-star', 'Worse');
+        var star3 = $('.star-3').attr('data-star', 'Average');
+        var star4 = $('.star-4').attr('data-star', 'Good');
+        var star5 = $('.star-5').attr('data-star', 'Great');
+        var allStars = [star1, star2, star3, star4, star5];
+        function getValue(element, dataName) {
+            element.on('click', function () {
+                var currentStarData = $(this).data(dataName);
+                resultDisplay.removeClass("move");
+                if (currentStarData >= 'Bad' || currentStarData != 'Bad') {
+                    $(this).prevAll('.star').addClass('checked');
+                    $(this).addClass("checked");
+                    resultDisplay.addClass("move");
+                }
+                if (currentStarData <= 'Greate' || currentStarData != 'Greate') {
+                    $(this).nextAll('.star').removeClass('checked');
+                    $(this).addClass("checked");
+                    resultDisplay.addClass("move");
+                }
+                resultDisplay.text(currentStarData);
+            });
+        }
+        for (var i = 0; i < allStars.length; i++) {
+            getValue(allStars[i], "star");
+        }
+    });
 
-        $("#btnCancelComment_" + id).click(function () {
-            $("#spanCommentContent_" + id).prop("contenteditable", false);
+    function btnEditComment_(itemId) {
+        var id = itemId;
 
-            $("#btnCancelComment_" + id).prop("hidden", true);
+        $('#btnEditComment_' + id).click(function () {
+            var listProduct = $('#txtareaCommentContent_' + id);
+            var commentList = [];
+            $.each(listProduct, function (i, item) {
+                /*The object here must be the same as the object in Cart to be mapping*/
+                commentList.push({
+                    CommentContent: $(item).val(),
+                    Id: $(item).data('id'),
+                });
+            });
 
-            $("#btnEditComment_" + id).val("Edit");
+            $.ajax({
+                url: '/Comment/Edit',
+                data: { commentModel: JSON.stringify(commentList) },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    //return results from CartController
+                    if (res.status == true) {
+                        window.location.href = "/Product/Details/SP01";
+                    }
+                }
+            })
         });
     }
-    
 
-    //$(document).ready(function () {
-    //    function getBtnId(id) {
-    //        return id;
+
+
+    //function btnEditComment_(itemId) {
+    //    var id = itemId;
+    //    var btnEditComment = document.getElementById("btnEditComment_" + id);
+
+    //    if (btnEditComment.value === "Edit") {
+    //        $("#txtareaCommentContent_" + id).prop("disabled", false);
+    //        $("#btnCancelComment_" + id).prop("hidden", false);
+    //        $("#btnEditComment_" + id).val("Save");
+
+    //        $("#btnCancelComment_" + id).click(function () {
+    //            $("#txtareaCommentContent_" + id).prop("disabled", true);
+
+    //            $("#btnCancelComment_" + id).prop("hidden", true);
+
+    //            $("#btnEditComment_" + id).val("Edit");
+    //        });
+    //    } else {
+    //        $("#txtareaCommentContent_" + id).prop("disabled", true);
+    //        $("#btnCancelComment_" + id).prop("hidden", true);
+    //        $("#btnEditComment_" + id).val("Edit");
     //    }
-    //    var stringId = getBtnId(id);
-
-    //    $("#btnEditComment_" + id).click(function () {
-    //        if (this.value == "Save") {
-    //            this.value = "Edit";
-    //            $("#spanCommentContent_" + id).prop("contenteditable", false);
-    //            $("#btnCancelComment_" + id).prop("hidden", true);
-    //        }
-    //        else {
-    //            this.value = "Save";
-    //            $("#spanCommentContent_" + id).prop("contenteditable", true);
-    //            $("#btnCancelComment_" + id).prop("hidden", false);
-    //        }
-    //    });
-
-    //    $("#btnCancelComment_" + id).click(function () {
-    //        $("#spanCommentContent_" + id).prop("contenteditable", false);
-
-    //        $("#btnCancelComment_" + id).prop("hidden", true);
-
-    //        $("#btnEditComment_" + id).val("Edit");
-    //    });
-    //});
-
-    //$(document).ready(function () {
-    //    //Enable input Edit Name
-    //    $("#btnEditComment").click(function () {
-    //        if (this.value == "Save") {
-    //            this.value = "Edit";
-    //            $("#spanCommentContent").prop("contenteditable", false);
-    //            $("#btnCancelComment").prop("hidden", true);
-    //        }
-    //        else {
-    //            this.value = "Save";
-    //            $("#spanCommentContent").prop("contenteditable", true);
-    //            $("#btnCancelComment").prop("hidden", false);
-    //        }
-    //    });
-
-    //    $("#btnCancelComment").click(function () {
-    //        $("#spanCommentContent").prop("contenteditable", false);
-
-    //        $("#btnCancelComment").prop("hidden", true);
-
-    //        $("#btnEditComment").val("Edit");
-    //    });
-    //});
-    //$(document).ready(function getBtnId(id) {
-    //    $("#btnEditComment_" + id).click(function () {
-    //        if (this.value == "Save") {
-    //            this.value = "Edit";
-    //            $("#spanCommentContent_" + id).prop("contenteditable", false);
-    //            $("#btnCancelComment_" + id).prop("hidden", true);
-    //        }
-    //        else {
-    //            this.value = "Save";
-    //            $("#spanCommentContent_" + id).prop("contenteditable", true);
-    //            $("#btnCancelComment_" + id).prop("hidden", false);
-    //        }
-    //    });
-
-    //    $("#btnCancelComment_" + id).click(function () {
-    //        $("#spanCommentContent_" + id).prop("contenteditable", false);
-
-    //        $("#btnCancelComment_" + id).prop("hidden", true);
-
-    //        $("#btnEditComment_" + id).val("Edit");
-    //    });
-    //});
-
+    //}
 </script>

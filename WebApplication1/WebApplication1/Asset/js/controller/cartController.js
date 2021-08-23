@@ -13,10 +13,10 @@
 
         $('#btnUpdate').off('click').on('click', function () {
             var listProduct = $('.txtQuantity');
-            var cartList = [];
+            var commentList = [];
             $.each(listProduct, function (i, item) {
                 /*The object here must be the same as the object in Cart to be mapping*/
-                cartList.push({
+                commentList.push({
                     Quantity: $(item).val(),
                     Product: {
                         //data('id') is html data-id file Cart in the index
@@ -27,7 +27,7 @@
 
             $.ajax({
                 url: '/Cart/Update',
-                data: { cartModel: JSON.stringify(cartList) },
+                data: { cartModel: JSON.stringify(commentList) },
                 dataType: 'json',
                 type: 'POST',
                 success: function (res) {

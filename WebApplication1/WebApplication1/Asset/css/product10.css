@@ -29,8 +29,15 @@
 .btn-comment {
     position: absolute;
     right: 50px;
-    top: 113px;
+    top: 380px;
 }
+
+@media(max-width:725px){
+    .btn-comment {
+        top: 610px;
+    }
+}
+
 /*details product*/
 .product .image .buttons .btn_images {
     margin-left: 5px;

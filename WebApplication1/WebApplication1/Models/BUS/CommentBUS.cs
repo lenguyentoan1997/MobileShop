@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using ShopOnlineConnection;
@@ -15,22 +18,14 @@ namespace WebApplication1.Models.BUS
         }
         public IEnumerable<CommentInformation> AllComments(string productId)
         {
-            
-            //Create Store Procedures
-            //CREATE PROCEDURE usp_GetGuestCommentInfor @ProductId nvarchar(10)
-            //AS
-            //SELECT Comment.Id,Comment.UserEmail,Comment.CommentContent,Comment.[Date],AspNetUsers.FullName
-            //FROM Comment Right JOIN AspNetUsers  ON Comment.UserEmail = AspNetUsers.Email
-            //Where ProductId = @ProductId ORDER BY[Date] DESC
-            //GO
+            var executeSql = DatabaseConnection().Fetch<CommentInformation>
+                (PetaPoco.Sql.Builder.Append(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId));
 
-            //EXEC usp_GetGuestCommentInfor @ProductId = 'SP01'
-
-            return DatabaseConnection().Fetch<CommentInformation>(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId);
+            return executeSql;
         }
 
         public static void Create(Comment comment)
-        {            
+        {
             DatabaseConnection().Insert(comment);
         }
 
@@ -39,9 +34,9 @@ namespace WebApplication1.Models.BUS
             DatabaseConnection().Delete(comment);
         }
 
-        public static void Edit(Comment comment ,int commentId)
-        {
-            DatabaseConnection().Update(comment,commentId);
+        public void Update(int commentId, string commentContent)
+        {          
+            DatabaseConnection().Execute(PetaPoco.Sql.Builder.Append("EXEC usp_CommentUpdateDelete @@Id = @0, @@CommentContent = @1, @@StatementType = 'UPDATE'", commentId, commentContent));
         }
     }
 }

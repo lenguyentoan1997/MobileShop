@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 using PagedList;
+using System.Web.Script.Serialization;
 
 namespace WebApplication1.Controllers
 {
@@ -24,26 +25,42 @@ namespace WebApplication1.Controllers
         //[Authorize(Roles = "Editor")]
         [Authorize]
         // GET: Comment
-        public ActionResult Create(Comment comment, string productId)
+        public ActionResult Create(Comment comment, string productId, string qualityEvalution)
         {
             if (comment.ProductId == null)
             {
                 return Redirect("/");
             }
 
+            switch (qualityEvalution)
+            {
+                case "Bad":
+                    comment.star = 1;
+                    break;
+                case "Worse":
+                    comment.star = 2;
+                    break;
+            }
+
             comment.Date = DateTime.Now;
             comment.UserEmail = User.Identity.Name;
+            comment.CommentContent.Trim();
             CommentBUS.Create(comment);
 
             return RedirectToAction("Details", "Shop", new { Id = productId });
         }
 
-        public ActionResult Edit(Comment comment, string productId)
+        public JsonResult Edit(string commentModel)
         {
-            int commentId = comment.Id;
-            CommentBUS.Edit(comment, commentId);
+            var jsonComment = new JavaScriptSerializer().Deserialize<List<Comment>>(commentModel);
+            var commentBUS = new CommentBUS();
+            foreach (var item in jsonComment)
+            {
+                item.CommentContent.Trim();
+                commentBUS.Update(item.Id, item.CommentContent);
+            }
 
-            return RedirectToAction("Details", "Shop", new { Id = productId });
+            return Json(new { status = true });
         }
 
         [Authorize]

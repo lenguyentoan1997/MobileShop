@@ -789,7 +789,7 @@
     <Content Include="Asset\js\controller\cartController.js" />
     <Content Include="Asset\js\jquery-2.1.1.js" />
     <Content Include="Asset\js\photo-gallery.js" />
-    <Content Include="Asset\js\productDetails01.js" />
+    <Content Include="Asset\js\product\productDetails02.js" />
     <Content Include="Asset\js\slick-slider\slick01.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

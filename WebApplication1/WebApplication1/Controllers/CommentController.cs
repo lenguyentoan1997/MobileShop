@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 using PagedList;
 using System.Web.Script.Serialization;
+using WebApplication1.Common;
 
 namespace WebApplication1.Controllers
 {
@@ -15,10 +16,62 @@ namespace WebApplication1.Controllers
         public ActionResult Index(string productId, int page = 1, int pageSize = 5)
         {
             ViewBag.ProductId = productId;
-            CommentBUS commentBUS = new CommentBUS();
-            var allComments = commentBUS.AllComments(productId).ToPagedList(page, pageSize);
 
-            return View(allComments);
+            CommentBUS commentBUS = new CommentBUS();
+            var allComments = commentBUS.AllComments(productId);
+            
+            List<int> starList = new List<int>();
+
+            List<int> countStarList = new List<int>();
+
+            int count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0;
+
+            foreach (var item in allComments)
+            {
+                if (item.star != null)
+                {
+                    starList.Add((int)item.star);
+
+                    switch (item.star)
+                    {
+                        case 1:
+                            count1++;
+                            break;
+                        case 2:
+                            count2++;
+                            break;
+                        case 3:
+                            count3++;
+                            break;
+                        case 4:
+                            count4++;
+                            break;
+                        case 5:
+                            count5++;
+                            break;
+                    }
+                }
+            }
+            //calculate point average star
+            if (starList.Count != 0)
+            {
+                Helper.AveragePoint = (int)starList.Average();
+            }
+            else
+            {
+                Helper.AveragePoint = 0;
+            }
+            //statistical number of stars
+            countStarList.Add(count1);
+            countStarList.Add(count2);
+            countStarList.Add(count3);
+            countStarList.Add(count4);
+            countStarList.Add(count5);
+            Helper.CountStarList = countStarList;
+
+            var commentPageList = allComments.ToPagedList(page, pageSize);
+
+            return View(commentPageList);
         }
 
         //[Authorize(Roles = "Admin")]
@@ -40,6 +93,17 @@ namespace WebApplication1.Controllers
                 case "Worse":
                     comment.star = 2;
                     break;
+                case "Average":
+                    comment.star = 3;
+                    break;
+                case "Good":
+                    comment.star = 4;
+                    break;
+                case "Great":
+                    comment.star = 5;
+                    break;
+                default:
+                    break;
             }
 
             comment.Date = DateTime.Now;
@@ -47,7 +111,7 @@ namespace WebApplication1.Controllers
             comment.CommentContent.Trim();
             CommentBUS.Create(comment);
 
-            return RedirectToAction("Details", "Shop", new { Id = productId });
+            return RedirectToAction("Details", "Product", new { Id = productId });
         }
 
         public JsonResult Edit(string commentModel)
@@ -60,15 +124,22 @@ namespace WebApplication1.Controllers
                 commentBUS.Update(item.Id, item.CommentContent);
             }
 
-            return Json(new { status = true });
+            return Json(new { isStatus = true });
+            //return RedirectToAction("Details", "Product", new { Id = ViewBag.ProductId });
         }
 
-        [Authorize]
-        public ActionResult Delete(Comment comment, string productId)
-        {
-            CommentBUS.Delete(comment);
 
-            return RedirectToAction("Details", "Shop", new { Id = productId });
+        public JsonResult Delete(string commentModel)
+        {
+            var jsonComment = new JavaScriptSerializer().Deserialize<List<Comment>>(commentModel);
+            var commentBUS = new CommentBUS();
+            foreach (var item in jsonComment)
+            {
+                commentBUS.Delete(item.Id, item.CommentContent);
+            }
+
+            //return RedirectToAction("Details", "Product", new { Id = ViewBag.ProductId });
+            return Json(new { isStatus = true });
         }
     }
 }

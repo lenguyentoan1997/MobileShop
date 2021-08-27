@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ShopOnlineConnection;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -15,6 +17,10 @@ namespace WebApplication1.Common
     public static class Helper
     {
         public static bool IsSocialMediaLogin { get; set; }
+        public static int AveragePoint { get; set; }
+
+        public static List<int> CountStarList { get; set; }
+
         public static string GetFullName(this System.Security.Principal.IPrincipal usr)
         {
             var fullNameClaim = ((ClaimsIdentity)usr.Identity).FindFirst("FullName");
@@ -26,19 +32,10 @@ namespace WebApplication1.Common
             return "";
         }
 
-        //public static bool IsloginLocal(this System.Security.Principal.IPrincipal usr)
-        //{
-        //    if (IsSocialMediaLogin == true)
-        //    {
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
         public static string FormatTime(DateTime commentDate)
         {
             var seconds = Math.Floor((DateTime.Now - commentDate).TotalSeconds);
- 
+
             var interval = Math.Floor(seconds / 31536000);
 
             if (interval >= 1)
@@ -67,6 +64,5 @@ namespace WebApplication1.Common
             }
             return Math.Floor(seconds) + " seconds";
         }
-
     }
 }

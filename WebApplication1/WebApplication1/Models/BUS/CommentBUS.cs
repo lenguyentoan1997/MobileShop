@@ -19,7 +19,7 @@ namespace WebApplication1.Models.BUS
         public IEnumerable<CommentInformation> AllComments(string productId)
         {
             var executeSql = DatabaseConnection().Fetch<CommentInformation>
-                (PetaPoco.Sql.Builder.Append(";EXEC usp_GetGuestCommentInfor @@ProductId = @0", productId));
+                (PetaPoco.Sql.Builder.Append(";EXEC usp_GetCommentInforByProductId @@ProductId = @0", productId));
 
             return executeSql;
         }
@@ -29,13 +29,13 @@ namespace WebApplication1.Models.BUS
             DatabaseConnection().Insert(comment);
         }
 
-        public static void Delete(Comment comment)
+        public void Delete(int commnetId, string commentContent)
         {
-            DatabaseConnection().Delete(comment);
+            DatabaseConnection().Execute(PetaPoco.Sql.Builder.Append("EXEC usp_CommentUpdateDelete @@Id = @0, @@CommentContent = @1,@@StatementType = 'DELETE'", commnetId, commentContent));
         }
 
         public void Update(int commentId, string commentContent)
-        {          
+        {
             DatabaseConnection().Execute(PetaPoco.Sql.Builder.Append("EXEC usp_CommentUpdateDelete @@Id = @0, @@CommentContent = @1, @@StatementType = 'UPDATE'", commentId, commentContent));
         }
     }

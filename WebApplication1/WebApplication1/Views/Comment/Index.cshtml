@@ -50,15 +50,31 @@
             font-size: 35px;
         }
 
-    .rate-list .total .totalResult {
+    .rate-list .total .total-result {
         font-size: 20px;
         font-weight: 800;
-        color:black;
-    }
-    .rate-list .total{
-        margin-top:10px;
+        color: black;
+        border: none;
+        outline: none;
+        width: 80%;
     }
 
+    .rate-list .total {
+        margin-top: 10px;
+    }
+
+    .point h2 {
+        color: #D9534F;
+    }
+
+    .modal-header .close {
+        margin-top: -30px;
+    }
+
+    .txtarea-comment-content:focus {
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        border: 1px solid black;
+    }
 </style>
 
 <h2>Comment</h2>
@@ -69,30 +85,32 @@
             <div class="c-rate-start-left text-center">
                 <p>Average Rating</p>
                 <div class="point">
-                    <h2 style="color: #D9534F;">4/5</h2>
+                    <h2 id="titleAveragePoint" data-average-point="@Helper.AveragePoint">@Helper.AveragePoint/5</h2>
                 </div>
                 <div class="rating list-start">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <span class="fa fa-star average-star-rate-@i"></span>
+                    }
                 </div>
-                <span>60 Comment</span>
+                <span>@Model.TotalItemCount Comments</span>
             </div>
         </div>
         <div class="col-lg-7">
             <div class="c-rate-start-right">
                 <div class="c-progress-list">
-                    @for (int i = 5; i >= 1; i--)
-                    {
-                        <div class="rating c-progress-item col-lg-12 ">
-                            <label>@i <i class="fa fa-star checked"></i></label>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    @{
+
+                        for (int i = 5; i >= 1; i--)
+                        {
+                            <div class="rating c-progress-item col-lg-12 ">
+                                <label>@i <i class="fa fa-star checked"></i></label>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width:@Helper.CountStarList[i - 1]%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span>@Helper.CountStarList[i - 1]</span>
                             </div>
-                            <span>10</span>
-                        </div>
+                        }
                     }
                 </div>
             </div>
@@ -105,20 +123,21 @@
     {
         using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { @class = "comment-product" }))
         {
+            @Html.AntiForgeryToken()
+
             <div class="col-lg-3">
                 <div class="rate-list text-center">
                     <div class="rating">
-                        <span class="star-1 star"><i class="fa fa-star"></i></span>
-                        <span class="star-2 star"><i class="fa fa-star"></i></span>
-                        <span class="star-3 star"><i class="fa fa-star"></i></span>
-                        <span class="star-4 star"><i class="fa fa-star"></i></span>
-                        <span class="star-5 star"><i class="fa fa-star"></i></span>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <span class="star-@i star"><i class="fa fa-star"></i></span>
+                        }
+
                     </div>
-                    <div class="total" name="qualityEvalution"><span class="totalResult"></span></div>
+                    <div class="total"><input class="total-result text-center" name="qualityEvalution" readonly></div>
                 </div>
             </div>
             <div class="col-lg-9">
-                @Html.AntiForgeryToken()
                 @Html.Hidden("productId", (string)ViewBag.productId)
                 @Html.TextArea("commentContent", new { @placeholder = "Writing" })
             </div>
@@ -130,10 +149,6 @@
         <p class="alert alert-danger">Please login to comment</p>
     }
 </div>
-
-
-
-
 <div id="comments" class="row">
     <br />
     @foreach (var item in Model)
@@ -144,10 +159,28 @@
                     @item.FullName
                 </strong>
                 @Helper.FormatTime(item.Date)
+                @if (item.star != null)
+                {
+                    <div class="rating">
+                        @for (int i = 1; i <= item.star; i++)
+                        {
+                            <span class="fa fa-star checked"></span>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <span class="fa fa-star"></span>
+                        }
+                    </div>
+                }
             </div>
             <div class="comment-content col-lg-10">
                 <p>
-                    <textarea class="input txtarea-comment-content" id="txtareaCommentContent_@item.Id" data-id="@item.Id">@item.CommentContent</textarea>
+                    <textarea class="input txtarea-comment-content" id="txtareaCommentContent_@item.Id" data-id="@item.Id" disabled>@item.CommentContent</textarea>
                     <span>
                         <input class="btn-cancel-comment" type="button" value="Cancel" id="btnCancelComment_@item.Id" hidden />
                     </span>
@@ -156,12 +189,33 @@
             @if (item.UserEmail == User.Identity.Name)
             {
                 <div class="details-comment col-lg-2">
-                    <input type="submit" value="Edit" class="btn btn-2" id="btnEditComment_@item.Id" onClick="btnEditComment_(@item.Id)" />
-                    <input type="submit" value="Delete" class="btn btn-2" />
+                    <input type="submit" value="Edit" class="btn btn-2" data-product-id="@ViewBag.ProductId" id="btnEditComment_@item.Id" onClick="btnEditComment_(@item.Id)" />
+                    <button type="button" class="btn btn-2" data-toggle="modal" data-target="#exampleModalCenter" id="btnYesDeleteComment_@item.Id" onClick="btnYesDeleteComment_(@item.Id)">
+                        Delete
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    Do You Want To Delete This Comment?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary btn-yes-delete-comment" value="Yes" data-product-id="@ViewBag.ProductId" data-dismiss="modal">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
-
     }
 
     <div class="text-center col-lg-12">
@@ -170,90 +224,3 @@
         </ul>
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        var resultDisplay = $('.totalResult');
-        //Select single star
-        var star1 = $('.star-1').attr('data-star', 'Bad');
-        var star2 = $('.star-2').attr('data-star', 'Worse');
-        var star3 = $('.star-3').attr('data-star', 'Average');
-        var star4 = $('.star-4').attr('data-star', 'Good');
-        var star5 = $('.star-5').attr('data-star', 'Great');
-        var allStars = [star1, star2, star3, star4, star5];
-        function getValue(element, dataName) {
-            element.on('click', function () {
-                var currentStarData = $(this).data(dataName);
-                resultDisplay.removeClass("move");
-                if (currentStarData >= 'Bad' || currentStarData != 'Bad') {
-                    $(this).prevAll('.star').addClass('checked');
-                    $(this).addClass("checked");
-                    resultDisplay.addClass("move");
-                }
-                if (currentStarData <= 'Greate' || currentStarData != 'Greate') {
-                    $(this).nextAll('.star').removeClass('checked');
-                    $(this).addClass("checked");
-                    resultDisplay.addClass("move");
-                }
-                resultDisplay.text(currentStarData);
-            });
-        }
-        for (var i = 0; i < allStars.length; i++) {
-            getValue(allStars[i], "star");
-        }
-    });
-
-    function btnEditComment_(itemId) {
-        var id = itemId;
-
-        $('#btnEditComment_' + id).click(function () {
-            var listProduct = $('#txtareaCommentContent_' + id);
-            var commentList = [];
-            $.each(listProduct, function (i, item) {
-                /*The object here must be the same as the object in Cart to be mapping*/
-                commentList.push({
-                    CommentContent: $(item).val(),
-                    Id: $(item).data('id'),
-                });
-            });
-
-            $.ajax({
-                url: '/Comment/Edit',
-                data: { commentModel: JSON.stringify(commentList) },
-                dataType: 'json',
-                type: 'POST',
-                success: function (res) {
-                    //return results from CartController
-                    if (res.status == true) {
-                        window.location.href = "/Product/Details/SP01";
-                    }
-                }
-            })
-        });
-    }
-
-
-
-    //function btnEditComment_(itemId) {
-    //    var id = itemId;
-    //    var btnEditComment = document.getElementById("btnEditComment_" + id);
-
-    //    if (btnEditComment.value === "Edit") {
-    //        $("#txtareaCommentContent_" + id).prop("disabled", false);
-    //        $("#btnCancelComment_" + id).prop("hidden", false);
-    //        $("#btnEditComment_" + id).val("Save");
-
-    //        $("#btnCancelComment_" + id).click(function () {
-    //            $("#txtareaCommentContent_" + id).prop("disabled", true);
-
-    //            $("#btnCancelComment_" + id).prop("hidden", true);
-
-    //            $("#btnEditComment_" + id).val("Edit");
-    //        });
-    //    } else {
-    //        $("#txtareaCommentContent_" + id).prop("disabled", true);
-    //        $("#btnCancelComment_" + id).prop("hidden", true);
-    //        $("#btnEditComment_" + id).val("Edit");
-    //    }
-    //}
-</script>

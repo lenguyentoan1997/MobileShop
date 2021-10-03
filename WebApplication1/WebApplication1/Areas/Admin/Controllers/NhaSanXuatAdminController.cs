@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
+using static WebApplication1.Models.Database;
 
 namespace WebApplication1.Areas.Admin.Controllers
 {
@@ -14,7 +15,8 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/NhaSanXuatAdmin
         public ActionResult Index()
         {
-            var ds = NhaSanXuatBUS.DanhSachAdmin();
+            var ds = NhaSanXuatModel.Instance.DanhSachAdmin();
+
             return View(ds);
         }
 
@@ -37,7 +39,21 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add insert logic here
-                NhaSanXuatBUS.ThemNSX(nsx);
+                switch (nsx.MaLoaiSanPham)
+                {
+                    case "Phone":
+                        nsx.MaLoaiSanPham = "LSP01";
+                        break;
+                    case "Laptop":
+                        nsx.MaLoaiSanPham = "LSP02";
+                        break;
+                    case "Accessories":
+                        nsx.MaLoaiSanPham = "LSP03";
+                        break;
+                    default:
+                        break;
+                }
+                NhaSanXuatModel.Instance.ThemNSX(nsx);
                 return RedirectToAction("Index");
             }
             catch
@@ -47,19 +63,37 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/NhaSanXuatAdmin/Edit/5
-        public ActionResult Edit(String id)
+        public ActionResult Edit(string id)
         {
-            return View(NhaSanXuatBUS.ChiTietAdmin(id));
+            return View(NhaSanXuatModel.Instance.ChiTietAdmin(id));
         }
 
         // POST: Admin/NhaSanXuatAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(NhaSanXuat nhaSanXuat, string maNhaSanXuat)
+        public ActionResult Edit(NhaSanXuatView nhaSanXuatView)
         {
             try
             {
                 // TODO: Add update logic here
-                NhaSanXuatBUS.UpdateNSX(nhaSanXuat, maNhaSanXuat);
+                NhaSanXuat nhaSanXuat = new NhaSanXuat();
+                nhaSanXuat.TenNhaSanXuat = nhaSanXuatView.TenNhaSanXuat;
+                nhaSanXuat.TinhTrang = nhaSanXuatView.TinhTrang;
+                switch (nhaSanXuatView.TenLoaiSanPham)
+                {
+                    case "Phone":
+                        nhaSanXuat.MaLoaiSanPham = "LSP01";
+                        break;
+                    case "Laptop":
+                        nhaSanXuat.MaLoaiSanPham = "LSP02";
+                        break;
+                    case "Accessories":
+                        nhaSanXuat.MaLoaiSanPham = "LSP03";
+                        break;
+                    default:
+                        throw new Exception("Invalid Product Type");
+                }
+
+                NhaSanXuatModel.Instance.UpdateNSX(nhaSanXuat, nhaSanXuatView.MaNhaSanXuat);
 
                 return RedirectToAction("Index");
             }
@@ -70,9 +104,9 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/NhaSanXuatAdmin/Delete/5
-        public ActionResult Delete(String id)
+        public ActionResult Delete(string id)
         {
-            return View(NhaSanXuatBUS.ChiTietAdmin(id));
+            return View(NhaSanXuatModel.Instance.ChiTietAdmin(id));
         }
 
         // POST: Admin/NhaSanXuatAdmin/Delete/5
@@ -82,7 +116,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add delete logic here
-                NhaSanXuatBUS.DeleteNSX(nhaSanXuat);
+                NhaSanXuatModel.Instance.DeleteNSX(nhaSanXuat);
                 return RedirectToAction("Index");
             }
             catch

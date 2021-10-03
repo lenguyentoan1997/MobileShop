@@ -16,7 +16,6 @@ namespace WebApplication1.Areas.Admin.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private AccountBUS _accountBUS = new AccountBUS();
 
         public ApplicationSignInManager SignInManager
         {
@@ -46,7 +45,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         public ActionResult Index()
         {
             
-            return View(_accountBUS.ListGuestAccount());
+            return View(AccountModel.Instance.ListGuestAccount());
         }
 
         // GET: Admin/GuestAccountAdmin/Details/5
@@ -89,7 +88,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/GuestAccountAdmin/Edit/5
         public ActionResult Edit(String id)
         {
-            return View(AccountBUS.AccountDetails(id));
+            return View(AccountModel.Instance.AccountDetails(id));
         }
 
 
@@ -100,13 +99,13 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add update logic here
-                var accountDetails = AccountBUS.AccountDetails(id);
+                var accountDetails = AccountModel.Instance.AccountDetails(id);
 
                 aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
 
-                _accountBUS.UpdateGuestAccount(aspNetUser, id);
+                AccountModel.Instance.UpdateGuestAccount(aspNetUser, id);
 
                 return RedirectToAction("Index");
             }
@@ -164,9 +163,9 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/GuestAccountAdmin/Delete/5
-        public ActionResult Delete(String id)
+        public ActionResult Delete(string id)
         {
-            return View(AccountBUS.AccountDetails(id));
+            return View(AccountModel.Instance.AccountDetails(id));
         }
 
         // POST: Admin/GuestAccountAdmin/Delete/5
@@ -176,7 +175,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add delete logic here
-                _accountBUS.DeleteGuestAccount(aspNetUser);
+                AccountModel.Instance.DeleteGuestAccount(aspNetUser);
 
                 return RedirectToAction("Index");
             }

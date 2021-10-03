@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="~/Asset/css/stylesheet10.css" />
+    <link rel="stylesheet" href="~/Asset/css/stylesheetV13.css" />
 
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
@@ -32,15 +32,15 @@
     <!-- jQuery and Modernizr-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="~/Asset/js/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="~/Asset/js/product/ratingStarV2.js"></script>
 
     <!--Bootstrap Core JavaScript Files -->
     <script type="text/javascript" src="~/Areas/AssetAdmin/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="~/Asset/js/bootstrap.min.js"></script>
 
+
     <!-- Slick Slider-->
     <script type="text/javascript" src="~/Asset/js/slick-slider/slick01.js" charset="utf-8"></script>
-
-
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -99,13 +99,13 @@
                 <span id="heading" class="visible-xs">Categories</span>
                 <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
             </div>
-
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @Html.Partial("_Phone", WebApplication1.Models.BUS.NhaSanXuatBUS.ListPhone())
-                    @Html.Partial("_LapTop", WebApplication1.Models.BUS.NhaSanXuatBUS.ListLapTop())
-                    @Html.Partial("_Accessories", WebApplication1.Models.BUS.NhaSanXuatBUS.DanhSach())
+                    @Html.Partial("_Phone", WebApplication1.Models.BUS.NhaSanXuatModel.Instance.ListPhone())
+                    @Html.Partial("_LapTop", WebApplication1.Models.BUS.NhaSanXuatModel.Instance.ListLapTop())
+                    @Html.Partial("_Accessories", WebApplication1.Models.BUS.NhaSanXuatModel.Instance.DanhSach())
+
                     <li><a href="category.html">Contact</a></li>
                 </ul>
             </div>
@@ -116,11 +116,12 @@
     <!--//////////////////////////////////////////////////-->
     @RenderBody()
     @*Kĩ thuật 1: đỗ dữ liệu theo kiểu renderpartital*@
+    <br />
     @{ Html.RenderPartial("_Footer");}
     @RenderSection("scripts", required: false)
     @RenderSection("jsCart", required: false)
     @RenderSection("jsProfileAccount", required: false)
     @RenderSection("jsProduct", required: false)
-
+    @RenderSection("jsRatingStar", required: false)
 </body>
 </html>

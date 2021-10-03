@@ -14,12 +14,11 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class AccountAdminController : Controller
     {
-        private AccountBUS _accountBUS = new AccountBUS();
 
         // GET: Admin/AccountAdmin
         public ActionResult Index()
         {
-            return View(_accountBUS.ListAdminAccocunt());
+            return View(AccountModel.Instance.ListAdminAccocunt());
         }
 
         // GET: Admin/AccountAdmin/Details/5
@@ -64,24 +63,24 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/AccountAdmin/Edit/5
-        public ActionResult Edit(String id)
+        public ActionResult Edit(string id)
         {
-            return View(AccountBUS.AccountDetails(id));
+            return View(AccountModel.Instance.AccountDetails(id));
         }
 
         // POST: Admin/AccountAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(AspNetUser aspNetUser, String id)
+        public ActionResult Edit(AspNetUser aspNetUser, string id)
         {
             try
             {
-                var accountDetails = AccountBUS.AccountDetails(id);
+                var accountDetails = AccountModel.Instance.AccountDetails(id);
 
                 aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
 
-                _accountBUS.UpdateAdminAcocunt(aspNetUser, id);
+                AccountModel.Instance.UpdateAdminAcocunt(aspNetUser, id);
 
                 return RedirectToAction("Index");
             }
@@ -94,7 +93,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/AccountAdmin/Delete/5
         public ActionResult Delete(String id)
         {
-            return View(AccountBUS.AccountDetails(id));
+            return View(AccountModel.Instance.AccountDetails(id));
         }
 
         // POST: Admin/AccountAdmin/Delete/5
@@ -104,7 +103,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add delete logic here
-                _accountBUS.DeleteAdminAccount(aspNetUser);
+                AccountModel.Instance.DeleteAdminAccount(aspNetUser);
 
                 return RedirectToAction("Index");
             }

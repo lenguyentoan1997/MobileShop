@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
         // GET: LoaiSanPham
         public ActionResult Index(String id, int page = 1, int pagesize = 3)
         {
-            var ds = LoaiSanPhamBUS.ChiTiet(id).ToPagedList(page,pagesize);
+            var ds = LoaiSanPhamModel.Instance.ChiTiet(id).ToPagedList(page,pagesize);
             return View(ds);
         }
     }

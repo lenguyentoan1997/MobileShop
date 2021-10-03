@@ -5,10 +5,6 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-@section jsCart{
-    <script src="/Asset/js/controller/cartController.js"></script>
-}
-
 @if (Model.Count > 0)
 {
     <div class="container">
@@ -47,15 +43,19 @@
         <button id="btnDeleteAll" class="btn">Xóa Hết Tất Cả Sản Phẩm</button>
         <button id="btnPayment" class="btn">Thanh Toán</button>
     </div>
-
 }
 else
 {
     <div class="container">
         <div class="row">
-            <div class="col-lg-4" >
-                <p class="alert alert-danger">Chua Co San pham nao trong gio hang</p>       
+            <div class="col-lg-4">
+                <p class="alert alert-danger">Chua Co San pham nao trong gio hang</p>
             </div>
         </div>
     </div>
+}
+    <br/>
+
+@section jsCart{
+    <script src="/Asset/js/controller/cartController.js"></script>
 }

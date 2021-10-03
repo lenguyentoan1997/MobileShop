@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 using PagedList;
@@ -17,9 +16,8 @@ namespace WebApplication1.Controllers
         {
             ViewBag.ProductId = productId;
 
-            CommentBUS commentBUS = new CommentBUS();
-            var allComments = commentBUS.AllComments(productId);
-            
+            var allComments = CommentModel.Instance.AllComments(productId);
+
             List<int> starList = new List<int>();
 
             List<int> countStarList = new List<int>();
@@ -56,6 +54,8 @@ namespace WebApplication1.Controllers
             if (starList.Count != 0)
             {
                 Helper.AveragePoint = (int)starList.Average();
+
+                ProductModel.Instance.UpdateProductAveragePoint(Helper.AveragePoint, productId);
             }
             else
             {
@@ -109,7 +109,7 @@ namespace WebApplication1.Controllers
             comment.Date = DateTime.Now;
             comment.UserEmail = User.Identity.Name;
             comment.CommentContent.Trim();
-            CommentBUS.Create(comment);
+            CommentModel.Instance.Create(comment);
 
             return RedirectToAction("Details", "Product", new { Id = productId });
         }
@@ -117,11 +117,11 @@ namespace WebApplication1.Controllers
         public JsonResult Edit(string commentModel)
         {
             var jsonComment = new JavaScriptSerializer().Deserialize<List<Comment>>(commentModel);
-            var commentBUS = new CommentBUS();
+
             foreach (var item in jsonComment)
             {
                 item.CommentContent.Trim();
-                commentBUS.Update(item.Id, item.CommentContent);
+                CommentModel.Instance.Update(item.Id, item.CommentContent);
             }
 
             return Json(new { isStatus = true });
@@ -132,10 +132,9 @@ namespace WebApplication1.Controllers
         public JsonResult Delete(string commentModel)
         {
             var jsonComment = new JavaScriptSerializer().Deserialize<List<Comment>>(commentModel);
-            var commentBUS = new CommentBUS();
             foreach (var item in jsonComment)
             {
-                commentBUS.Delete(item.Id, item.CommentContent);
+                CommentModel.Instance.Delete(item.Id, item.CommentContent);
             }
 
             //return RedirectToAction("Details", "Product", new { Id = ViewBag.ProductId });

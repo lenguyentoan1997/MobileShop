@@ -11,7 +11,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/LoaiSanPhamAdmin
         public ActionResult Index()
         {
-            var db = LoaiSanPhamBUS.DanhSachAdmin();
+            var db = LoaiSanPhamModel.Instance.DanhSachAdmin();
             return View(db);
         }
 
@@ -34,7 +34,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add insert logic here
-                LoaiSanPhamBUS.AddLoaiSanPham(lsp);
+                LoaiSanPhamModel.Instance.AddLoaiSanPham(lsp);
                 return RedirectToAction("Index");
             }
             catch
@@ -44,9 +44,9 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/LoaiSanPhamAdmin/Edit/5
-        public ActionResult Edit(String id)
+        public ActionResult Edit(string id)
         {
-            return View(LoaiSanPhamBUS.ChiTietLSP(id));
+            return View(LoaiSanPhamModel.Instance.ChiTietLSP(id));
         }
 
         // POST: Admin/LoaiSanPhamAdmin/Edit/5
@@ -56,7 +56,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add update logic here
-                LoaiSanPhamBUS.UpdateLSP(loaiSanPham, maLoaiSanPham);
+                LoaiSanPhamModel.Instance.UpdateLSP(loaiSanPham, maLoaiSanPham);
                 return RedirectToAction("Index");
             }
             catch
@@ -66,9 +66,9 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/LoaiSanPhamAdmin/Delete/5
-        public ActionResult Delete(String id)
+        public ActionResult Delete(string id)
         {
-            return View(LoaiSanPhamBUS.ChiTietLSP(id));
+            return View(LoaiSanPhamModel.Instance.ChiTietLSP(id));
         }
 
         // POST: Admin/LoaiSanPhamAdmin/Delete/5
@@ -78,7 +78,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add delete logic here
-                LoaiSanPhamBUS.DeleteLSP(loaiSanPham);
+                LoaiSanPhamModel.Instance.DeleteLSP(loaiSanPham);
 
                 return RedirectToAction("Index");
             }

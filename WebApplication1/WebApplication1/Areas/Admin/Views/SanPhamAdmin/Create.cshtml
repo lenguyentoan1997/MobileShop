@@ -48,7 +48,7 @@
         </tr>
         <tr>
             <td>Product Name</td>
-            <td><input class="input-product-style" type="text" name="TenSanPham"/></td>
+            <td><input class="input-product-style" type="text" name="TenSanPham" /></td>
         </tr>
         <tr>
             <td>Image Avatar</td>
@@ -91,9 +91,19 @@
             </td>
         </tr>
         <tr>
+            <td class="td-config-product">Decription</td>
+            <td colspan="2">
+                <textarea class="ckeditor" name="Description" rows="4" cols="30"></textarea>
+            </td>
+        </tr>
+        <tr>
             <td colspan="3">
                 <input class="input-add-product" type="submit" name="btn_ThemDienThoai" value="Create Product" />
             </td>
         </tr>
     </table>
+}
+
+@section jsCRUDProduct{
+    <script src="~/Areas/AssetAdmin/js/product/previewFile.js"></script>
 }

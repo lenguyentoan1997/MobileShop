@@ -248,8 +248,8 @@ namespace WebApplication1.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                //AddErrors(result);
-                ModelState.AddModelError("", String.Format("This Email: {0} already exists.", model.Email));
+                AddErrors(result);
+                //ModelState.AddModelError("", String.Format("This Email: {0} already exists.", model.Email));
             }
 
             // If we got this far, something failed, redisplay form
@@ -612,7 +612,7 @@ namespace WebApplication1.Controllers
         // GET: Admin/ManageAccountDetailsAdmin/Edit/5
         public ActionResult ProfileAccount(String id)
         {
-            return View(AccountBUS.AccountDetails(id));
+            return View(AccountModel.Instance.AccountDetails(id));
         }
 
         // POST: Admin/ManageAccountDetailsAdmin/Edit/5

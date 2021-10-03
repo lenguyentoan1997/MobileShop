@@ -4,134 +4,222 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
+<style>
+    .like-product {
+        background-color: #eee;
+        display: inline-block;
+        border-radius: 4px;
+    }
 
-<div id="page-content" class="single-page">
-    <div class="container-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="breadcrumb">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Phone", "AllPhone", "Product")</li>
-                        <li><a href="#">@Model.TenSanPham</a></li>
-                    </ul>
-                </div>
+    .btn-like {
+        cursor: pointer;
+        height: 34px;
+        width: 50px;
+    }
+
+    .number-like-product {
+        padding-right: 15px;
+    }
+</style>
+
+<div class="detail-product">
+    <div class="container-fluid detail-product-imgs" id="detailProductImgs">
+        <div class="row">
+            <div class="close-detail-img text-center col-lg-offset-11 col-md-offset-10 col-sm-offset-10 col-xs-offset-10">
+                <i class="fas fa-times-circle" id="closeDetailImg"></i>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="product">
-                        <div class="col-md-4">
-                            <div class="image">
-                                @*@Html.Partial("_AvartaDetails", WebApplication1.Models.BUS.ShopOnlineBUS.LoadAvartaImg(Model.MaSanPham))*@
-                                <img src="~/Asset/images/@Model.HinhChinh">
-                                <div class="image-more">
-                                    <br />
-                                    <ul class="row">
-                                        <li class="col-lg-3 col-sm-3 col-xs-4">
-                                            <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh1"></a>
-                                        </li>
-                                        <li class="col-lg-3 col-sm-3 col-xs-4">
-                                            <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh2"></a>
-                                        </li>
-                                        <li class="col-lg-3 col-sm-3 col-xs-4">
-                                            <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh3"></a>
-                                        </li>
-                                        <li class="col-lg-3 col-sm-3 col-xs-4">
-                                            <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh4"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="buttons">
-                                    <a class="btn cart" href="@Url.Action("Index","Cart")">
-                                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    </a>
-                                    <a class="btn wishlist" href="#">
-                                        <span class="glyphicon glyphicon-heart"></span>
-                                    </a>
-                                    <a class="btn compare" href="#">
-                                        <span class="glyphicon glyphicon-eye-open"> @Model.LuotView</span>
-                                    </a>
-                                    <a href="#" data-id="@Model.MaSanPham" class="btn_images">
-                                        <img src="~/Asset/images/ThemHinh.png" />
-                                        Details Product
-                                    </a>
+            <div class="col-lg-offset-3 col-lg-6">
+                <section class="single-img-slider">
+                    <div class="detail-product-img-slider">
+                        <div class="detail-product-img">
+                            <img class="detail-img" src="~/Asset/images/@Model.Hinh1">
+                        </div>
+                    </div>
+                    <div class="detail-product-img-slider">
+                        <div class="detail-product-img">
+                            <img class="detail-img" src="~/Asset/images/@Model.Hinh2">
+                        </div>
+                    </div>
+                    <div class="detail-product-img-slider">
+                        <div class="detail-product-img">
+                            <img class="detail-img" src="~/Asset/images/@Model.Hinh3">
+                        </div>
+                    </div>
+                    <div class="detail-product-img-slider">
+                        <div class="detail-product-img">
+                            <img class="detail-img" src="~/Asset/images/@Model.Hinh4">
+                        </div>
+                    </div>
+                </section>
+                <div id="prevDetailImg"><i class="fas fa-arrow-alt-circle-left"></i></div>
+                <div id="nextDetailImg"><i class="fas fa-arrow-alt-circle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-content" class="single-page">
+        <div class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="breadcrumb">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Phone", "AllPhone", "Product")</li>
+                            <li><a href="#">@Model.TenSanPham</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product">
+                            <div class="col-md-4">
+                                <div class="image">
+                                    <div>
+                                        <img class="img-slides" src="~/Asset/images/@Model.Hinh1">
+                                        <img class="img-slides" src="~/Asset/images/@Model.Hinh2" style="display:none;">
+                                        <img class="img-slides" src="~/Asset/images/@Model.Hinh3" style="display:none;">
+                                        <img class="img-slides" src="~/Asset/images/@Model.Hinh4" style="display:none;">
+                                    </div>
+
+                                    <div class="image-more">
+                                        <br />
+                                        <ul class="row">
+                                            <li class="col-lg-3 col-sm-3 col-xs-4">
+                                                <img class="img-responsive" src="~/Asset/images/@Model.Hinh1" onclick="clickImgThumbnail(1)">
+                                            </li>
+                                            <li class="col-lg-3 col-sm-3 col-xs-4">
+                                                <img class="img-responsive" src="~/Asset/images/@Model.Hinh2" onclick="clickImgThumbnail(2)">
+                                            </li>
+                                            <li class="col-lg-3 col-sm-3 col-xs-4">
+                                                <img class="img-responsive" src="~/Asset/images/@Model.Hinh3" onclick="clickImgThumbnail(3)">
+                                            </li>
+                                            <li class="col-lg-3 col-sm-3 col-xs-4">
+                                                <img class="img-responsive" src="~/Asset/images/@Model.Hinh4" onclick="clickImgThumbnail(4)">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="buttons">
+                                        @*<a class="btn cart" href="@Url.Action("Index","Cart")">
+                                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                                            </a>*@
+                                        @if (!User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="btn compare" data-toggle="modal" data-target="#modalLikeProduct">
+                                                <span class="glyphicon glyphicon-thumbs-up"> @Model.LikeProduct</span>
+                                            </a>
+                                            <a class="btn compare" data-toggle="modal" data-target="#modalLikeProduct">
+                                                <span class="glyphicon glyphicon-heart"></span>
+                                            </a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modalLikeProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Login Confirmation?</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body-like-product text-center">
+                                                            Please login
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <a href="@Url.Action("Login","Account")" class="btn btn-primary" style="background-color:#428bca">Login</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="like-product">
+                                                <span class="btn btn-like glyphicon glyphicon-thumbs-up" data-product-id="@Model.MaSanPham"></span>
+                                                <span class="number-like-product">@Model.LikeProduct</span>
+                                            </div>
+                                            <div class="heart-product">
+                                                <span class="btn btn-heart" data-product-id="@Model.MaSanPham"></span>
+                                            </div>
+                                        }
+                                        <a class="btn compare">
+                                            @*  *@
+                                            <span class="glyphicon glyphicon-eye-open"> @Model.LuotView</span>
+                                        </a>
+                                        <button class="btn_images" id="btnOpenDetailImg">
+                                            <img src="~/Asset/images/ThemHinh.png" /> Pictures
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-md-offset-2">
-                            <div class="caption">
-                                <div class="name-phone"><h3>@Model.TenSanPham</h3></div>
-                                @*<div><h5>Luot View: @Model.LuotView</h5></div>*@
-                                <div class="price-phone">
-                                    <h5>
-                                        @String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:#,#₫}", Model.Gia)
-                                    </h5>
-                                </div>
-                                @Html.Raw(HttpUtility.HtmlDecode(Model.CauHinh))
-                                <div class="rating">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                </div>
-                                @*@using (Html.BeginForm("AddItem", "Cart", FormMethod.Post))*@
-                                @using (Html.BeginForm(new { action = "AddItem", controller = "Cart", id = Model.MaSanPham }))
-                                {
-                                    <input type="hidden" name="tensanpham" value="@Model.TenSanPham" />
-                                    <input type="hidden" name="productId" value="@Model.MaSanPham" />
-                                    <input type="hidden" name="gia" value="@Model.Gia" />
-                                    <label>So Luong: </label>
-                                    <input class="fomr-inline quantity" type="number" value="1" min="1" max="1000" name="quantity" />
-                                    if (User.Identity.IsAuthenticated)
+                            <div class="col-md-6 col-md-offset-2">
+                                <div class="caption">
+                                    <div class="name-phone"><h3>@Model.TenSanPham</h3></div>
+                                    <div class="price-phone">
+                                        <h5>
+                                            @String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:#,#₫}", Model.Gia)
+                                        </h5>
+                                    </div>
+                                    @Html.Raw(HttpUtility.HtmlDecode(Model.CauHinh))
+                                    <div class="rating list-start" >
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <span class="fa fa-star average-star-rate-@i"></span>
+                                        }
+                                    </div>
+                                    @using (Html.BeginForm("AddItem", "Cart", new { id = Model.MaSanPham }))
                                     {
-                                        <input type="submit" class="btn btn-2" value="Them Vao Gio" />
+                                        <input type="hidden" name="tensanpham" value="@Model.TenSanPham" />
+                                        <input type="hidden" name="productId" value="@Model.MaSanPham" />
+                                        <input type="hidden" name="gia" value="@Model.Gia" />
+                                        <label>So Luong: </label>
+                                        <input class="fomr-inline quantity" type="number" value="1" min="1" max="1000" name="quantity" />
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+                                            <input type="submit" class="btn btn-2" value="Add Cart" />
+                                        }
+                                        else
+                                        {
+                                            <p class="alert alert-danger">Vui Long Dang Nhap De Them Vao Gio Hang</p>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <p class="alert alert-danger">Vui Long Dang Nhap De Them Vao Gio Hang</p>
-                                    }
-                                }
+                                </div>
                             </div>
+                            <div class="clear"></div>
                         </div>
-                        <div class="clear"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div id="main-content" class="col-md-12">
-                <div class="row product-desc">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="">Description</a></li>
-                    </ul>
-                    <div class="tab-content body-shadow">
-                        <div id="description">
-                            <h4>Sample Lorem Ipsum Text</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at ante. Mauris eleifend, quam a vulputate dictum, massa quam dapibus leo, eget vulputate orci purus ut lorem. In fringilla mi in ligula. Pellentesque aliquam quam vel dolor. Nunc adipiscing. Sed quam odio, tempus ac, aliquam molestie, varius ac, tellus. Vestibulum ut nulla aliquam risus rutrum interdum. Pellentesque lorem. Curabitur sit amet erat quis risus feugiat viverra. Pellentesque augue justo, sagittis et, lacinia at, venenatis non, arcu. Nunc nec libero. In cursus dictum risus. Etiam tristique nisl a</p>
-                            <h4>Sample Lorem Ipsum Text</h4>
-                            <p>Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque aliquet lacus vitae pede. Nullam mollis dolor ac nisi. Phasellus sit amet urna. Praesent pellentesque sapien sed lacus. Donec lacinia odio in odio. In sit amet elit. Maecenas gravida interdum urna. Integer pretium, arcu vitae imperdiet facilisis, elit tellus tempor nisi, vel feugiat ante velit sit amet mauris. Vivamus arcu. Integer pharetra magna ac lacus. Aliquam vitae sapien in nibh vehicula auctor. Suspendisse leo mauris, pulvinar sed, tempor et, consequat ac, lacus. Proin velit. Nulla semper lobortis mauris. Duis urna erat, ornare et, imperdiet eu, suscipit sit amet, massa. Nulla nulla nisi, pellentesque at, egestas quis, fringilla eu, diam.</p>
-                        </div>
-                    </div>
-                </div>
-               @*comment*@
-                <div class="row">
-                    <div class="col-lg-12">
+        <div class="container">
+            <div class="row">
+                <div id="main-content" class="col-md-12">
+                    <div class="row product-desc">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="">Description</a></li>
+                        </ul>
                         <div class="tab-content body-shadow">
-                            @Html.Action("Index", "Comment", new { productId = Model.MaSanPham })
+                            <div id="description">
+                                @Model.Description
+                            </div>
+                        </div>
+                    </div>
+                    @*comment*@
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="tab-content body-shadow">
+                                @Html.Action("Index", "Comment", new { productId = Model.MaSanPham })
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="similarProducts" class="col-md-12">
-                <div class="widget wid-product">
-                    <div class="heading">
-                        <h4>Similar Products</h4>
-                    </div>
-                    <div class="content">
-                        @Html.Action("SimilarProducts", "Product", new { producerCode = Model.MaNhaSanXuat, price = Model.Gia })
+                <div id="similarProducts" class="col-md-12">
+                    <div class="widget wid-product">
+                        <div class="heading">
+                            <h4>Similar Products</h4>
+                        </div>
+                        <div class="content">
+                            @Html.Action("SimilarProducts", "Product", new { producerCode = Model.MaNhaSanXuat, price = Model.Gia })
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,8 +227,23 @@
     </div>
 </div>
 
+<script>
+
+    $(".btn-heart").on('click touchstart', function () {
+        $(this).toggleClass('btn-heart-animating');
+        $(this).toggleClass('btn-heart-color');
+
+        $.ajax({
+            url: '/FavoriteProduct/AddFavoriteProduct',
+            //id must match name parameter in controller
+            data: { id: $(this).data('product-id') },
+            dataType: 'json',
+            type: 'POST',
+        });
+    });
+
+</script>
+
 @section jsProduct{
-    <script src="~/Asset/js/product/productDetails02.js"></script>
+    <script src="~/Asset/js/product/productDetailsV04.js"></script>
 }
-
-

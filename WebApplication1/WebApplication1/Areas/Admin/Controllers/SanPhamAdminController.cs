@@ -15,7 +15,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/SanPhamAdmin
         public ActionResult Index()
         {
-            return View(ProductBUS.DanhSachSP());
+            return View(ProductModel.Instance.DanhSachSP());
         }
 
         // GET: Admin/SanPhamAdmin/Details/5
@@ -27,63 +27,81 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/SanPhamAdmin/Create
         public ActionResult Create()
         {
-            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatBUS.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat");
-            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamBUS.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham");
+            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatModel.Instance.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat");
+            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamModel.Instance.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham");
             return View();
         }
 
         // POST: Admin/SanPhamAdmin/Create
         [HttpPost, ValidateInput(false)]
-        public ActionResult Create(SanPham sp)
+        public ActionResult Create(SanPham product)
         {
             try
             {
-                var hpf = HttpContext.Request.Files[0];
-                if (hpf.ContentLength > 0)
+                for (int i = 0; i < 5; i++)
                 {
-                    string fileName = sp.MaSanPham;
-                    string fullPathWithFileName = "~/Asset/images/" + fileName + ".png";
-                    hpf.SaveAs(Server.MapPath(fullPathWithFileName));
-                    sp.HinhChinh = sp.MaSanPham + ".png";
+                    var httpContextRequestFile = HttpContext.Request.Files[i];
+
+                    if (HttpContext.Request.Files[i].ContentLength != 0)
+                    {
+                        if (i == 0)
+                        {
+                            string fullPathWithFileName = "~/Asset/images/" + product.MaSanPham + "_avatarV" + i + ".png";
+                            httpContextRequestFile.SaveAs(Server.MapPath(fullPathWithFileName));
+
+                            product.HinhChinh = product.MaSanPham + "_avatarV" + i + ".png";
+                        }
+                        else
+                        {
+                            string fullPathWithFileName = "~/Asset/images/" + product.MaSanPham + "thumbnail_" + i + ".png";
+                            httpContextRequestFile.SaveAs(Server.MapPath(fullPathWithFileName));
+
+                            switch (i)
+                            {
+                                case 1:
+                                    product.Hinh1 = product.MaSanPham + "thumbnail_" + i + ".png";
+                                    break;
+                                case 2:
+                                    product.Hinh2 = product.MaSanPham + "thumbnail_" + i + ".png";
+                                    break;
+                                case 3:
+                                    product.Hinh3 = product.MaSanPham + "thumbnail_" + i + ".png";
+                                    break;
+                                case 4:
+                                    product.Hinh4 = product.MaSanPham + "thumbnail_" + i + ".png";
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                product.HinhChinh = "defaultPhone.jpg";
+                                break;
+                            case 1:
+                                product.Hinh1 = "defaultPhone.jpg";
+                                break;
+                            case 2:
+                                product.Hinh2 = "defaultPhone.jpg";
+                                break;
+                            case 3:
+                                product.Hinh3 = "defaultPhone.jpg";
+                                break;
+                            case 4:
+                                product.Hinh4 = "defaultPhone.jpg";
+                                break;
+                        }
+                    }
                 }
 
-                var hpf1 = HttpContext.Request.Files[1];
-                if (hpf1.ContentLength > 0)
-                {
-                    string fileName1 = sp.MaSanPham;
-                    string fullPathWithFileName1 = "~/Asset/images/" + fileName1 + "_1.png";
-                    hpf1.SaveAs(Server.MapPath(fullPathWithFileName1));
-                    sp.Hinh1 = sp.MaSanPham + "_1.png";
-                }
-                var hpf2 = HttpContext.Request.Files[2];
-                if (hpf2.ContentLength > 0)
-                {
-                    string fileName2 = sp.MaSanPham;
-                    string fullPathWithFileName2 = "~/Asset/images/" + fileName2 + "_2.png";
-                    hpf2.SaveAs(Server.MapPath(fullPathWithFileName2));
-                    sp.Hinh2 = sp.MaSanPham + "_2.png";
-                }
-                var hpf3 = HttpContext.Request.Files[3];
-                if (hpf3.ContentLength > 0)
-                {
-                    string fileName3 = sp.MaSanPham;
-                    string fullPathWithFileName3 = "~/Asset/images/" + fileName3 + "_3.png";
-                    hpf3.SaveAs(Server.MapPath(fullPathWithFileName3));
-                    sp.Hinh3 = sp.MaSanPham + "_3.png";
-                }
-                var hpf4 = HttpContext.Request.Files[4];
-                if (hpf4.ContentLength > 0)
-                {
-                    string fileName4 = sp.MaSanPham;
-                    string fullPathWithFileName4 = "~/Asset/images/" + fileName4 + "_4.png";
-                    hpf4.SaveAs(Server.MapPath(fullPathWithFileName4));
-                    sp.Hinh4 = sp.MaSanPham + "_4.png";
-                }
-                sp.TinhTrang = "0";
-                sp.SoLuongDaBan = 0;
-                sp.LuotView = 0;
-                // TODO: Add insert logic here
-                ProductBUS.InsertSp(sp);
+                product.LuotView = 0;
+                product.TinhTrang = "0";
+                product.LikeProduct = 0;
+                product.AveragePoint = 0;
+                ProductModel.Instance.InsertSp(product);
+
                 return RedirectToAction("Index");
             }
             catch
@@ -92,96 +110,104 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/SanPhamAdmin/Edit/5
-        public ActionResult Edit(String id)
+        private static List<string> ProductImgs = new List<string>();
+        private void SelectTop5ProductImgs()
         {
-            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatBUS.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat", ProductBUS.ChiTiet(id).MaNhaSanXuat);
-            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamBUS.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham", ProductBUS.ChiTiet(id).MaLoaiSanPham);
-            return View(ProductBUS.ChiTiet(id));
+            if (ProductImgs.Count > 5)
+            {
+                ProductImgs.RemoveRange(0, 5);
+            }
+        }
+
+
+
+        private static int CountNumberImageChange { get; set; }
+
+        // GET: Admin/SanPhamAdmin/Edit/5
+        public ActionResult Edit(string id)
+        {
+            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatModel.Instance.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat", ProductModel.Instance.ChiTiet(id).MaNhaSanXuat);
+
+            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamModel.Instance.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham", ProductModel.Instance.ChiTiet(id).MaLoaiSanPham);
+
+            var product = ProductModel.Instance.ChiTiet(id);
+
+            ProductImgs.Add(product.HinhChinh);
+            ProductImgs.Add(product.Hinh1);
+            ProductImgs.Add(product.Hinh2);
+            ProductImgs.Add(product.Hinh3);
+            ProductImgs.Add(product.Hinh4);
+
+            return View(product);
         }
 
         // POST: Admin/SanPhamAdmin/Edit/5
         [HttpPost, ValidateInput(false)]
-        public ActionResult Edit(String id, SanPham sp)
+        public ActionResult Edit(SanPham product)
         {
-            var temp = ProductBUS.ChiTiet(id);
-            try
-            {
-                var hpf = HttpContext.Request.Files[0];
-                if (hpf.ContentLength > 0)
-                {
-                    string fileName = sp.MaSanPham;
-                    string fullPathWithFileName = "~/Asset/images/" + fileName + "_avatar.png";
-                    hpf.SaveAs(Server.MapPath(fullPathWithFileName));
-                    sp.HinhChinh = sp.MaSanPham + "_avatar.png";
-                }
-                else
-                {
-                    sp.HinhChinh = temp.HinhChinh;
-                }
+            SelectTop5ProductImgs();
 
-                var hpf1 = HttpContext.Request.Files[1];
-                if (hpf1.ContentLength > 0)
-                {
-                    string fileName1 = sp.MaSanPham;
-                    string fullPathWithFileName1 = "~/Asset/images/" + fileName1 + "thumbnail_1.png";
-                    hpf1.SaveAs(Server.MapPath(fullPathWithFileName1));
-                    sp.Hinh1 = sp.MaSanPham + "thumbnail_1.png";
-                }
-                else
-                {
-                    sp.Hinh1 = temp.Hinh1;
-                }
-                var hpf2 = HttpContext.Request.Files[2];
-                if (hpf2.ContentLength > 0)
-                {
-                    string fileName2 = sp.MaSanPham;
-                    string fullPathWithFileName2 = "~/Asset/images/" + fileName2 + "thumbnail_2.png";
-                    hpf2.SaveAs(Server.MapPath(fullPathWithFileName2));
-                    sp.Hinh2 = sp.MaSanPham + "thumbnail_2.png";
-                }
-                else
-                {
-                    sp.Hinh2 = temp.Hinh2;
-                }
-                var hpf3 = HttpContext.Request.Files[3];
-                if (hpf3.ContentLength > 0)
-                {
-                    string fileName3 = sp.MaSanPham;
-                    string fullPathWithFileName3 = "~/Asset/images/" + fileName3 + "thumbnail_3.png";
-                    hpf3.SaveAs(Server.MapPath(fullPathWithFileName3));
-                    sp.Hinh3 = sp.MaSanPham + "thumbnail_3.png";
-                }
-                else
-                {
-                    sp.Hinh3 = temp.Hinh3;
-                }
-                var hpf4 = HttpContext.Request.Files[4];
-                if (hpf4.ContentLength > 0)
-                {
-                    string fileName4 = sp.MaSanPham;
-                    string fullPathWithFileName4 = "~/Asset/images/" + fileName4 + "thumbnail_4.png";
-                    hpf4.SaveAs(Server.MapPath(fullPathWithFileName4));
-                    sp.Hinh4 = sp.MaSanPham + "thumbnail_4.png";
-                }
-                else
-                {
-                    sp.Hinh4 = temp.Hinh4;
-                }
-                ProductBUS.UpdateSp(id, sp);
-                // TODO: Add update logic here
-                return RedirectToAction("Index");
-            }
-            catch
+            List<string> productImgsList = new List<string>();
+            productImgsList.Add(product.HinhChinh);
+            productImgsList.Add(product.Hinh1);
+            productImgsList.Add(product.Hinh2);
+            productImgsList.Add(product.Hinh3);
+            productImgsList.Add(product.Hinh4);
+
+            for (int i = 0; i < productImgsList.Count; i++)
             {
-                return View();
+                if (productImgsList[i] != null)
+                {
+                    CountNumberImageChange++;
+                    if (i == 0)
+                    {
+                        string fullPathWithFileNameAvatar = "~/Asset/images/" + product.MaSanPham + "_avatarV" + CountNumberImageChange + ".png";
+                        HttpContext.Request.Files[i].SaveAs(Server.MapPath(fullPathWithFileNameAvatar));
+                        productImgsList[i] = product.MaSanPham + "_avatarV" + CountNumberImageChange + ".png";
+                    }
+                    else
+                    {
+                        string fullPathWithFileName = "~/Asset/images/" + product.MaSanPham + "thumbnail_" + i + "V" + CountNumberImageChange + ".png";
+                        HttpContext.Request.Files[i].SaveAs(Server.MapPath(fullPathWithFileName));
+                    }
+
+                    switch (i)
+                    {
+                        case 1:
+                            productImgsList[i] = product.MaSanPham + "thumbnail_" + i + "V" + CountNumberImageChange + ".png";
+                            break;
+                        case 2:
+                            productImgsList[i] = product.MaSanPham + "thumbnail_" + i + "V" + CountNumberImageChange + ".png";
+                            break;
+                        case 3:
+                            productImgsList[i] = product.MaSanPham + "thumbnail_" + i + "V" + CountNumberImageChange + ".png";
+                            break;
+                        case 4:
+                            productImgsList[i] = product.MaSanPham + "thumbnail_" + i + "V" + CountNumberImageChange + ".png";
+                            break;
+                    }
+                }
+                else
+                {
+                    productImgsList[i] = ProductImgs[i];
+                }
             }
+            product.HinhChinh = productImgsList[0];
+            product.Hinh1 = productImgsList[1];
+            product.Hinh2 = productImgsList[2];
+            product.Hinh3 = productImgsList[3];
+            product.Hinh4 = productImgsList[4];
+
+            ProductModel.Instance.UpdateSp(product);
+
+            return RedirectToAction("Index");
         }
 
+
         // GET: Admin/SanPhamAdmin/Delete/5
-        public ActionResult Delete(String id)
+        public ActionResult Delete(string id)
         {
-            return View(ProductBUS.ChiTiet(id));
+            return View(ProductModel.Instance.ChiTiet(id));
         }
 
         // POST: Admin/SanPhamAdmin/Delete/5
@@ -191,7 +217,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         {
             try
             {
-                ProductBUS.DeleteSp(sp);
+                ProductModel.Instance.DeleteSp(sp);
                 // TODO: Add delete logic here
                 return RedirectToAction("Index");
             }

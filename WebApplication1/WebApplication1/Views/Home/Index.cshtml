@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Home Page";
 }
+
 <div id="page-content" class="home-page">
     <div class="container">
         <div class="row">
@@ -64,7 +65,7 @@
                 </div>
             </div>
         </div>
-        @Html.Partial("_Top4New", WebApplication1.Models.BUS.ProductBUS.Top4New())
+        @Html.Partial("_Top4New", WebApplication1.Models.BUS.ProductModel.Instance.Top4New())
         <div class="row">
             <div class="banner">
                 <div class="col-sm-6">
@@ -75,7 +76,17 @@
                 </div>
             </div>
         </div>
-        @Html.Partial("_TopHot", WebApplication1.Models.BUS.ProductBUS.TopHot())
-
+        @Html.Partial("_TopHot", WebApplication1.Models.BUS.ProductModel.Instance.TopHot())
+        <div class="row">
+            <div class="banner">
+                <div class="col-sm-6">
+                    <img src="~/Asset/images/sub-banner4.jpg" />
+                </div>
+                <div class="col-sm-6">
+                    <img src="~/Asset/images/sub-banner5.png" />
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_TopHot", WebApplication1.Models.BUS.ProductModel.Instance.TopHot())
     </div>
 </div>

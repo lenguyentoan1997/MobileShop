@@ -1,0 +1,14 @@
+﻿@model List<WebApplication1.Models.FavoriteProduct>
+
+@{
+    ViewBag.Title = "CountFavoriteProduct";
+    Layout = null;
+}
+
+<div id="favoriteProduct">
+    <a class="btn btn-1" href="@Url.Action("index", "FavoriteProduct")">
+        <span class="glyphicon glyphicon-heart"></span> @Model.Count ITEM
+    </a>
+</div>
+
+

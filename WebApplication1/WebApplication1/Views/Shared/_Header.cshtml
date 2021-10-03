@@ -2,17 +2,37 @@
 
 <header class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div id="logo"><a href="/"><img src="~/Asset/images/logo.png" /></a></div>
         </div>
-        <div class="col-md-4">
-            <form class="form-search">
-                <input type="text" class="input-medium search-query">
+        <div class="col-md-5">
+            @using (Html.BeginForm("SearchProductByName", "Product", FormMethod.Get, new { @class = "form-search" }))
+            {
+                <input id="searchQuery" type="text" name="queryProductName" class="input-medium search-query" onblur="formatSearch()">
                 <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
-            </form>
+            }
+            @*<form class="form-search">
+                    <input type="text" class="input-medium search-query">
+                    <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+                </form>*@
         </div>
-        <div class="col-md-4">
-            <div id="cart"><a class="btn btn-1" href="@Url.Action("index","Cart")"><span class="glyphicon glyphicon-shopping-cart"></span>CART : @Model.Count  ITEM</a></div>
+        <div class="col-md-2">
+            <div id="cart">
+                <a class="btn btn-1" href="@Url.Action("index", "Cart")">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                    CART : @Model.Count  ITEM
+                </a>
+            </div>
+        </div>
+        <div class="col-md-1">
+            @Html.Action("CountFavoriteProduct", "FavoriteProduct");
         </div>
     </div>
 </header>
+
+<script>
+    function formatSearch() {
+        var searchQuery = document.getElementById("searchQuery");
+        searchQuery.value = searchQuery.value.replace(/[^\w]/g, ' ').replace(/\s{2,}/g,' ').trim().toLowerCase();
+    }
+</script>

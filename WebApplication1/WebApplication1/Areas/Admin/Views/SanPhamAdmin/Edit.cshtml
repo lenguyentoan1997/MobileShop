@@ -1,4 +1,5 @@
 ﻿@model ShopOnlineConnection.SanPham
+
 <httpRuntime validateRequest="false" />
 
 @{
@@ -15,7 +16,7 @@
             <td>Product Code</td>
             @*name input like name DB*@
             <td><input class="input-product-style" maxlength="11" type="text" name="MaSanPham" value="@Model.MaSanPham" readonly /></td>
-            <td rowspan="8" class="td-avatar-product">
+            <td rowspan="7" class="td-avatar-product">
                 <div class="image">
                     @if (Model.HinhChinh == null)
                     {
@@ -23,7 +24,10 @@
                     }
                     else
                     {
-                        <img class="img" id="imgAvatar" src="~/Asset/images/@Model.HinhChinh" />
+                        <div class="edit-delete-product-avatar-img">
+                            <img class="img" id="imgAvatar" name="HinhChinh" value="@Model.HinhChinh" src="~/Asset/images/@Model.HinhChinh" style="padding:10px;" />
+                        </div>
+
                     }
                     <div class="image-more">
                         <ul class="row" style="margin-top:50px;">
@@ -93,24 +97,25 @@
         </tr>
         <tr>
             <td>Image Avatar</td>
-            <td><input type="File" class="img" id="file_Hinh" name="HinhChinh" onchange="loadImgAvatar(this)" value="@Model.HinhChinh" />
+            <td>
+                <input type="File" class="img" id="file_Hinh" name="HinhChinh" onchange="loadImgAvatar(this)" />
             </td>
         </tr>
         <tr>
             <td>Image 1</td>
-            <td><input type="File" class="img1" id="file_Hinh" name="Hinh1" onchange="loadImgThumbnail1(this)" value="@Model.Hinh1" /></td>
+            <td><input type="File" class="img1" id="file_Hinh" name="Hinh1" onchange="loadImgThumbnail1(this)" /></td>
         </tr>
         <tr>
             <td>Image 2</td>
-            <td><input type="File" class="img2" id="file_Hinh" name="Hinh2" onchange="loadImgThumbnail2(this)" value="@Model.Hinh2" /></td>
+            <td><input type="File" class="img2" id="file_Hinh" name="Hinh2" onchange="loadImgThumbnail2(this)" /></td>
         </tr>
         <tr>
             <td>Image 3</td>
-            <td><input type="File" class="img3" id="file_Hinh" name="Hinh3" onchange="loadImgThumbnail3(this)" value="@Model.Hinh3" /></td>
+            <td><input type="File" class="img3" id="file_Hinh" name="Hinh3" onchange="loadImgThumbnail3(this)" /></td>
         </tr>
         <tr>
             <td>Image 4</td>
-            <td><input type="File" class="img4" id="file_Hinh" name="Hinh4" onchange="loadImgThumbnail4(this)" value="@Model.Hinh4" /></td>
+            <td><input type="File" class="img4" id="file_Hinh" name="Hinh4" onchange="loadImgThumbnail4(this)" /></td>
         </tr>
         <tr>
             <td>Price</td>
@@ -119,6 +124,18 @@
         <tr>
             <td>Note</td>
             <td><input class="input-product-style" type="text" name="GhiChu" value="@Model.GhiChu" /></td>
+        </tr>
+        <tr>
+            <td>Like Product</td>
+            <td><input class="input-product-style" type="text" name="LikeProduct" value="@Model.LikeProduct" /></td>
+        </tr>
+        <tr>
+            <td>View</td>
+            <td><input class="input-product-style" type="text" name="LuotView" value="@Model.LuotView" /></td>
+        </tr>
+        <tr>
+            <td>Average Point</td>
+            <td><input class="input-product-style" type="text" name="LuotView" value="@Model.AveragePoint" /></td>
         </tr>
         <tr>
             <td>Producer</td>
@@ -132,13 +149,13 @@
                 <select id="conditionProduct" name="TinhTrang">
                     @if (Model.TinhTrang == "1")
                     {
-                        <option value="0">Hiển Thị</option>
-                        <option value="1" selected>Ẩn</option>
+                        <option value="0">Display</option>
+                        <option value="1" selected>Hidden</option>
                     }
                     else
                     {
-                        <option value="0" selected>Hiển Thị</option>
-                        <option value="1">Ẩn</option>
+                        <option value="0" selected>Display</option>
+                        <option value="1">Hidden</option>
                     }
                 </select>
             </td>
@@ -150,10 +167,19 @@
             </td>
         </tr>
         <tr>
+            <td style="width:300px;">Decription</td>
+            <td colspan="2">
+                <textarea class="ckeditor" name="Description" rows="4" cols="30">@Model.Description</textarea>
+            </td>
+        </tr>
+        <tr>
             <td colspan="3">
-                <input class="input-add-product" type="submit" name="btn_ThemDienThoai" value="Xac Nhan" />
+                <input class="input-add-product" type="submit" name="btn_EditProduct" value="Xac Nhan" />
             </td>
         </tr>
     </table>
 }
 
+@section jsCRUDProduct{
+    <script src="~/Areas/AssetAdmin/js/product/previewFile.js"></script>
+}

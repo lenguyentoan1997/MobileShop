@@ -17,6 +17,7 @@ namespace WebApplication1.Common
     public static class Helper
     {
         public static bool IsSocialMediaLogin { get; set; }
+
         public static int AveragePoint { get; set; }
 
         public static List<int> CountStarList { get; set; }

@@ -15,7 +15,7 @@ namespace WebApplication1.Controllers
         // GET: NhaSanXuat
         public ActionResult Index(string id, int page = 1, int pagesize = 4)
         {
-            var db = NhaSanXuatBUS.ChiTiet(id).ToPagedList(page, pagesize);
+            var db = NhaSanXuatModel.Instance.ChiTiet(id).ToPagedList(page, pagesize);
             switch (id)
             {
                 case "NSX01":

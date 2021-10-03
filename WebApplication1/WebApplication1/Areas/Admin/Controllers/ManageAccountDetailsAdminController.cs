@@ -7,9 +7,7 @@ using WebApplication1.Models.BUS;
 namespace WebApplication1.Areas.Admin.Controllers
 {
     public class ManageAccountDetailsAdminController : Controller
-    {
-        private AccountBUS _accountBUS = new AccountBUS();
-       
+    {      
         // GET: Admin/ManageAccountDetailsAdmin
         public ActionResult Index()
         {
@@ -47,7 +45,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/ManageAccountDetailsAdmin/Edit/5
         public ActionResult Edit(String id)
         {
-            return View(AccountBUS.AccountDetails(id));
+            return View(AccountModel.Instance.AccountDetails(id));
         }
 
         // POST: Admin/ManageAccountDetailsAdmin/Edit/5
@@ -57,13 +55,13 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 // TODO: Add update logic here
-                var accountDetails = AccountBUS.AccountDetails(id);
+                var accountDetails = AccountModel.Instance.AccountDetails(id);
 
                 aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
              
-                _accountBUS.UpdateGuestAccount(aspNetUser, id);
+                AccountModel.Instance.UpdateGuestAccount(aspNetUser, id);
                 return RedirectToAction("Edit");
             }
             catch

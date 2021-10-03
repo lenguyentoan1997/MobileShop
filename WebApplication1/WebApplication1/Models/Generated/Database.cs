@@ -191,20 +191,8 @@ namespace ShopOnlineConnection
 		[Column] public DateTime Date { get; set; }
 		[Column] public byte? star { get; set; }
 	}
-    public partial class CommentInformation : ShopOnlineConnectionDB.Record<Comment>
-    {
-        [Column] public int Id { get; set; }
-        [Column] public string ProductId { get; set; }
-        [Column] public string UserEmail { get; set; }
-        [Column] public string CommentContent { get; set; }
-        [Column] public int Status { get; set; }
-        [Column] public DateTime Date { get; set; }
-        [Column] public string FullName { get; set; }
-
-		[Column] public byte? star { get; set; }
-	}
-
-    [TableName("dbo.LoaiSanPham")]
+    
+	[TableName("dbo.LoaiSanPham")]
 	[PrimaryKey("MaLoaiSanPham", AutoIncrement=false)]
 	[ExplicitColumns]
     public partial class LoaiSanPham : ShopOnlineConnectionDB.Record<LoaiSanPham>  
@@ -267,11 +255,12 @@ namespace ShopOnlineConnection
 		[Column] public string Hinh3 { get; set; }
 		[Column] public string Hinh4 { get; set; }
 		[Column] public int? Gia { get; set; }
-		[Column] public int? SoLuongDaBan { get; set; }
 		[Column] public int? LuotView { get; set; }
 		[Column] public string TinhTrang { get; set; }
 		[Column] public string GhiChu { get; set; }
 		[Column] public string Description { get; set; }
+		[Column] public int? LikeProduct { get; set; }
+		[Column] public byte? AveragePoint { get; set; }
 	}
     
 	[TableName("dbo.sysdiagrams")]

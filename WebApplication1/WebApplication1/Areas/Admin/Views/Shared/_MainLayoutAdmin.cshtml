@@ -1,9 +1,9 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
+
 @{
     Layout = null;
 
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/css/localadmin001.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/css/localadminV3.css" />
 
     <!-- jQuery and Modernizr-->
     <script type="text/javascript" src="~/Areas/AssetAdmin/js/jquery-1.10.2.min.js"></script>
@@ -96,6 +96,7 @@
         </nav>
         @RenderBody()
         @RenderSection("jsProfileAccount", required: false)
+        @RenderSection("jsCRUDProduct", required: false)
     </div>
 </body>
 </html>

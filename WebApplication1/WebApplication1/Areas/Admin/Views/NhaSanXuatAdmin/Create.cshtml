@@ -10,12 +10,16 @@
             <h2 class="text-center">Create Producer</h2>
             @using (Html.BeginForm("Create", "NhaSanXuatAdmin", FormMethod.Post, new { @class = "create-admin" }))
             {
-                <label for="fname">Producer Code</label>
+                <label for="producer_code">Producer Code</label>
                 <input type="text" id="fname" name="MaNhaSanXuat" placeholder="Enter The Producer Code" required>
-
-                <label for="lname">Producer Name</label>
+                <label for="producer_name">Producer Name</label>
                 <input type="text" id="lname" name="TenNhaSanXuat" placeholder="Enter The Producer Code" required>
-
+                <label for="producer_type">Producer Type</label>
+                <select class="cre-producer-type" name="MaLoaiSanPham">
+                    <option>Phone</option>
+                    <option>Laptop</option>
+                    <option>Accessories</option>
+                </select>
                 <label for="status">Status</label>
                 <select id="status" name="TinhTrang" required>
                     <option value="0">Not Locked</option>

@@ -1,0 +1,319 @@
+﻿.single-page .container-fluid {
+    background-color: white;
+}
+
+.body-shadow {
+    background-color: #fff;
+    background-clip: border-box;
+    -webkit-box-shadow: 0 0 3px 0 #dee2e6;
+    box-shadow: 0 0 3px 0 #dee2e6;
+    border-radius: 6px;
+}
+
+.rating .checked {
+    color: red;
+}
+
+.products .height-products {
+    height: 537px;
+}
+
+.products .product .caption .name {
+    margin-top: 30px;
+}
+
+.products .product .buttons {
+    margin-top: 20px;
+}
+
+.btn-comment {
+    position: absolute;
+    right: 50px;
+    top: 380px;
+}
+
+@media(max-width:725px) {
+    .btn-comment {
+        top: 610px;
+    }
+}
+
+/*details product*/
+.product .image .buttons .btn_images {
+    margin-left: 5px;
+    background-color: #ffffff;
+}
+
+/*comment details product*/
+.comment-product #commentContent {
+    width: 100%;
+    resize: none;
+    padding: 8px;
+}
+
+#comments .comment .comment-name strong {
+    font-size: 25px;
+    color: black;
+}
+
+.span-comment-content {
+    outline: none;
+}
+
+.btn-cancel-comment {
+    background-color: black;
+    color: white;
+    font-size: 10px;
+    border-radius: 10%;
+}
+
+.txtarea-comment-content {
+    background-color: #f8f9fa;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    color: black;
+    padding: 8px;
+    resize: none;
+    border-radius: 10px;
+}
+
+.c-progress-list .c-progress-item label {
+    float: left;
+}
+
+.c-progress-list .c-progress-item .progress {
+    width: 80%;
+    float: left;
+}
+
+.rate-list .rating {
+    margin-top: 5px;
+}
+
+    .rate-list .rating .star {
+        font-size: 35px;
+    }
+
+.rate-list .total .total-result {
+    font-size: 20px;
+    font-weight: 800;
+    color: black;
+    border: none;
+    outline: none;
+    width: 80%;
+}
+
+.rate-list .total {
+    margin-top: 10px;
+}
+
+.point h2 {
+    color: #D9534F;
+}
+
+.modal-header .close {
+    margin-top: -30px;
+}
+
+.txtarea-comment-content:focus {
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    border: 1px solid black;
+}
+
+/*similar products*/
+.slider .similar-details-products {
+    padding: 30px;
+}
+
+.wid-product .content .paginator-center .prev, .next {
+    position: absolute;
+    height: 20px;
+    width: 30px;
+    line-height: 0px;
+    cursor: pointer;
+    top: 50%;
+    margin-top: -10px;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-size: 40px;
+}
+
+.wid-product .content .paginator-center .prev {
+    left: -30px;
+}
+
+.wid-product .content .paginator-center .next {
+    right: -30px;
+}
+
+.similar-details-products .card .card-body .product .image a {
+    outline: none;
+    outline: 0;
+}
+
+    .similar-details-products .card .card-body .product .image a img {
+        display: initial;
+    }
+
+.detail-product {
+    position: relative;
+}
+
+/*details product*/
+.img-responsive {
+    cursor: pointer;
+}
+
+.btn_images {
+    border: none;
+}
+
+/*details img slider*/
+.detail-product-imgs {
+    background-color: black;
+    opacity: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    transition: .5s ease;
+    position: fixed;
+    z-index: -1;
+}
+
+    .detail-product-imgs .single-img-slider .detail-product-img-slider {
+        padding: 50px;
+    }
+
+        .detail-product-imgs .single-img-slider .detail-product-img-slider .detail-product-img {
+            border: 1px solid #ffffff;
+            border-radius: 20px;
+            padding: 10px;
+            background-color: white;
+        }
+/*prev,next slick detail img*/
+#prevDetailImg, #nextDetailImg {
+    font-size: 35px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+}
+
+#prevDetailImg {
+    left: -30px;
+}
+
+#nextDetailImg {
+    right: -30px;
+}
+
+.detail-product:matches(.btn_images:hover) .detail-product-imgs {
+    opacity: 1;
+}
+
+/*close slick detail img*/
+.close-detail-img {
+    margin-top: 20px;
+}
+
+    .close-detail-img #closeDetailImg {
+        font-size: 35px;
+        cursor: pointer;
+    }
+
+/*dots slick detail img*/
+.slick-dots {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 1rem 0;
+}
+
+
+    .slick-dots li {
+        margin: 0 0.25rem;
+    }
+
+        .slick-dots li button {
+            display: block;
+            width: 1rem;
+            height: 1rem;
+            padding: 0;
+            border: none;
+            border-radius: 100%;
+            background-color: orange;
+        }
+
+        .slick-dots li.slick-active button {
+            background-color: red;
+        }
+
+
+/*modal login confirmation*/
+.modal-body-like-product {
+    padding: 15px;
+    position: relative;
+}
+
+/*animation heart when click*/
+.btn-heart {
+    cursor: pointer;
+    height: 34px;
+    width: 50px;
+    background-image: url("../images/heart_animation.png");
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 2900%;
+}
+
+.btn-heart-color {
+    background-position: right;
+}
+
+.btn-heart:hover {
+    background-position: right;
+}
+
+.btn-heart-animating {
+    animation: heart-burst 1.0s steps(28) 1;
+}
+
+
+@keyframes heart-burst {
+    from {
+        background-position: left;
+    }
+
+    to {
+        background-position: right;
+    }
+}
+
+/*Details product img*/
+.heart-product {
+    background-color: #eee;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+    .heart-product .number-heart-product {
+        padding-right: 15px;
+    }
+
+.modal-open {
+    overflow: auto;
+}
+
+.modal {
+    overflow-y: auto;
+}

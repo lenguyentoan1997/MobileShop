@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Common;
 using WebApplication1.Models.BUS;
 using System.Web.Script.Serialization;
 using ShopOnlineConnection;
-using Microsoft.AspNet.Identity;
-using System.Collections;
+
 
 namespace WebApplication1.Controllers
 {
@@ -29,9 +27,10 @@ namespace WebApplication1.Controllers
             return View(list);
         }
 
-        public ActionResult AddItem(String productId, int quantity)
+        [HttpPost]
+        public ActionResult AddItem(string productId, int quantity)
         {
-            var product = ProductBUS.ChiTiet(productId);
+            var product = ProductModel.Instance.ChiTiet(productId);
             var cart = Session[CartSession];
             if (cart != null)
             {
@@ -145,9 +144,9 @@ namespace WebApplication1.Controllers
 
             try
             {
-                var id = new OrderBUS().Insert(order);
+                var id = new OrderModel().Insert(order);
                 var cart = (List<CartItem>)Session[CartSession];
-                var orderDetailBus = new OrderDetailBUS();
+                var orderDetailBus = new OrderDetailModel();
                 foreach (var item in cart)
                 {
                     var orderDetail = new OrderDetail();

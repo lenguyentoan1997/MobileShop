@@ -23,7 +23,12 @@
                         <div class="caption">
                             <div class="name"><h3><a href="@Url.Action("Details","Shop",new { id=item.MaSanPham})">@item.TenSanPham</a></h3></div>
                             <div class="price"><span>@item.Gia</span></div>
-                            <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                            <div class="rating" data-average-point="@item.AveragePoint" data-product-id="@item.MaSanPham">
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    <span class="fa fa-star average-star-rate-@item.MaSanPham-@i"></span>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +43,9 @@
     </div>
 </div>
 
-
+@section jsRatingStar{
+    <script src="~/Asset/js/product/ratingStarV2.js"></script>
+}
 
 
 

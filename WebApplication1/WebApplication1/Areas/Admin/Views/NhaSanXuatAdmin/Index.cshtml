@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShopOnlineConnection.NhaSanXuat>
+﻿@model IEnumerable<WebApplication1.Models.Database.NhaSanXuatView>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
@@ -14,24 +14,25 @@
                     <th>Producer Code</th>
                     <th>Producer Name</th>
                     <th>Status</th>
+                    <th>Product Type</th>
                     <th colspan="2">
                         <a href="@Url.Action("Create","NhaSanXuatAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
                     </th>
-                </tr>
-
+                </tr>            
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>@item.MaNhaSanXuat</td>
                         <td>@item.TenNhaSanXuat</td>
                         <td>@item.TinhTrang</td>
+                        <td>@item.TenLoaiSanPham</td>
                         <td>
                             <a href="@Url.Action("Edit","NhaSanXuatAdmin",new { id = @item.MaNhaSanXuat})">
                                 <img src="~/Asset/images/edit.png" />
                             </a>
                         </td>
                         <td>
-                            <a href="@Url.Action("Delete","NhaSanXuatAdmin",new { id = item.MaNhaSanXuat})">
+                            <a href="@Url.Action("Delete","NhaSanXuatAdmin",new { id = @item.MaNhaSanXuat})">
                                 <img src="~/Asset/images/Delete.png" />
                             </a>
                         </td>

@@ -8,5 +8,8 @@ namespace WebApplication1.Common
     public class CommonConstants
     {
         public static string CartSession = "CartSession";
+        public static string FavoriteProductSession = "FavoriteProductSession";
+
+
     }
 }

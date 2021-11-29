@@ -1,9 +1,6 @@
 ﻿using ShopOnlineConnection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Xml.Linq;
 
 namespace WebApplication1.Models.BUS
 {
@@ -43,19 +40,24 @@ namespace WebApplication1.Models.BUS
         {
             DatabaseConnection().Execute(PetaPoco.Sql.Builder.Append("EXEC sp_UpdateProductViews @@MaSanPham = @0", id));
         }
+
         public void UpdateProductLike(string id)
         {
             DatabaseConnection().Execute(PetaPoco.Sql.Builder.Append("EXEC sp_UpdateProductLike @@MaSanPham = @0", id));
         }
-        public IEnumerable<SanPham> Top4New()
+
+        public IEnumerable<SanPham> Top4PhoneByNew()
         {
-            return DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetTop4ProductByNew");
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetTop4PhoneByNew");
         }
 
-        public IEnumerable<SanPham> TopHot()
+        public IEnumerable<SanPham> Top4PhoneByView()
         {
-            return DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetTop4ProductByLuotView");
+            return DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetTop4PhoneByLuotView");
         }
+
+        public IEnumerable<SanPham> Top4LaptopByNew() => DatabaseConnection().Query<SanPham>("SELECT * FROM vw_GetTop4LaptopByNew");
+
         //---------------Admin----------------------
         public IEnumerable<SanPham> DanhSachSP()
         {

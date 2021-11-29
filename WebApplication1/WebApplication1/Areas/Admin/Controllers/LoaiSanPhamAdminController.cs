@@ -1,27 +1,50 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 using ShopOnlineConnection;
+using System.Collections.Generic;
 
 namespace WebApplication1.Areas.Admin.Controllers
 {
     public class LoaiSanPhamAdminController : Controller
     {
-        //[Authorize(Roles ="Admin")]
-        // GET: Admin/LoaiSanPhamAdmin
-        public ActionResult Index()
+        /*
+         * Get all information product type from database
+         */
+        private List<LoaiSanPham> GetAllProductType()
         {
-            var db = LoaiSanPhamModel.Instance.DanhSachAdmin();
-            return View(db);
+            List<LoaiSanPham> getAllProductTypeFromDB = new List<LoaiSanPham>();
+            getAllProductTypeFromDB.AddRange(LoaiSanPhamModel.Instance.DanhSachAdmin());
+
+            return getAllProductTypeFromDB;
         }
 
-        // GET: Admin/LoaiSanPhamAdmin/Details/5
-        public ActionResult Details(int id)
+        /*
+         * [Authorize(Roles ="Admin")]
+         * GET: Admin/LoaiSanPhamAdmin
+         * If the parameter is not null,it will be display by queryName
+         * If the parameter is null,it will be display all product type
+         * Search by TenLoaiSanPham or MaLoaiSanPham
+         */
+        public ActionResult Index(string queryName)
         {
-            return View();
+            if (queryName != null)
+            {
+                var resultSearch = GetAllProductType().FindAll(
+                    producType => producType.TenLoaiSanPham.ToLower().Contains(queryName) ||
+                                  producType.MaLoaiSanPham.ToLower().Contains(queryName));
+
+                return View(resultSearch);
+            }
+            else
+            {
+                return View(GetAllProductType());
+            }
         }
 
-        // GET: Admin/LoaiSanPhamAdmin/Create
+        /*
+         * Display view create
+         * GET: Admin/LoaiSanPhamAdmin/Create
+         */
         public ActionResult Create()
         {
             return View();
@@ -43,11 +66,11 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/LoaiSanPhamAdmin/Edit/5
-        public ActionResult Edit(string id)
-        {
-            return View(LoaiSanPhamModel.Instance.ChiTietLSP(id));
-        }
+        /*
+         * Display information product Type to edit
+         * GET: Admin/LoaiSanPhamAdmin/Edit/5
+         */
+        public ActionResult Edit(string id) => View(GetAllProductType().Find(productType => productType.MaLoaiSanPham == id));
 
         // POST: Admin/LoaiSanPhamAdmin/Edit/5
         [HttpPost]
@@ -65,11 +88,11 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/LoaiSanPhamAdmin/Delete/5
-        public ActionResult Delete(string id)
-        {
-            return View(LoaiSanPhamModel.Instance.ChiTietLSP(id));
-        }
+        /*
+         * Display information product type to delete
+         * GET: Admin/LoaiSanPhamAdmin/Delete/5
+         */
+        public ActionResult Delete(string id) => View(GetAllProductType().Find(productType => productType.MaLoaiSanPham == id));
 
         // POST: Admin/LoaiSanPhamAdmin/Delete/5
         [HttpPost]

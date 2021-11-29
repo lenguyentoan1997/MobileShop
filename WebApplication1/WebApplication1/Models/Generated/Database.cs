@@ -176,6 +176,7 @@ namespace ShopOnlineConnection
 		[Column] public string FullName { get; set; }
 		[Column] public string UserAddress { get; set; }
 		[Column] public DateTime? DOB { get; set; }
+		[Column] public DateTime? CreateDate { get; set; }
 	}
     
 	[TableName("dbo.Comment")]
@@ -273,5 +274,16 @@ namespace ShopOnlineConnection
 		[Column] public int diagram_id { get; set; }
 		[Column] public int? version { get; set; }
 		[Column] public byte[] definition { get; set; }
+	}
+    
+	[TableName("dbo.tblAccountOrderCommentActivitylog")]
+	[PrimaryKey("Id")]
+	[ExplicitColumns]
+    public partial class tblAccountOrderCommentActivitylog : ShopOnlineConnectionDB.Record<tblAccountOrderCommentActivitylog>  
+    {
+		[Column] public int Id { get; set; }
+		[Column] public DateTime? Date { get; set; }
+		[Column] public string ActiveContent { get; set; }
+		[Column] public string Type { get; set; }
 	}
 }

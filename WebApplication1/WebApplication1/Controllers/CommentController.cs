@@ -7,6 +7,7 @@ using WebApplication1.Models.BUS;
 using PagedList;
 using System.Web.Script.Serialization;
 using WebApplication1.Common;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {

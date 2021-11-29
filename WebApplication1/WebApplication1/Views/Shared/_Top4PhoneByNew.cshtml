@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ShopOnlineConnection.SanPham>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="heading"><h2>TOP NEW PHONE</h2></div>
+        <div class="products">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card card-signin my-5 height-products">
+                        <div class="card-body">
+                            <div class="product">
+                                <div class="image"><a href="@Url.Action("Details","Product",new { id=item.MaSanPham})"><img src="~/Asset/images/@item.HinhChinh" /></a></div>
+                                <div class="buttons">
+                                    <a class="btn cart" href="#">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    </a>
+                                    <a class="btn wishlist" href="#">
+                                        <span class="glyphicon glyphicon-heart"></span>
+                                    </a>
+                                    <a class="btn compare" href="#">
+                                        <span class="glyphicon glyphicon-eye-open"> @item.LuotView</span>
+                                    </a>
+                                </div>
+                                <div class="caption">
+                                    <div class="name">
+                                        <h3><a href="@Url.Action("Details","Product",new { id=item.MaSanPham})">@item.TenSanPham</a></h3>
+                                    </div>
+                                    <div class="price">
+                                        <strong>@String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:#,#₫}", @item.Gia)</strong>
+                                    </div>
+                                    <div class="rating" data-average-point="@item.AveragePoint" data-product-id="@item.MaSanPham">
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            <span class="fa fa-star average-star-rate-@item.MaSanPham-@i"></span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

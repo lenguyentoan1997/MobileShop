@@ -43,14 +43,14 @@ namespace WebApplication1.Areas.Admin.Controllers
         }
 
         // GET: Admin/ManageAccountDetailsAdmin/Edit/5
-        public ActionResult Edit(String id)
+        public ActionResult Edit(string id)
         {
             return View(AccountModel.Instance.AccountDetails(id));
         }
 
         // POST: Admin/ManageAccountDetailsAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(AspNetUser aspNetUser, String id)
+        public ActionResult Edit(AspNetUser aspNetUser, string id)
         {
             try
             {
@@ -60,7 +60,8 @@ namespace WebApplication1.Areas.Admin.Controllers
                 aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
-             
+                aspNetUser.CreateDate = accountDetails.CreateDate;
+
                 AccountModel.Instance.UpdateGuestAccount(aspNetUser, id);
                 return RedirectToAction("Edit");
             }

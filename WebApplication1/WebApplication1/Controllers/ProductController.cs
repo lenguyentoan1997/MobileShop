@@ -16,7 +16,9 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        // GET: Shop/Details/5
+        /*
+         * GET: Product/Details/
+         */
         public ActionResult Details(string id)
         {
             var db = ProductModel.Instance.ChiTiet(id);
@@ -25,7 +27,7 @@ namespace WebApplication1.Controllers
 
             return View(db);
         }
-
+        //Update Views of Product
         public void UpdateProductViews(string id)
         {
             ProductModel.Instance.UpdateProductViews(id);
@@ -59,7 +61,15 @@ namespace WebApplication1.Controllers
         /*
          * Get all Products from Database
          */
-        private static IEnumerable<SanPham> GetAllProducts() => ProductModel.Instance.DanhSach();
+        private static List<SanPham> GetAllProducts() {
+
+            IEnumerable<SanPham> getAllProductFromDB = ProductModel.Instance.DanhSach();
+
+            var listProduct = new List<SanPham>();
+            listProduct.AddRange(getAllProductFromDB);
+
+            return listProduct;
+        } 
 
         private static int s_count;
         public static int CountAllProductsFound { get => s_count; set => s_count = value; }
@@ -69,10 +79,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult SearchProductByName(string queryProductName)
         {
-            List<SanPham> listProduct = new List<SanPham>();
-            listProduct.AddRange(GetAllProducts());
-
-            var resultSearchProduct = listProduct.FindAll(product => product.TenSanPham.ToLower().Contains(queryProductName));
+            var resultSearchProduct = GetAllProducts().FindAll(product => product.TenSanPham.ToLower().Contains(queryProductName));
 
             //Initialize session from found product
             Session[queryProductName] = resultSearchProduct;
@@ -96,23 +103,22 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult LoadMoreProductSearch(string urlSearchResults)
         {
-            string[] sessionName = urlSearchResults.Split(new[] { '=' }, 2);
-
-            List<SanPham> loadMoreListProduct = (List<SanPham>)Session[sessionName[1]];
+            List<SanPham> loadMoreListProduct = (List<SanPham>)Session[urlSearchResults];
 
             //The number of products taken out each time increases by 4 products
             Session["loadMoreProduct"] = Convert.ToInt32(Session["loadMoreProduct"]) + 4;
             int numbers = Convert.ToInt32(Session["loadMoreProduct"]);
 
-            CountProductsFoundBySessionName(sessionName[1]);
+            CountProductsFoundBySessionName(urlSearchResults);
 
             //Delete session when the number of lists if less than or equal to the number of products retrieved
             if (loadMoreListProduct.Count <= numbers)
             {
-                Session.Remove(sessionName[1]);
+                Session.Remove(urlSearchResults);
             }
 
             return PartialView("_LoadMoreProductSearch", loadMoreListProduct.Take(numbers));
         }
+
     }
 }

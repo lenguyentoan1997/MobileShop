@@ -1,0 +1,43 @@
+﻿@using Shield.Mvc.UI
+@model IEnumerable<WebApplication1.Models.Database.Statistics>
+
+@{
+    Layout = "";
+}
+
+<div class="panel-body">
+    <div class="col-lg-12">
+        @using (Html.BeginForm("Statistics", "MainAdmin", FormMethod.Post))
+        {
+            <div class="col-lg-6 col-md-12">
+                <label>From:</label>
+                <label class="date-from">
+                    <input type="date" id="dob" name="dateFrom" />
+                </label>
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <label>To:</label>
+                <label class="date-to">
+                    <input type="date" id="dob" name="dateTo" />
+                </label>
+                <button type="submit" class="btn btn-submit-date"><span class="glyphicon glyphicon-search"></span></button>
+            </div>
+        }
+    </div>
+    <div class="col-lg-12">
+        @(Html.ShieldChart()
+                        .Name("Chart")
+                        .Tooltip(tooltip => tooltip.AxisMarkers(axisMarkers => axisMarkers.Enabled(true)
+                             .Mode(Shield.Mvc.UI.Chart.TooltipAxisMarkerMode.XY)
+                             .Width(1)
+                             .ZIndex(3)))
+                        .Theme("dark")
+                        .PrimaryHeader(header => header.Text("Sale Data By Order From Date"))
+                        .Export(false)
+                        .AxisX(axis => axis.CategoricalValues(Model.Select(item => item.ProductId)))
+                        .DataSeries(series => series.Area()
+                            .Name("Number Of Products Sold")
+                            .Data(Model.Select(item => item.Quantity).Cast<object>().ToArray())))
+    </div>
+</div>

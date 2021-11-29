@@ -53,15 +53,15 @@
                 </div>
                 <div class="text-center">
                     @if (ProductController.CountAllProductsFound > 4)
-                    {
-                        @Ajax.ActionLink("Show More", "LoadMoreProductSearch", "Product", new { urlSearchResults = HttpContext.Current.Request.Url.PathAndQuery }, new AjaxOptions()
                         {
-                            HttpMethod = "POST",
-                            InsertionMode = InsertionMode.Replace,
-                            UpdateTargetId = "change",
-                            LoadingElementId = "loader"
-                         }, new { @class = "btn btn-danger" })
-                    }
+                            @Ajax.ActionLink("Show More", "LoadMoreProductSearch", "Product", new { urlSearchResults = HttpContext.Current.Request.Url.Query.Split('=').Last() }, new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "change",
+                                LoadingElementId = "loader"
+                             }, new { @class = "btn btn-danger" })
+                        }
                 </div>
             </div>
         </div>

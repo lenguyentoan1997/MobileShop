@@ -3,9 +3,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using ShopOnlineConnection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 using WebApplication1.Models.BUS;
@@ -14,20 +11,41 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class AccountAdminController : Controller
     {
-
-        // GET: Admin/AccountAdmin
-        public ActionResult Index()
+        /*
+         * Get all information Account Admin
+         */
+        private List<AspNetUser> GetAllAccountAdmin()
         {
-            return View(AccountModel.Instance.ListAdminAccocunt());
+            List<AspNetUser> getAllAccountAdminFromDB = new List<AspNetUser>();
+            getAllAccountAdminFromDB.AddRange(AccountModel.Instance.ListAccocuntAdmin());
+
+            return getAllAccountAdminFromDB;
         }
 
-        // GET: Admin/AccountAdmin/Details/5
-        public ActionResult Details(int id)
+        /*
+         * GET: Admin/AccountAdmin
+         * If the parameter is not null,it will be display by queryName
+         * If the parameter is null,it will be display all Account Admin
+         * Search by FullName or Email
+         */
+        public ActionResult Index(string queryName)
         {
-            return View();
+            if (queryName != null)
+            {
+                var resultSearch = GetAllAccountAdmin().FindAll(accountAdmin => accountAdmin.FullName == queryName || accountAdmin.Email == queryName);
+
+                return View(resultSearch);
+            }
+            else
+            {
+                return View(GetAllAccountAdmin());
+            }
         }
 
-        // GET: Admin/AccountAdmin/Create
+        /*
+         * GET: Admin/AccountAdmin/Create 
+         * Display Account Admin information to create
+         */
         public ActionResult Create()
         {
             return View();
@@ -37,7 +55,6 @@ namespace WebApplication1.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(RegisterViewModel model)
         {
-            // TODO: Add insert logic here
             if (ModelState.IsValid)
             {
                 ApplicationDbContext context = new ApplicationDbContext();
@@ -46,7 +63,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
                 //Here we create a Admin super user who will maintain the website
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, FullName = model.FullName };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, FullName = model.FullName, CreateDate = DateTime.Now };
                 var chkUser = UserManager.Create(user, model.Password);
 
                 //Add default User to Role Admin
@@ -62,11 +79,11 @@ namespace WebApplication1.Areas.Admin.Controllers
             return View(model);
         }
 
-        // GET: Admin/AccountAdmin/Edit/5
-        public ActionResult Edit(string id)
-        {
-            return View(AccountModel.Instance.AccountDetails(id));
-        }
+        /*
+         * Display information Account Admin to edit
+         * GET: Admin/AccountAdmin/Edit/5
+         */
+        public ActionResult Edit(string id) => View(GetAllAccountAdmin().Find(accountAdmin => accountAdmin.Id == id));
 
         // POST: Admin/AccountAdmin/Edit/5
         [HttpPost]
@@ -79,6 +96,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
+                aspNetUser.CreateDate = accountDetails.CreateDate;
 
                 AccountModel.Instance.UpdateAdminAcocunt(aspNetUser, id);
 
@@ -90,11 +108,11 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/AccountAdmin/Delete/5
-        public ActionResult Delete(String id)
-        {
-            return View(AccountModel.Instance.AccountDetails(id));
-        }
+        /*
+         * Display information Account Admin to delete
+         * GET: Admin/AccountAdmin/Delete/5
+         */
+        public ActionResult Delete(string id) => View(GetAllAccountAdmin().Find(accountAdmin => accountAdmin.Id == id));
 
         // POST: Admin/AccountAdmin/Delete/5
         [HttpPost]
@@ -102,7 +120,6 @@ namespace WebApplication1.Areas.Admin.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
                 AccountModel.Instance.DeleteAdminAccount(aspNetUser);
 
                 return RedirectToAction("Index");

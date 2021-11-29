@@ -7,7 +7,6 @@ namespace WebApplication1.Models.BUS
     public class CartItem
     {
         public SanPham Product { set; get; }
-        public int Quantity { set; get; }
-       
+        public int Quantity { set; get; } 
     }
 }

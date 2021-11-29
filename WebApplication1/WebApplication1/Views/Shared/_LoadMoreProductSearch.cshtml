@@ -47,15 +47,15 @@
             </div>
             <div class="text-center">
                 @if (Model.Count() < ProductController.CountAllProductsFound)
-                {
-                    @Ajax.ActionLink("Show More", "LoadMoreProductSearch", "Product", new { urlSearchResults = HttpContext.Current.Request.UrlReferrer.PathAndQuery }, new AjaxOptions()
-                        {
-                            HttpMethod = "POST",
-                            InsertionMode = InsertionMode.Replace,
-                            UpdateTargetId = "change",
-                            LoadingElementId = "loader"
-                         }, new { @class = "btn btn-danger" })
-                }
+                    {
+                        @Ajax.ActionLink("Show More", "LoadMoreProductSearch", "Product", new { urlSearchResults = HttpContext.Current.Request.Url.Query.Split('=').Last() }, new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "change",
+                                LoadingElementId = "loader"
+                             }, new { @class = "btn btn-danger" })
+                    }
             </div>
         </div>
     </div>

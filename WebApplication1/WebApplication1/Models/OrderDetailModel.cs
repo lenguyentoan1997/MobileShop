@@ -1,14 +1,13 @@
 ﻿using ShopOnlineConnection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using static WebApplication1.Models.Database;
 
 namespace WebApplication1.Models.BUS
 {
     public class OrderDetailModel
     {
-        ShopOnlineConnectionDB db = null;
+        static ShopOnlineConnectionDB db = null;
         public OrderDetailModel()
         {
             db = new ShopOnlineConnectionDB();
@@ -26,5 +25,6 @@ namespace WebApplication1.Models.BUS
                 return false;
             }
         }
+     
     }
 }

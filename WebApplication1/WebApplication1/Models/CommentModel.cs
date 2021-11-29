@@ -28,16 +28,18 @@ namespace WebApplication1.Models.BUS
             return executeSql;
         }
 
-        public void Create(Comment comment)
-        {
-            DatabaseConnection().Insert(comment);
-        }
-
+        /*
+         * Insert Comment
+         */
+        public void Create(Comment comment) => DatabaseConnection().Insert(comment);
+       
+        /*
+         * Delete,Update Comment kind of like Store Procedure
+         */
         public void Delete(int commnetId, string commentContent)
         {
             DatabaseConnection().Execute(PetaPoco.Sql.Builder.Append("EXEC usp_CommentUpdateDelete @@Id = @0, @@CommentContent = @1,@@StatementType = 'DELETE'", commnetId, commentContent));
         }
-
         public void Update(int commentId, string commentContent)
         {
             DatabaseConnection().Execute(PetaPoco.Sql.Builder.Append("EXEC usp_CommentUpdateDelete @@Id = @0, @@CommentContent = @1, @@StatementType = 'UPDATE'", commentId, commentContent));

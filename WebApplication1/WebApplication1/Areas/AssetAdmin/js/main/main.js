@@ -1,5 +1,4 @@
-﻿
-jQuery(function ($) {
+﻿jQuery(function ($) {
     var performance = [12, 43, 34, 22, 12, 33, 4, 17, 22, 34, 54, 67],
         visits = [123, 323, 443, 32],
         traffic = [

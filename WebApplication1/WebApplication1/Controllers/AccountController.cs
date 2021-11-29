@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Facebook;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ShopOnlineConnection;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 using WebApplication1.Areas.Admin.Controllers;
 using WebApplication1.Common;
 using WebApplication1.Models;
@@ -64,6 +59,8 @@ namespace WebApplication1.Controllers
         {
             get
             {
+                //keyword '??' returns the value of its left-hand operand if it isn't null,
+                //otherwise,it evaluates the rigth-hand operand and retuns its result.
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
             private set
@@ -234,7 +231,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,FullName = model.FullName};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName, CreateDate = DateTime.Now };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -248,7 +245,7 @@ namespace WebApplication1.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                AddErrors(result);
+                AddErrors(result) ;
                 //ModelState.AddModelError("", String.Format("This Email: {0} already exists.", model.Email));
             }
 
@@ -492,7 +489,7 @@ namespace WebApplication1.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = info.Email, Email = info.Email, FullName = model.FullName };
+                var user = new ApplicationUser { UserName = info.Email, Email = info.Email, FullName = model.FullName, CreateDate = DateTime.Now };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -565,7 +562,11 @@ namespace WebApplication1.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                if (error.Contains("Email"))
+                {
+                    ModelState.AddModelError("", error);
+                    break;
+                }             
             }
         }
 
@@ -610,14 +611,14 @@ namespace WebApplication1.Controllers
         #endregion
         //Profile Account
         // GET: Admin/ManageAccountDetailsAdmin/Edit/5
-        public ActionResult ProfileAccount(String id)
+        public ActionResult ProfileAccount(string id)
         {
             return View(AccountModel.Instance.AccountDetails(id));
         }
 
         // POST: Admin/ManageAccountDetailsAdmin/Edit/5
         [HttpPost]
-        public ActionResult ProfileAccount(AspNetUser aspNetUser, String id)
+        public ActionResult ProfileAccount(AspNetUser aspNetUser, string id)
         {
             try
             {

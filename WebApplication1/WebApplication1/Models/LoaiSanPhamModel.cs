@@ -45,13 +45,6 @@ namespace WebApplication1.Models.BUS
             db.Insert(lsp);
         }
 
-        public LoaiSanPham ChiTietLSP(String id)
-        {
-            var db = new ShopOnlineConnectionDB();
-
-            return db.SingleOrDefault<LoaiSanPham>("SELECT * FROM udf_GetLoaiSanPhamByMaLoaiSanPham(@0)", id);
-        }
-
         public void UpdateLSP(LoaiSanPham loaiSanPham, string maLoaiSanPham)
         {
             var db = new ShopOnlineConnectionDB();

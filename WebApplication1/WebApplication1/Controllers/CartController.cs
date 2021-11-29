@@ -6,7 +6,7 @@ using WebApplication1.Common;
 using WebApplication1.Models.BUS;
 using System.Web.Script.Serialization;
 using ShopOnlineConnection;
-
+using Microsoft.AspNet.Identity;
 
 namespace WebApplication1.Controllers
 {
@@ -64,6 +64,7 @@ namespace WebApplication1.Controllers
                 item.Quantity = quantity;
                 var list = new List<CartItem>();
                 list.Add(item);
+
                 //assign to session
                 Session[CartSession] = list;
             }
@@ -137,6 +138,7 @@ namespace WebApplication1.Controllers
         {
             var order = new Order();
             order.CreateDate = DateTime.Now;
+            order.CustomeID = User.Identity.GetUserId();
             order.ShipName = shipName;
             order.ShipMobile = mobile;
             order.ShipAddress = address;
@@ -145,8 +147,9 @@ namespace WebApplication1.Controllers
             try
             {
                 var id = new OrderModel().Insert(order);
+
                 var cart = (List<CartItem>)Session[CartSession];
-                var orderDetailBus = new OrderDetailModel();
+                var orderDetailModel = new OrderDetailModel();
                 foreach (var item in cart)
                 {
                     var orderDetail = new OrderDetail();
@@ -154,7 +157,7 @@ namespace WebApplication1.Controllers
                     orderDetail.OrderID = id;
                     orderDetail.Price = item.Product.Gia;
                     orderDetail.Quantity = item.Quantity;
-                    orderDetailBus.Insert(orderDetail);
+                    orderDetailModel.Insert(orderDetail);
                 }
             }
             catch (Exception e)
@@ -162,7 +165,7 @@ namespace WebApplication1.Controllers
                 throw e;
             }
 
-            return View("/Cart/Sucess");
+            return RedirectToAction("Success");
         }
 
         public ActionResult Success()

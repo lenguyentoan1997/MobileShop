@@ -1,8 +1,5 @@
 ﻿using ShopOnlineConnection;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 
@@ -11,24 +8,58 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class SanPhamAdminController : Controller
     {
-        //[Authorize(Roles = "Admin")]
-        // GET: Admin/SanPhamAdmin
-        public ActionResult Index()
+        /*
+         * Get all information products
+         */
+        private List<SanPham> GetAllProduct()
         {
-            return View(ProductModel.Instance.DanhSachSP());
+            List<SanPham> getAllProductFromDB = new List<SanPham>();
+            getAllProductFromDB.AddRange(ProductModel.Instance.DanhSachSP());
+
+            return getAllProductFromDB;
         }
 
-        // GET: Admin/SanPhamAdmin/Details/5
-        public ActionResult Details(int id)
+        /*
+         * SelectList Producer Code, ProductTypeCode
+         */
+        static SelectList SelectListProducerCode;
+        static SelectList SelectListProductTypeCode;
+
+        /*
+         * [Authorize(Roles = "Admin")]
+         * GET: Admin/SanPhamAdmin 
+         * If the parameter is not null,it will be display by queryName
+         * If the parameter is null,it will be display all products
+         * Search by TenSanPham or MaSanPham
+         */
+        public ActionResult Index(string queryName)
         {
-            return View();
+            SelectListProducerCode = new SelectList(NhaSanXuatModel.Instance.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat");
+            SelectListProductTypeCode = new SelectList(LoaiSanPhamModel.Instance.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham");
+
+            if (queryName != null)
+            {
+                var resultSearch = GetAllProduct().FindAll(
+                    product => product.TenSanPham.ToLower().Contains(queryName) ||
+                               product.MaSanPham.ToLower().Contains(queryName));
+
+                return View(resultSearch);
+            }
+            else
+            {
+                return View(GetAllProduct());
+            }
         }
 
-        // GET: Admin/SanPhamAdmin/Create
+        /*
+         * Display product information to create
+         * GET: Admin/SanPhamAdmin/Create
+         */
         public ActionResult Create()
         {
-            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatModel.Instance.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat");
-            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamModel.Instance.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham");
+            ViewBag.MaNhaSanXuat = SelectListProducerCode;
+            ViewBag.MaLoaiSanPham = SelectListProductTypeCode;
+
             return View();
         }
 
@@ -110,7 +141,13 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
+        /*
+         * Update Product
+         * List of images in the product
+         */
         private static List<string> ProductImgs = new List<string>();
+
+        //Check if in the list of images there is a count greater than 5 or if greater than 5 remove 5 images at index 0 -> 4
         private void SelectTop5ProductImgs()
         {
             if (ProductImgs.Count > 5)
@@ -119,34 +156,37 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-
-
+        //Number of times the img is changed
         private static int CountNumberImageChange { get; set; }
 
         // GET: Admin/SanPhamAdmin/Edit/5
+        // Display information products to edit
+        // Get 5 images available in the product add to ProductImgs
         public ActionResult Edit(string id)
         {
-            ViewBag.MaNhaSanXuat = new SelectList(NhaSanXuatModel.Instance.DanhSach(), "MaNhaSanXuat", "TenNhaSanXuat", ProductModel.Instance.ChiTiet(id).MaNhaSanXuat);
+            //Display SelectList MaNhaSanXuat,MaLoaiSanPham
+            ViewBag.MaNhaSanXuat = SelectListProducerCode;
+            ViewBag.MaLoaiSanPham = SelectListProductTypeCode;
 
-            ViewBag.MaLoaiSanPham = new SelectList(LoaiSanPhamModel.Instance.DanhSach(), "MaLoaiSanPham", "TenLoaiSanPham", ProductModel.Instance.ChiTiet(id).MaLoaiSanPham);
+            var getProductById = GetAllProduct().Find(product => product.MaSanPham == id);
 
-            var product = ProductModel.Instance.ChiTiet(id);
+            ProductImgs.Add(getProductById.HinhChinh);
+            ProductImgs.Add(getProductById.Hinh1);
+            ProductImgs.Add(getProductById.Hinh2);
+            ProductImgs.Add(getProductById.Hinh3);
+            ProductImgs.Add(getProductById.Hinh4);
 
-            ProductImgs.Add(product.HinhChinh);
-            ProductImgs.Add(product.Hinh1);
-            ProductImgs.Add(product.Hinh2);
-            ProductImgs.Add(product.Hinh3);
-            ProductImgs.Add(product.Hinh4);
-
-            return View(product);
+            return View(getProductById);
         }
 
         // POST: Admin/SanPhamAdmin/Edit/5
+        //Update product information into DB
         [HttpPost, ValidateInput(false)]
         public ActionResult Edit(SanPham product)
         {
             SelectTop5ProductImgs();
 
+            //add the changed images to the new list
             List<string> productImgsList = new List<string>();
             productImgsList.Add(product.HinhChinh);
             productImgsList.Add(product.Hinh1);
@@ -154,23 +194,30 @@ namespace WebApplication1.Areas.Admin.Controllers
             productImgsList.Add(product.Hinh3);
             productImgsList.Add(product.Hinh4);
 
+            //check which images have changed
             for (int i = 0; i < productImgsList.Count; i++)
             {
+                //if the image changes then check at that image location
                 if (productImgsList[i] != null)
                 {
                     CountNumberImageChange++;
+
+                    // i = 0 mean representative image
                     if (i == 0)
                     {
+                        //Coppy representative image to file and rename by product
                         string fullPathWithFileNameAvatar = "~/Asset/images/" + product.MaSanPham + "_avatarV" + CountNumberImageChange + ".png";
                         HttpContext.Request.Files[i].SaveAs(Server.MapPath(fullPathWithFileNameAvatar));
                         productImgsList[i] = product.MaSanPham + "_avatarV" + CountNumberImageChange + ".png";
                     }
                     else
                     {
+                        //Coppy secondary image avatar to file and rename by product
                         string fullPathWithFileName = "~/Asset/images/" + product.MaSanPham + "thumbnail_" + i + "V" + CountNumberImageChange + ".png";
                         HttpContext.Request.Files[i].SaveAs(Server.MapPath(fullPathWithFileName));
                     }
 
+                    //update name image
                     switch (i)
                     {
                         case 1:
@@ -189,9 +236,12 @@ namespace WebApplication1.Areas.Admin.Controllers
                 }
                 else
                 {
+                    //if the image has not changed,add the old image
                     productImgsList[i] = ProductImgs[i];
                 }
             }
+
+            //update all images
             product.HinhChinh = productImgsList[0];
             product.Hinh1 = productImgsList[1];
             product.Hinh2 = productImgsList[2];
@@ -199,16 +249,17 @@ namespace WebApplication1.Areas.Admin.Controllers
             product.Hinh4 = productImgsList[4];
 
             ProductModel.Instance.UpdateSp(product);
+            ProductImgs.Clear();
 
             return RedirectToAction("Index");
         }
 
 
-        // GET: Admin/SanPhamAdmin/Delete/5
-        public ActionResult Delete(string id)
-        {
-            return View(ProductModel.Instance.ChiTiet(id));
-        }
+        /*
+         * Display product information to delete
+         * GET: Admin/SanPhamAdmin/Delete/5
+         */
+        public ActionResult Delete(string id) => View(GetAllProduct().Find(product => product.MaSanPham == id));
 
         // POST: Admin/SanPhamAdmin/Delete/5
         [HttpPost]
@@ -218,7 +269,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             try
             {
                 ProductModel.Instance.DeleteSp(sp);
-                // TODO: Add delete logic here
+
                 return RedirectToAction("Index");
             }
             catch

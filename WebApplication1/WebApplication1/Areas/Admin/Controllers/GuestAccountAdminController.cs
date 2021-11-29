@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ShopOnlineConnection;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -41,20 +42,41 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/GuestAccountAdmin
-        public ActionResult Index()
+        /*
+         * Get all information account guest
+         */
+        public List<AspNetUser> GetAllAccountGuest()
         {
-            
-            return View(AccountModel.Instance.ListGuestAccount());
+            List<AspNetUser> getAllAccountGuestFromDB = new List<AspNetUser>();
+            getAllAccountGuestFromDB.AddRange(AccountModel.Instance.ListAccountGuest());
+
+            return getAllAccountGuestFromDB;
         }
 
-        // GET: Admin/GuestAccountAdmin/Details/5
-        public ActionResult Details(int id)
+        /*
+         * GET: Admin/GuestAccountAdmin
+         * If the parameter is not null,it will be display by queryName
+         * If the parameter is null,it will be display all Account Guest
+         * Search by FullName,Email or PhoneNumber
+         */
+        public ActionResult Index(string queryName)
         {
-            return View();
+            if (queryName != null)
+            {
+                var resultSearch = GetAllAccountGuest().FindAll(accountGuest => accountGuest.Email == queryName || accountGuest.FullName == queryName || accountGuest.PhoneNumber == queryName);
+
+                return View(resultSearch);
+            }
+            else
+            {
+                return View(GetAllAccountGuest());
+            }
         }
 
-        // GET: Admin/GuestAccountAdmin/Create
+        /*
+         * GET: Admin/GuestAccountAdmin/Create
+         * Display information Account Admin to create
+         */
         public ActionResult Create()
         {
             return View();
@@ -66,7 +88,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             // TODO: Add insert logic here
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, FullName = model.FullName };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, FullName = model.FullName,CreateDate = DateTime.Now };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -85,25 +107,24 @@ namespace WebApplication1.Areas.Admin.Controllers
             return View(model);
         }
 
-        // GET: Admin/GuestAccountAdmin/Edit/5
-        public ActionResult Edit(String id)
-        {
-            return View(AccountModel.Instance.AccountDetails(id));
-        }
-
+        /*
+         * Display information Account Guest to Edit
+         * GET: Admin/GuestAccountAdmin/Edit/5
+         */
+        public ActionResult Edit(string id) => View(GetAllAccountGuest().Find(accountGuest => accountGuest.Id == id));
 
         // POST: Admin/GuestAccountAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(AspNetUser aspNetUser, String id)
+        public ActionResult Edit(AspNetUser aspNetUser, string id)
         {
             try
             {
-                // TODO: Add update logic here
-                var accountDetails = AccountModel.Instance.AccountDetails(id);
+                var accountDetails = GetAllAccountGuest().Find(accountGuest => accountGuest.Id == id);
 
                 aspNetUser.UserName = accountDetails.UserName;
                 aspNetUser.PasswordHash = accountDetails.PasswordHash;
                 aspNetUser.SecurityStamp = accountDetails.SecurityStamp;
+                aspNetUser.CreateDate = accountDetails.CreateDate;
 
                 AccountModel.Instance.UpdateGuestAccount(aspNetUser, id);
 
@@ -114,12 +135,15 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return View();
             }
         }
+
+        /*
+         * Change guest account password
+         */
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -144,14 +168,16 @@ namespace WebApplication1.Areas.Admin.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
+        /*
+         * Log Out Account Guest
+         * POST: /Account/LogOff
+         */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index","Home", new { Area = "" });
+            return RedirectToAction("Index", "Home", new { Area = "" });
 
         }
         private IAuthenticationManager AuthenticationManager
@@ -162,11 +188,11 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/GuestAccountAdmin/Delete/5
-        public ActionResult Delete(string id)
-        {
-            return View(AccountModel.Instance.AccountDetails(id));
-        }
+        /*
+         * Display information account guest to delete
+         * GET: Admin/GuestAccountAdmin/Delete/5
+         */
+        public ActionResult Delete(string id) => View(GetAllAccountGuest().Find(accountGuest => accountGuest.Id == id));
 
         // POST: Admin/GuestAccountAdmin/Delete/5
         [HttpPost]
@@ -174,7 +200,6 @@ namespace WebApplication1.Areas.Admin.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
                 AccountModel.Instance.DeleteGuestAccount(aspNetUser);
 
                 return RedirectToAction("Index");

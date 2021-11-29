@@ -1,0 +1,150 @@
+﻿@model IEnumerable<ShopOnlineConnection.tblAccountOrderCommentActivitylog>
+
+@{
+    Layout = null;
+}
+
+<div class="panel-body feed">
+        @foreach (var item in Model)
+        {
+            switch (item.Type)
+            {
+                case "account":
+                    <section class="feed-item">
+                        <div class="icon pull-left">
+                            <i class="fa fa-plus-square-o"></i>
+                        </div>
+                        <div class="feed-item-body">
+                            <div class="text">
+                                @item.ActiveContent
+                            </div>
+                            <div class="time pull-left">
+                                @item.Date
+                            </div>
+                        </div>
+                    </section>
+                    break;
+
+                case "comment":
+                    <section class="feed-item">
+                        <div class="icon pull-left">
+                            <i class="fa fa-comment"></i>
+                        </div>
+                        <div class="feed-item-body">
+                            <div class="text">
+                                @item.ActiveContent
+                            </div>
+                            <div class="time pull-left">
+                                @item.Date
+                            </div>
+                        </div>
+                    </section>
+                    break;
+
+                case "order":
+                    <section class="feed-item">
+                        <div class="icon pull-left">
+                            <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <div class="feed-item-body">
+                            <div class="text">
+                                @item.ActiveContent
+                            </div>
+                            <div class="time pull-left">
+                                @item.Date
+                            </div>
+                        </div>
+                    </section>
+                    break;
+            }
+        }
+   
+    <section class="feed-item">
+        <div class="icon pull-left">
+            <i class="fa fa-comment"></i>
+        </div>
+        <div class="feed-item-body">
+            <div class="text">
+                <a href="#">John Doe</a> commented on <a href="#">What Makes Good Code Good</a>.
+            </div>
+            <div class="time pull-left">
+                3 h
+            </div>
+        </div>
+    </section>
+    <section class="feed-item">
+        <div class="icon pull-left">
+            <i class="fa fa-check"></i>
+        </div>
+        <div class="feed-item-body">
+            <div class="text">
+                <a href="#">Merge request #42</a> has been approved by <a href="#">Jessica Lori</a>.
+            </div>
+            <div class="time pull-left">
+                10 h
+            </div>
+        </div>
+    </section>
+    <section class="feed-item">
+        <div class="icon pull-left">
+            <i class="fa fa-plus-square-o"></i>
+        </div>
+        <div class="feed-item-body">
+            <div class="text">
+                New user <a href="#">Greg Wilson</a> registered.
+            </div>
+            <div class="time pull-left">
+                Today
+            </div>
+        </div>
+    </section>
+    <section class="feed-item">
+        <div class="icon pull-left">
+            <i class="fa fa-bolt"></i>
+        </div>
+        <div class="feed-item-body">
+            <div class="text">
+                Server fail level raises above normal. <a href="#">See logs</a> for details.
+            </div>
+            <div class="time pull-left">
+                Yesterday
+            </div>
+        </div>
+    </section>
+    <section class="feed-item">
+        <div class="icon pull-left">
+            <i class="fa fa-archive"></i>
+        </div>
+        <div class="feed-item-body">
+            <div class="text">
+                <a href="#">Database usage report</a> is ready.
+            </div>
+            <div class="time pull-left">
+                Yesterday
+            </div>
+        </div>
+    </section>
+    <section class="feed-item">
+        <div class="icon pull-left">
+            <i class="fa fa-shopping-cart"></i>
+        </div>
+        <div class="feed-item-body">
+            <div class="text">
+                <a href="#">Order #233985</a> needs additional processing.
+            </div>
+            <div class="time pull-left">
+                Wednesday
+            </div>
+        </div>
+    </section>
+    <section class="feed-item">
+        <div class="icon pull-left">
+            <i class="fa fa-arrow-down"></i>
+        </div>
+        <div class="feed-item-body">
+            <div class="text">
+                <a href="#">Load more...</a>
+            </div>
+        </div>
+    </section>
+</div>

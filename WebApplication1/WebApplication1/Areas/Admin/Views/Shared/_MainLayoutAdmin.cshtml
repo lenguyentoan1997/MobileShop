@@ -20,17 +20,19 @@
     <!-- jQuery and Modernizr-->
     <script type="text/javascript" src="~/Areas/AssetAdmin/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="~/Areas/AssetAdmin/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="~/Areas/AssetAdmin/js/main/main.js"></script>
+    @*<script type="text/javascript" src="~/Areas/AssetAdmin/js/main/main.js"></script>*@
 
     <!-- Core JavaScript Files -->
     <script type="text/javascript" src="~/Areas/AssetAdmin/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+    <script type="text/javascript" src="~/areas/assetadmin/shieldui.1.7.43-trial/js/shieldui-all1.min.js"></script>
+
     <script type="text/javascript" src="https://www.prepbootstrap.com/Content/js/gridData.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 
     <!-- you need to include the shieldui css and js assets in order for the charts to work -->
-    <link rel="stylesheet" type="text/css" href="https://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
-    <link id="gridcss" rel="stylesheet" type="text/css" href="https://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/shieldui.1.7.43-Trial/css/light-bootstrap/all.min.css" />
+    <link id="gridcss" rel="stylesheet" type="text/css" href="~/Areas/AssetAdmin/shieldui.1.7.43-Trial/css/dark-bootstrap/all.min.css" />
+
 </head>
 <body>
     <div id="wrapper">
@@ -87,9 +89,22 @@
                     </li>
                     <li class="divider-vertical"></li>
                     <li>
-                        <form class="navbar-search">
-                            <input type="text" placeholder="Search" class="form-control">
-                        </form>
+                        @{
+                            string controllerName = HttpContext.Current.Request.Url.AbsolutePath.Split('/').Last();
+                            using (Html.BeginForm("Index", controllerName, FormMethod.Post, new { @class = "navbar-search" }))
+                            {
+                                string checkControllerName = controllerName.ToLower();
+                                if (checkControllerName.Contains("admin") || checkControllerName.Contains("nhasanxuatadmin") || checkControllerName.Contains("loaisanphamadmin") ||
+                                    checkControllerName.Contains("sanphamadmin") || checkControllerName.Contains("accountadmin") || checkControllerName.Contains("guestaccountadmin"))
+                                {
+                                    <input id="searchQuery" type="text" placeholder="Search" class="form-control" onblur="formatSearch()" name="queryName">
+                                }
+                                else
+                                {
+                                    <input id="searchQuery" type="text" placeholder="Search" class="form-control" readonly>
+                                }
+                            }
+                        }
                     </li>
                 </ul>
             </div>

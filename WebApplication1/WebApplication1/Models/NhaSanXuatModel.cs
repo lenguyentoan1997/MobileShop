@@ -52,12 +52,6 @@ namespace WebApplication1.Models.BUS
             DatabaseConnection().Insert(nsx);
         }
 
-        public NhaSanXuatView ChiTietAdmin(string id)
-        {
-            return DatabaseConnection().SingleOrDefault<NhaSanXuatView>("SELECT * FROM udf_GetNhaSanXuatByMaNhaSanXuat(@0)", id);
-
-        }
-
         public void UpdateNSX(NhaSanXuat nhaSanXuat, string maNhaSanXuat)
         {
             DatabaseConnection().Update(nhaSanXuat, maNhaSanXuat);

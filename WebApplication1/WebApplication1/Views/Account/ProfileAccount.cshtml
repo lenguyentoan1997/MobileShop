@@ -18,7 +18,7 @@
                         {
                             <label for="email">Email</label>
                             <input type="text" id="email" name="Email" value="@Model.Email" readonly />
-                            <label for="user-name">User Name</label>
+                            <label for="user-name">Full Name</label>
                             <input type="text" id="user-name" name="FullName" value="@Model.FullName" readonly />
                             <button type="button" class="slide-toggle btn" value="Enable" id="btnEditName">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
@@ -32,7 +32,14 @@
                             <input type="text" id="address" name="UserAddress" value="@Model.UserAddress" readonly /><button type="button" class="slide-toggle btn" value="Enable" id="btnEditAddress">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
                             </button><label for="dob">Date Of Birthday</label>
-                            <input type="date" id="dob" name="DOB" value="@Model.DOB.Value.ToString("yyyy-MM-dd")" readonly />
+                            if (string.IsNullOrEmpty(Model.DOB.ToString()))
+                            {
+                                <input type="date" id="dob" name="DOB" value="@Model.DOB" readonly />
+                            }
+                            else
+                            {
+                                <input type="date" id="dob" name="DOB" value="@Model.DOB.Value.ToString("yyyy-MM-dd")" readonly />
+                            }
                             <button type="button" class="slide-toggle btn" value="Enable" id="btnEditDOB">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
                             </button>

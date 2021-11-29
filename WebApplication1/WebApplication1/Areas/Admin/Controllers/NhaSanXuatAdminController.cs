@@ -1,8 +1,6 @@
 ﻿using ShopOnlineConnection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models.BUS;
 using static WebApplication1.Models.Database;
@@ -11,22 +9,45 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class NhaSanXuatAdminController : Controller
     {
-        //[Authorize(Roles = "Admin")]
-        // GET: Admin/NhaSanXuatAdmin
-        public ActionResult Index()
+        /*
+         * Get all information producer from Database
+         */
+        private List<NhaSanXuatView> GetAllProducer()
         {
-            var ds = NhaSanXuatModel.Instance.DanhSachAdmin();
+            List<NhaSanXuatView> getAllProducerFromDB = new List<NhaSanXuatView>();
+            getAllProducerFromDB.AddRange(NhaSanXuatModel.Instance.DanhSachAdmin());
 
-            return View(ds);
+            return getAllProducerFromDB;
         }
 
-        // GET: Admin/NhaSanXuatAdmin/Details/5
-        public ActionResult Details(int id)
+        /*
+         * [Authorize(Roles = "Admin")]
+         * GET: Admin/NhaSanXuatAdmin
+         * If the parameter is not null,it will be display by queryName
+         * If the parameter is null,it will be display all producer
+         * Search by TenNhaSanXuat,TenLoaiSanPham or MaNhaSanXuat
+         */
+        public ActionResult Index(string queryName)
         {
-            return View();
+            if (queryName != null)
+            {
+                var resultSearch = GetAllProducer().FindAll(
+                    producer => producer.TenNhaSanXuat.ToLower().Contains(queryName) ||
+                                producer.TenLoaiSanPham.ToLower().Contains(queryName) ||
+                                producer.MaNhaSanXuat.ToLower().Contains(queryName));
+
+                return View(resultSearch);
+            }
+            else
+            {
+                return View(GetAllProducer());
+            }
         }
 
-        // GET: Admin/NhaSanXuatAdmin/Create
+        /*
+         * GET: Admin/NhaSanXuatAdmin/Create
+         * Display view Create
+         */
         public ActionResult Create()
         {
             return View();
@@ -62,11 +83,11 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/NhaSanXuatAdmin/Edit/5
-        public ActionResult Edit(string id)
-        {
-            return View(NhaSanXuatModel.Instance.ChiTietAdmin(id));
-        }
+        /*
+         * Display information product to edit
+         * GET: Admin/NhaSanXuatAdmin/Edit/5
+         */
+        public ActionResult Edit(string id) => View(GetAllProducer().Find(producerId => producerId.MaNhaSanXuat == id));
 
         // POST: Admin/NhaSanXuatAdmin/Edit/5
         [HttpPost]
@@ -103,11 +124,11 @@ namespace WebApplication1.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/NhaSanXuatAdmin/Delete/5
-        public ActionResult Delete(string id)
-        {
-            return View(NhaSanXuatModel.Instance.ChiTietAdmin(id));
-        }
+        /*
+         * Display information products to delete
+         * GET: Admin/NhaSanXuatAdmin/Delete/5
+         */
+        public ActionResult Delete(string id) => View(GetAllProducer().Find(producerId => producerId.MaNhaSanXuat == id));
 
         // POST: Admin/NhaSanXuatAdmin/Delete/5
         [HttpPost]

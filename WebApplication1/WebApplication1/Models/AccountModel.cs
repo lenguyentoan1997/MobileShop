@@ -24,10 +24,7 @@ namespace WebApplication1.Models.BUS
         }
 
         //display details of account
-        public AspNetUser AccountDetails(string id)
-        {
-            return Database().SingleOrDefault<AspNetUser>("SELECT * FROM udf_GetAccountById(@0)", id);
-        }
+        public AspNetUser AccountDetails(string id) => Database().First<AspNetUser>("select * from udf_GetAccountById(@0)", id);       
 
         //----------------Guest Account Managed By Admin--------------
         //display a list of guest account
@@ -47,7 +44,7 @@ namespace WebApplication1.Models.BUS
         //    }
 
         //}
-        public IEnumerable<AspNetUser> ListGuestAccount()
+        public IEnumerable<AspNetUser> ListAccountGuest()
         {
             return Database().Query<AspNetUser>(" SELECT * FROM vw_GuestAccount");
         }
@@ -63,7 +60,7 @@ namespace WebApplication1.Models.BUS
         }
 
         //----------------Admin Account Managed By Admin--------------
-        public IEnumerable<AspNetUser> ListAdminAccocunt()
+        public IEnumerable<AspNetUser> ListAccocuntAdmin()
         {
             return Database().Query<AspNetUser>("SELECT * FROM vw_AdminAccount");
         }

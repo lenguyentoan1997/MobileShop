@@ -30,7 +30,7 @@
                 data: { cartModel: JSON.stringify(commentList) },
                 dataType: 'json',
                 type: 'POST',
-                success: function (res) {
+                success: function (res2) {
                     //return results from CartController
                     if (res.status == true) {
                         window.location.href = "/Cart";

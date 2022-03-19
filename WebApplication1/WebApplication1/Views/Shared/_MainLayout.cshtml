@@ -57,12 +57,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
-                    <select class="language">
-                        <option value="English" selected>English</option>
-                        <option value="France">France</option>
-                        <option value="Germany">Germany</option>
-                    </select>
-                    <span class="currency"><a href="../Admin/MainAdmin">Den Trang Admin</a></span>
+                    @*<select class="language">
+                            <option value="English" selected>English</option>
+                            <option value="France">France</option>
+                            <option value="Germany">Germany</option>
+                        </select>*@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span class="currency">
+                            <a href="../Admin/MainAdmin">Den Trang Admin</a>
+                        </span>
+                    }
+
                     @*<select class="currency">
                             <option value="USD" selected>USD</option>
                             <option value="EUR">EUR</option>

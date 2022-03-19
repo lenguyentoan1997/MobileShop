@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
         {
             var db = ProductModel.Instance.ChiTiet(id);
 
-            //UpdateProductViews(id);
+            UpdateProductViews(id);
 
             return View(db);
         }

@@ -15,6 +15,7 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class GuestAccountAdminController : Controller
     {
+        
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 

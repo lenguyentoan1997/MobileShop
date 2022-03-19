@@ -459,3 +459,4 @@ C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\bin\Sy
 C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\bin\System.Reflection.Metadata.xml
 C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\bin\System.Text.Encodings.Web.xml
+C:\Users\nh0xq\Desktop\Project\MobileShop\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete

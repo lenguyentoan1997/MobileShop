@@ -7,9 +7,11 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class LoaiSanPhamAdminController : Controller
     {
+
         /*
          * Get all information product type from database
          */
+        [Authorize(Roles = "Admin")]
         private List<LoaiSanPham> GetAllProductType()
         {
             List<LoaiSanPham> getAllProductTypeFromDB = new List<LoaiSanPham>();

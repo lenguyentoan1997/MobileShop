@@ -12,6 +12,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         /*
          * Get all information producer from Database
          */
+        [Authorize(Roles = "Admin")]
         private List<NhaSanXuatView> GetAllProducer()
         {
             List<NhaSanXuatView> getAllProducerFromDB = new List<NhaSanXuatView>();

@@ -11,6 +11,7 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class AccountAdminController : Controller
     {
+        [Authorize(Roles ="Admin")]
         /*
          * Get all information Account Admin
          */

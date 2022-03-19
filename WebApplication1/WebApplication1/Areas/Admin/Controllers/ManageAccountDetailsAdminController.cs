@@ -7,8 +7,9 @@ using WebApplication1.Models.BUS;
 namespace WebApplication1.Areas.Admin.Controllers
 {
     public class ManageAccountDetailsAdminController : Controller
-    {      
+    {
         // GET: Admin/ManageAccountDetailsAdmin
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View();

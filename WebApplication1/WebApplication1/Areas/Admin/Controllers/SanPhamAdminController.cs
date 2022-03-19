@@ -11,6 +11,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         /*
          * Get all information products
          */
+        //[Authorize(Roles = "Admin")]
         private List<SanPham> GetAllProduct()
         {
             List<SanPham> getAllProductFromDB = new List<SanPham>();
